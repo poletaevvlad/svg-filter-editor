@@ -1,0 +1,50 @@
+
+@default_width: 400px;
+
+#app-root {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #333;
+}
+
+#nodes-container{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: @default_width;
+}
+
+#result-preview{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: @default_width;
+}
+
+#separator{
+	@width: 5px;
+	position: absolute;
+	left: -@width - 2;
+	bottom: 0;
+	top: 0;
+	width: @width;
+	background-color: #404040;
+	border-color: #494949;
+	border-width: 1px;
+	border-style: none solid;
+}
+
+#toolbar{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 24px;
+	background-color: #3a3a3a;
+	border-bottom: 1px solid #5d5d5d;
+}
