@@ -1,16 +1,18 @@
 .node{
+	@border-radius: 5px;
 	width: 150px;
 	height: 75px;
 	position: absolute;
 	left: 250px;
 	top: 250px;
-	overflow: hidden;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-top-left-radius: @border-radius;
+	border-top-right-radius: @border-radius;
 	background-color: rgba(200, 200, 200, 0.1);
 	border: 1px solid #222;
 
 	.header{
+		border-top-left-radius: @border-radius;
+		border-top-right-radius: @border-radius;
 		height: 16px;
 		background-color: rgba(200, 200, 200, 0.15);
 		text-align: center;
@@ -18,5 +20,44 @@
 		line-height: 16px;
 		color: #ddd;
 		border-bottom: 1px solid #333;
+	}
+
+	.io{
+		display: flex;
+		padding-top: 3px;
+		
+		.inputs, .outputs{
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+
+		}
+
+		.io-component{
+			color: #888;
+			position: relative;
+		}
+
+		.io-connector{
+			width: 10px;
+			background-image: data-uri('image/svg+xml;charset=UTF-8', 'connector.svg');
+			position: absolute;
+			top: 0;
+			bottom: 2px;
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+		}
+
+		.inputs{
+			& .io-component{ padding-left: 10px; }
+			& .io-connector{ left: -5px; }
+		}
+
+		.outputs{
+			text-align: right;
+			& .io-component{ padding-right: 10px; }
+			& .io-connector{ right: -5px; }
+		}
 	}
 }
