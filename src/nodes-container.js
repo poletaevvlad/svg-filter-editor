@@ -1,12 +1,14 @@
 import React from "react";
 import Node from "./node-ui.js"
+import Primitive from "./primitive.js"
 
 class NodesContainer extends React.Component{
 	constructor(){
 		super();
 		this.state = {
 			left: 0, 
-			top: 0
+			top: 0,
+			primitives: [new Primitive()]
 		}
 
 		this._handleMouseDown = this._onMouseDown.bind(this);
@@ -15,7 +17,11 @@ class NodesContainer extends React.Component{
 
 		this._mouseX = 0;
 		this._mouseY = 0;
+		this._isPanning = false;
 		this._isDragging = false;
+		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
+
+		this.selected = [];
 	}
 
 	render(){
@@ -24,34 +30,50 @@ class NodesContainer extends React.Component{
 				onMouseUp={this._handleMouseUp} 
 				onMouseMove={this._handleMouseMove}>
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
-				<Node />
+				{this.state.primitives.map(primitive => {
+					let NodeComponent = primitive.nodeComponentClass;
+					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
+						left={primitive.positionX} top={primitive.positionY} key={primitive.id}/>
+				})}
 			</div>
 		</div>
 	}
 
 	_onMouseDown(e){
 		if(e.nativeEvent.button == 1){
-			this._isDragging = true;
-			this._mouseX = e.nativeEvent.clientX;
-			this._mouseY = e.nativeEvent.clientY;
+			this._isPanning = true;
 		}
+		this._mouseX = e.nativeEvent.clientX;
+		this._mouseY = e.nativeEvent.clientY;
 	}
 
 	_onMouseUp(e){
+		this._isPanning = false;
 		this._isDragging = false;
 	}
 
 	_onMouseMove(e){
-		if(this._isDragging){
-			let dx = e.nativeEvent.clientX - this._mouseX;
-			let dy = e.nativeEvent.clientY - this._mouseY;
+		let dx = e.nativeEvent.clientX - this._mouseX;
+		let dy = e.nativeEvent.clientY - this._mouseY;
+		if(this._isPanning){
 			this.setState({
 				left: this.state.left + dx,
 				top: this.state.top + dy
 			});
-			this._mouseX = e.nativeEvent.clientX;
-			this._mouseY = e.nativeEvent.clientY;
+		}else if (this._isDragging){
+			this.state.primitives.forEach(primitive => {
+				primitive.positionX += dx;
+				primitive.positionY += dy;
+			});
+			this.setState(this.state);
 		}
+		this._mouseX = e.nativeEvent.clientX;
+		this._mouseY = e.nativeEvent.clientY;
+	}
+
+	_onStartedNodeDragging(node){
+		this.selected = [node];
+		this._isDragging = true;
 	}
 }
 

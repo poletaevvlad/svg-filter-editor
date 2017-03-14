@@ -7,20 +7,12 @@ class Node extends React.Component{
 		this.title = "undefined";
 		this._renderEditor = this.renderEditor.bind(this);
 
-		this.state = {
-			left: 50, 
-			top: 40
-		}
-
 		this._handleDragMouseDown = this._onDragMouseDown.bind(this);
-		this._handleDragMouseUp = this._onDragMouseUp.bind(this);
-		this._handleDragMouseMove = this._onDragMouseMove.bind(this);
 	}
 
 	render(){
-		return <div className="node" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
-			<div className="header" onMouseDown={this._handleDragMouseDown} onMouseUp={this._handleDragMouseUp} 
-				onMouseMove={this._handleDragMouseMove}>{this.title}</div>
+		return <div className="node" style={{left: `${this.props.left}px`, top: `${this.props.top}px`}}>
+			<div className="header" onMouseDown={this._handleDragMouseDown}>{this.title}</div>
 		</div>
 	}
 
@@ -29,15 +21,12 @@ class Node extends React.Component{
 	}
 
 	_onDragMouseDown(e){
-	
-	}
-
-	_onDragMouseUp(e){
-
-	}
-
-	_onDragMouseMove(e){
-
+		if (e.nativeEvent.button == 0){
+			e.preventDefault();
+			if (typeof this.props.onEnterDraggingState != "undefined"){
+				this.props.onEnterDraggingState(this);
+			}
+		}
 	}
 }
 
