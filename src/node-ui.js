@@ -12,7 +12,7 @@ class Node extends React.Component{
 
 	render(){
 		return <div className="node" style={{left: `${this.props.left}px`, top: `${this.props.top}px`}}>
-			<div className="header" onMouseDown={this._handleDragMouseDown}>{this.title}</div>
+			<div className={"header" + (this.props.dragging? " dragging": "")} onMouseDown={this._handleDragMouseDown}>{this.title}</div>
 			<div className="io">
 				<div className="inputs">
 				{this.props.primitive.inputs.map(input => {

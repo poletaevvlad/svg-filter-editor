@@ -33,7 +33,8 @@ class NodesContainer extends React.Component{
 				{this.state.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
-						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}/>
+						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
+						dragging={this._isDragging && this.selected.findIndex(val => primitive.id == val.id) >= 0}/>
 				})}
 			</div>
 		</div>
@@ -50,6 +51,7 @@ class NodesContainer extends React.Component{
 	_onMouseUp(e){
 		this._isPanning = false;
 		this._isDragging = false;
+		this.setState(this.state);
 	}
 
 	_onMouseMove(e){
@@ -74,6 +76,7 @@ class NodesContainer extends React.Component{
 	_onStartedNodeDragging(node){
 		this.selected = [node];
 		this._isDragging = true;
+		this.setState(this.state);
 	}
 }
 

@@ -6,3 +6,5 @@ document.addEventListener("DOMContentLoaded", () => {
 	let rootElement = document.getElementById("app_root");
 	ReactDOM.render(<FilterEditor />, rootElement)
 })
+
+document.addEventListener("mousedown", (e) => e.preventDefault());

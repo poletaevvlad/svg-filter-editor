@@ -20,6 +20,10 @@
 		line-height: 16px;
 		color: #ddd;
 		border-bottom: 1px solid #333;
+		
+		&.dragging{
+			cursor: move;
+		}
 	}
 
 	.io{
@@ -50,14 +54,14 @@
 		}
 
 		.inputs{
-			& .io-component{ padding-left: 10px; }
-			& .io-connector{ left: -5px; }
+			.io-component{ padding-left: 10px; }
+			.io-connector{ left: -5px; }
 		}
 
 		.outputs{
 			text-align: right;
-			& .io-component{ padding-right: 10px; }
-			& .io-connector{ right: -5px; }
+			.io-component{ padding-right: 10px; }
+			.io-connector{ right: -5px; }
 		}
 	}
 }
