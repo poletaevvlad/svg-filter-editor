@@ -8,7 +8,7 @@ class NodesContainer extends React.Component{
 		this.state = {
 			left: 0, 
 			top: 0,
-			primitives: [new Primitive()]
+			primitives: [new Primitive(), new Primitive()]
 		}
 
 		this._handleMouseDown = this._onMouseDown.bind(this);
@@ -33,7 +33,7 @@ class NodesContainer extends React.Component{
 				{this.state.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
-						left={primitive.positionX} top={primitive.positionY} key={primitive.id}/>
+						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}/>
 				})}
 			</div>
 		</div>
@@ -61,7 +61,7 @@ class NodesContainer extends React.Component{
 				top: this.state.top + dy
 			});
 		}else if (this._isDragging){
-			this.state.primitives.forEach(primitive => {
+			this.selected.forEach(primitive => {
 				primitive.positionX += dx;
 				primitive.positionY += dy;
 			});
