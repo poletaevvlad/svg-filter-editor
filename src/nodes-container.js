@@ -1,4 +1,5 @@
 import React from "react";
+import Node from "./node-ui.js"
 
 class NodesContainer extends React.Component{
 	constructor(){
@@ -23,14 +24,7 @@ class NodesContainer extends React.Component{
 				onMouseUp={this._handleMouseUp} 
 				onMouseMove={this._handleMouseMove}>
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
-				<div style={{
-					position: "absolute",
-					left: "10px",
-					top: "10px",
-					width: "50px",
-					height: "50px",
-					backgroundColor: "#5982AF"
-				}}></div>
+				<Node />
 			</div>
 		</div>
 	}
