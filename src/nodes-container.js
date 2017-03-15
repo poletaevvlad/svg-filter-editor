@@ -37,6 +37,7 @@ class NodesContainer extends React.Component{
 		this._isDragging = false;
 		this._isConnecting = false;
 		this._connectionStart = null;
+		this._connectionEnd = null;
 		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
 
 		this.selected = [];
@@ -52,13 +53,16 @@ class NodesContainer extends React.Component{
 					let NodeComponent = primitive.nodeComponentClass;
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
 						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
-						dragging={this._isDragging && this.selected.findIndex(val => primitive.id == val.id) >= 0}/>
+						dragging={this._isDragging && this.selected.findIndex(val => primitive.id == val.id) >= 0} 
+						{... (this._isConnecting && this._connectionEnd != null && this._connectionEnd.primitive == primitive.id) ? 
+							{ ioSelectionType: this._connectionEnd.type, ioSelectionId: this._connectionEnd.io } : {} }/>
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
 				{this._isConnecting ? 
 					<Connection x1={this._connectionStart.position.x} y1={this._connectionStart.position.y} 
-						x2={this._mouseX} y2={this._mouseY} />
+						x2={this._connectionEnd != null ? this._connectionEnd.position.x : this._mouseX} 
+						y2={this._connectionEnd != null ? this._connectionEnd.position.y : this._mouseY} />
 				 : null}
 			</svg>
 		</div>
@@ -115,6 +119,17 @@ class NodesContainer extends React.Component{
 			});
 			this.setState(this.state);
 		}else if (this._isConnecting){
+			let element = e.target;
+			if (element.hasAttribute("data-iotype")){
+				this._connectionEnd = {
+					type: element.getAttribute("data-iotype"),
+					primitive: parseInt(element.getAttribute("data-primitiveid")),
+					io: parseInt(element.getAttribute("data-ioid")),
+					position: this.getElementCenter(element.id)
+				}
+			}else{
+				this._connectionEnd = null;
+			}
 			this.setState(this.state);
 		}
 		this._mouseX = e.nativeEvent.clientX;

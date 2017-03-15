@@ -18,7 +18,7 @@ class Node extends React.Component{
 				{this.props.primitive.inputs.map(input => {
 					return <div className="io-component" key={this.props.primitive.getInputId(input)}>
 					{input.title}
-					<div className="io-connector" id={this.props.primitive.getInputId(input)} 
+					<div className={this._getConnectorClass(input.id, "input")} id={this.props.primitive.getInputId(input)} 
 						data-primitiveid={this.props.primitive.id}
 						data-iotype="input" data-ioid={input.id} /></div>
 				})}
@@ -27,13 +27,21 @@ class Node extends React.Component{
 				{this.props.primitive.outputs.map(output => {
 					return <div className="io-component" key={this.props.primitive.getOutputId(output)}>
 					{output.title}
-					<div className="io-connector" id={this.props.primitive.getOutputId(output)} 
+					<div className={this._getConnectorClass(output.id, "output")} id={this.props.primitive.getOutputId(output)} 
 						data-primitiveid={this.props.primitive.id}
 						data-iotype="output" data-ioid={output.id} /></div>
 				})}
 				</div>
 			</div>
 		</div>
+	}
+
+	_getConnectorClass(id, type){
+		let result = "io-connector";
+		if (this.props.ioSelectionType == type && this.props.ioSelectionId == id){
+			result += " selected";
+		}
+		return result;
 	}
 
 	renderEditor(){
