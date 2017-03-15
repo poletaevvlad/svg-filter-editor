@@ -8,8 +8,7 @@ class Connection extends React.Component{
 		return <g>
 			<path d={path} stroke="black" strokeWidth="5" fill="transparent" />
 			<path d={path} stroke="white" strokeWidth="3" fill="transparent" />
-		</g>>
-
+		</g>
 	}
 
 	generatePath(){
@@ -36,6 +35,8 @@ class NodesContainer extends React.Component{
 		this._mouseY = 0;
 		this._isPanning = false;
 		this._isDragging = false;
+		this._isConnecting = false;
+		this._connectionStart = null;
 		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
 
 		this.selected = [];
@@ -55,9 +56,18 @@ class NodesContainer extends React.Component{
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
-				<Connection x1={50} y1={50} x2={250} y2={300} />
+				{this._isConnecting ? 
+					<Connection x1={this._connectionStart.position.x} y1={this._connectionStart.position.y} 
+						x2={this._mouseX} y2={this._mouseY} />
+				 : null}
 			</svg>
 		</div>
+	}
+
+	getElementCenter(id){
+		let element = document.getElementById(id);
+		let bbox = element.getBoundingClientRect();
+		return {x: (bbox.left + bbox.right) / 2, y: bbox.top + bbox.height / 2}
 	}
 
 	_onMouseDown(e){
@@ -65,7 +75,16 @@ class NodesContainer extends React.Component{
 			this._isPanning = true;
 		}else if (e.nativeEvent.button == 0){
 			let element = e.target;
-			console.log(element);
+			if (element.hasAttribute("data-iotype")){
+				this._isConnecting = true;
+				this._connectionStart = {
+					type: element.getAttribute("data-iotype"),
+					primitive: parseInt(element.getAttribute("data-primitiveid")),
+					io: parseInt(element.getAttribute("data-ioid")),
+					position: this.getElementCenter(element.id)
+				}
+				this.setState(this.state);
+			}
 		}
 		this._mouseX = e.nativeEvent.clientX;
 		this._mouseY = e.nativeEvent.clientY;
@@ -74,6 +93,10 @@ class NodesContainer extends React.Component{
 	_onMouseUp(e){
 		this._isPanning = false;
 		this._isDragging = false;
+		if (this._isConnecting){
+			this._isConnecting = false;
+			this._connectionStart = null;
+		}
 		this.setState(this.state);
 	}
 
@@ -90,6 +113,8 @@ class NodesContainer extends React.Component{
 				primitive.positionX += dx;
 				primitive.positionY += dy;
 			});
+			this.setState(this.state);
+		}else if (this._isConnecting){
 			this.setState(this.state);
 		}
 		this._mouseX = e.nativeEvent.clientX;
