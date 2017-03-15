@@ -100,6 +100,7 @@ class NodesContainer extends React.Component{
 		if (this._isConnecting){
 			this._isConnecting = false;
 			this._connectionStart = null;
+			this._connectionEnd = null;
 		}
 		this.setState(this.state);
 	}
