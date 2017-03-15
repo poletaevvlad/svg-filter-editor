@@ -2,6 +2,23 @@ import React from "react";
 import Node from "./node-ui.js"
 import Primitive from "./primitive.js"
 
+class Connection extends React.Component{
+	render(){
+		let path = this.generatePath();
+		return <g>
+			<path d={path} stroke="black" strokeWidth="5" fill="transparent" />
+			<path d={path} stroke="white" strokeWidth="3" fill="transparent" />
+		</g>>
+
+	}
+
+	generatePath(){
+		let x1 = this.props.x1, y1 = this.props.y1;
+		let x2 = this.props.x2, y2 = this.props.y2;
+		return `M ${x1} ${y1} L ${x1 + 20} ${y1} L ${x2 - 20} ${y2} L ${x2} ${y2}`;
+	}
+}
+
 class NodesContainer extends React.Component{
 	constructor(){
 		super();
@@ -37,12 +54,18 @@ class NodesContainer extends React.Component{
 						dragging={this._isDragging && this.selected.findIndex(val => primitive.id == val.id) >= 0}/>
 				})}
 			</div>
+			<svg id="nodes-connections" width="100%" height="100%">
+				<Connection x1={50} y1={50} x2={250} y2={300} />
+			</svg>
 		</div>
 	}
 
 	_onMouseDown(e){
 		if(e.nativeEvent.button == 1){
 			this._isPanning = true;
+		}else if (e.nativeEvent.button == 0){
+			let element = e.target;
+			console.log(element);
 		}
 		this._mouseX = e.nativeEvent.clientX;
 		this._mouseY = e.nativeEvent.clientY;
