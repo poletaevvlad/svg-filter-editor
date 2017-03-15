@@ -14,7 +14,8 @@ class Connection extends React.Component{
 	generatePath(){
 		let x1 = this.props.x1, y1 = this.props.y1;
 		let x2 = this.props.x2, y2 = this.props.y2;
-		return `M ${x1} ${y1} L ${x1 + 20} ${y1} L ${x2 - 20} ${y2} L ${x2} ${y2}`;
+		let offset1 = this.props.d1 == "input" ? -20: 20, offset2 = this.props.d2 == "input" ? -20: 20;
+		return `M ${x1} ${y1} L ${x1 + offset1} ${y1} L ${x2 + offset2} ${y2} L ${x2} ${y2}`;
 	}
 }
 
@@ -62,7 +63,8 @@ class NodesContainer extends React.Component{
 				{this._isConnecting ? 
 					<Connection x1={this._connectionStart.position.x} y1={this._connectionStart.position.y} 
 						x2={this._connectionEnd != null ? this._connectionEnd.position.x : this._mouseX} 
-						y2={this._connectionEnd != null ? this._connectionEnd.position.y : this._mouseY} />
+						y2={this._connectionEnd != null ? this._connectionEnd.position.y : this._mouseY} 
+						d1={this._connectionStart.type} d2={this._connectionStart.type == "input" ? "output" : "input"}/>
 				 : null}
 			</svg>
 		</div>
