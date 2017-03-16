@@ -35,4 +35,7 @@ class Primitive{
 	}
 }
 
+Primitive.getInputId = (primitive, ioId) => `pr${primitive}_in${ioId}`
+Primitive.getOutputId = (primitive, ioId) => `pr${primitive}_out${ioId}`
+
 module.exports = Primitive;

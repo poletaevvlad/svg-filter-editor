@@ -1,8 +1,9 @@
 import React from "react";
 import Node from "./node-ui.js"
 import Primitive from "./primitive.js"
+import Connection from "./connection.js"
 
-class Connection extends React.Component{
+class ConnectionGraphics extends React.Component{
 	render(){
 		let path = this.generatePath();
 		return <g>
@@ -25,7 +26,8 @@ class NodesContainer extends React.Component{
 		this.state = {
 			left: 0, 
 			top: 0,
-			primitives: [new Primitive(), new Primitive()]
+			primitives: [new Primitive(), new Primitive()],
+			connections: []
 		}
 
 		this._handleMouseDown = this._onMouseDown.bind(this);
@@ -60,8 +62,14 @@ class NodesContainer extends React.Component{
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
+				{this.state.connections.map(connection => {
+					let inputPosition = this.getElementCenter(Primitive.getInputId(connection.inputPrimitive, connection.inputIOID));
+					let outputPosition = this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID));
+					return <ConnectionGraphics x1={inputPosition.x} y1={inputPosition.y} d1="input" 
+						x2 = {outputPosition.x} y2={outputPosition.y} d2="output" key={connection.id} />
+				})}
 				{this._isConnecting ? 
-					<Connection x1={this._connectionStart.position.x} y1={this._connectionStart.position.y} 
+					<ConnectionGraphics x1={this._connectionStart.position.x} y1={this._connectionStart.position.y} 
 						x2={this._connectionEnd != null ? this._connectionEnd.position.x : this._mouseX} 
 						y2={this._connectionEnd != null ? this._connectionEnd.position.y : this._mouseY} 
 						d1={this._connectionStart.type} d2={this._connectionStart.type == "input" ? "output" : "input"}/>
@@ -101,6 +109,18 @@ class NodesContainer extends React.Component{
 		this._isDragging = false;
 		if (this._isConnecting){
 			this._isConnecting = false;
+			if (this._connectionStart != null && this._connectionEnd != null){
+				let input, output;
+				if (this._connectionStart.type == "input"){
+					input = this._connectionStart;
+					output = this._connectionEnd;
+				}else{
+					input = this._connectionEnd;
+					output = this._connectionStart;
+				}
+				let connection = new Connection(output.primitive, output.io, input.primitive, input.io);
+				this.state.connections.push(connection);
+			}
 			this._connectionStart = null;
 			this._connectionEnd = null;
 		}
