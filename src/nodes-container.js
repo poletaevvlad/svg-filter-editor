@@ -8,8 +8,8 @@ class ConnectionGraphics extends React.Component{
 	render(){
 		let path = this.generatePath();
 		return <g>
-			<path d={path} stroke="black" strokeWidth="5" fill="transparent" />
-			<path d={path} stroke="white" strokeWidth="3" fill="transparent" />
+			<path d={path} stroke="black" strokeWidth="4" fill="transparent" />
+			<path d={path} stroke={this.props.selected ? "white" : "gray"} strokeWidth="2" fill="transparent" />
 		</g>
 	}
 
@@ -67,16 +67,22 @@ class NodesContainer extends React.Component{
 					let inputPosition = this.getElementCenter(Primitive.getInputId(connection.inputPrimitive, connection.inputIOID));
 					let outputPosition = this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID));
 					return <ConnectionGraphics x1={inputPosition.x} y1={inputPosition.y} d1="input" 
-						x2 = {outputPosition.x} y2={outputPosition.y} d2="output" key={connection.id} />
+						x2 = {outputPosition.x} y2={outputPosition.y} d2="output" key={connection.id} 
+						selected={this._isConnectionSelected(connection)}/>
 				})}
 				{this._isConnecting ? 
 					<ConnectionGraphics x1={this._connectionStart.position.x} y1={this._connectionStart.position.y} 
 						x2={this._connectionEnd != null ? this._connectionEnd.position.x : this._mouseX} 
 						y2={this._connectionEnd != null ? this._connectionEnd.position.y : this._mouseY} 
-						d1={this._connectionStart.type} d2={this._connectionStart.type == "input" ? "output" : "input"}/>
+						d1={this._connectionStart.type} d2={this._connectionStart.type == "input" ? "output" : "input"}
+						selected={true}/>
 				 : null}
 			</svg>
 		</div>
+	}
+
+	_isConnectionSelected(connection){
+		return this.selected.findIndex(e => e.id == connection.inputPrimitive || e.id == connection.outputPrimitive) >= 0
 	}
 
 	getElementCenter(id){
