@@ -9,6 +9,11 @@
 	border-top-right-radius: @border-radius;
 	background-color: rgba(200, 200, 200, 0.1);
 	border: 1px solid #222;
+	transition: box-shadow 0.08s;
+
+	&.selected{
+		box-shadow: 0 0 1px 2px orange;
+	}
 
 	.header{
 		border-top-left-radius: @border-radius;

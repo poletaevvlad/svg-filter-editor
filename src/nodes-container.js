@@ -54,9 +54,10 @@ class NodesContainer extends React.Component{
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
 				{this.state.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
+					let selected = this.selected.findIndex(val => primitive.id == val.id) >= 0;
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
 						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
-						dragging={this._isDragging && this.selected.findIndex(val => primitive.id == val.id) >= 0} 
+						dragging={this._isDragging && selected} selected={selected}
 						{... (this._isConnecting && this._connectionEnd != null && this._connectionEnd.primitive == primitive.id) ? 
 							{ ioSelectionType: this._connectionEnd.type, ioSelectionId: this._connectionEnd.io } : {} }/>
 				})}
@@ -107,8 +108,10 @@ class NodesContainer extends React.Component{
 				}
 				this._connectionStart = connectionStart;
 				this._connectionEnd = null;
-				this.setState(this.state);
+			}else if (element.id == "nodes-container" || element.id == "nodes-connections"){
+				this.selected = [];
 			}
+			this.setState(this.state);
 		}
 		this._mouseX = e.nativeEvent.clientX;
 		this._mouseY = e.nativeEvent.clientY;
