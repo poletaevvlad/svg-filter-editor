@@ -3,12 +3,40 @@ import Primitive from "./primitive.js"
 class Filter{
 
 	constructor(){
-		this.primitives = [new Primitive(), new Primitive()],
+		this.primitives = [],
 		this.connections = []
+		this.primitivesById = {}
+
+		// to be removed
+		this.addPrimitive(new Primitive());
+		this.addPrimitive(new Primitive());
+		this.primitives[1].positionX += 250;
+		this.primitives[1].positionY += 150;
 	}
 
 	addConnection(connection){
 		this.connections.push(connection);
+		let inputPrimitive = this.getPrimitive(connection.inputPrimitive);
+		let io = inputPrimitive.getInput(connection.inputIOID);
+		if (io.connection != null){
+			this.removeConnection(io.connection);
+		}
+		io.connection = connection;
+	}
+
+	removeConnection(connection){
+		let index = this.connections.indexOf(connection);
+		if (index < 0) return;
+		this.connections.splice(index, 1);
+	}
+
+	addPrimitive(primitive){
+		this.primitives.push(primitive);
+		this.primitivesById[primitive.id] = primitive;
+	}
+
+	getPrimitive(id){
+		return this.primitivesById[id];
 	}
 
 }

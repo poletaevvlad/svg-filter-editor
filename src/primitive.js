@@ -6,7 +6,7 @@ function generateId(){
 }
 
 function input(title, id){
-	return {title: title, id: id};
+	return {title: title, id: id, connection: null};
 }
 
 function output(title, id){
@@ -32,6 +32,14 @@ class Primitive{
 
 	getOutputId(out){
 		return `pr${this.id}_out${out.id}`;
+	}
+
+	getInput(id){
+		return this.inputs.find(e => e.id == id);
+	}
+
+	getOutput(id){
+		return this.outputs.find(e => e.id == id);
 	}
 }
 
