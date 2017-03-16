@@ -42,7 +42,7 @@ class NodesContainer extends React.Component{
 		this._connectionStart = null;
 		this._connectionEnd = null;
 		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
-
+		this._handleKeyPress = this._onKeyPressed.bind(this);
 		this.selected = [];
 	}
 
@@ -79,6 +79,14 @@ class NodesContainer extends React.Component{
 				 : null}
 			</svg>
 		</div>
+	}
+
+	componentWillMount(){
+		document.addEventListener("keypress", this._handleKeyPress);
+	}
+
+	componentWillUnmount(){
+		document.removeEventListener("keypress", this._handleKeyPress);
 	}
 
 	_isConnectionSelected(connection){
@@ -182,6 +190,14 @@ class NodesContainer extends React.Component{
 		this.selected = [node];
 		this._isDragging = true;
 		this.setState(this.state);
+	}
+
+	_onKeyPressed(e){
+		if (e.key == "Delete"){
+			this.selected.forEach(primitive => this.state.filter.removePrimitive(primitive));
+			this.selected = [];
+			this.setState(this.state);
+		}
 	}
 }
 

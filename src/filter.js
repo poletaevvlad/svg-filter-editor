@@ -51,6 +51,18 @@ class Filter{
 		return this.primitivesById[id];
 	}
 
+	removePrimitive(primitive){
+		this.primitives.splice(this.primitives.indexOf(primitive), 1);
+		delete this.primitivesById[primitive.id];
+		this.connections = this.connections.filter(connection => {
+			if (connection.inputPrimitive == primitive.id || connection.outputPrimitive == primitive.id){
+				this.removeConnection(connection);
+				return false;
+			}
+			return true;
+		})
+	}
+
 }
 
 module.exports = Filter;
