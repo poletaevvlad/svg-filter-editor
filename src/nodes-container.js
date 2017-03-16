@@ -2,6 +2,7 @@ import React from "react";
 import Node from "./node-ui.js"
 import Primitive from "./primitive.js"
 import Connection from "./connection.js"
+import Filter from "./filter.js"
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -26,8 +27,7 @@ class NodesContainer extends React.Component{
 		this.state = {
 			left: 0, 
 			top: 0,
-			primitives: [new Primitive(), new Primitive()],
-			connections: []
+			filter: new Filter()
 		}
 
 		this._handleMouseDown = this._onMouseDown.bind(this);
@@ -52,7 +52,7 @@ class NodesContainer extends React.Component{
 				onMouseUp={this._handleMouseUp} 
 				onMouseMove={this._handleMouseMove}>
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
-				{this.state.primitives.map(primitive => {
+				{this.state.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
 						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
@@ -62,7 +62,7 @@ class NodesContainer extends React.Component{
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
-				{this.state.connections.map(connection => {
+				{this.state.filter.connections.map(connection => {
 					let inputPosition = this.getElementCenter(Primitive.getInputId(connection.inputPrimitive, connection.inputIOID));
 					let outputPosition = this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID));
 					return <ConnectionGraphics x1={inputPosition.x} y1={inputPosition.y} d1="input" 
@@ -119,7 +119,7 @@ class NodesContainer extends React.Component{
 					output = this._connectionStart;
 				}
 				let connection = new Connection(output.primitive, output.io, input.primitive, input.io);
-				this.state.connections.push(connection);
+				this.state.filter.addConnection(connection);
 			}
 			this._connectionStart = null;
 			this._connectionEnd = null;
@@ -143,7 +143,7 @@ class NodesContainer extends React.Component{
 			this.setState(this.state);
 		}else if (this._isConnecting){
 			let element = e.target;
-			if (element.hasAttribute("data-iotype")){
+			if (element.hasAttribute("data-iotype") && this._connectionStart.type != element.getAttribute("data-iotype")){
 				this._connectionEnd = {
 					type: element.getAttribute("data-iotype"),
 					primitive: parseInt(element.getAttribute("data-primitiveid")),
