@@ -24,6 +24,18 @@ class Filter{
 		io.connection = connection;
 	}
 
+	dettachConnection(primitive, inputIO){
+		let inputPrimitive = this.getPrimitive(primitive);
+		let io = inputPrimitive.getInput(inputIO);
+		if (io && io.connection != null){
+			let connection = io.connection;
+			this.removeConnection(connection);
+			io.connection = null;
+			return connection;
+		}
+		return null;
+	}
+
 	removeConnection(connection){
 		let index = this.connections.indexOf(connection);
 		if (index < 0) return;

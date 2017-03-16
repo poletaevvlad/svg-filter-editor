@@ -90,13 +90,23 @@ class NodesContainer extends React.Component{
 		}else if (e.nativeEvent.button == 0){
 			let element = e.target;
 			if (element.hasAttribute("data-iotype")){
-				this._isConnecting = true;
-				this._connectionStart = {
-					type: element.getAttribute("data-iotype"),
-					primitive: parseInt(element.getAttribute("data-primitiveid")),
-					io: parseInt(element.getAttribute("data-ioid")),
-					position: this.getElementCenter(element.id)
+				let type = element.getAttribute("data-iotype");
+				let primitive = parseInt(element.getAttribute("data-primitiveid"));
+				let io = parseInt(element.getAttribute("data-ioid"));
+				let connectionStart = null;
+				if (type == "input"){
+					let connection = this.state.filter.dettachConnection(primitive, io);
+					if (connection != null){
+						connectionStart = {type: "output", primitive: connection.outputPrimitive, io: connection.outputIOID, 
+							position: this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID))}
+					}
 				}
+				this._isConnecting = true;
+				if (connectionStart == null){
+					connectionStart = { type: type, primitive: primitive, io: io, position: this.getElementCenter(element.id) }
+				}
+				this._connectionStart = connectionStart;
+				this._connectionEnd = null;
 				this.setState(this.state);
 			}
 		}
