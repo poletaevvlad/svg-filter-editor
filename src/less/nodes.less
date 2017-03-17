@@ -1,7 +1,6 @@
 .node{
 	@border-radius: 5px;
 	width: 150px;
-	height: 75px;
 	position: absolute;
 	left: 250px;
 	top: 250px;
@@ -14,6 +13,8 @@
 	&.selected{
 		box-shadow: 0 0 1px 2px orange;
 	}
+
+	@text-color: #888;
 
 	.header{
 		border-top-left-radius: @border-radius;
@@ -44,7 +45,7 @@
 		}
 
 		.io-component{
-			color: #888;
+			color: @text-color;
 			position: relative;
 		}
 
@@ -71,5 +72,10 @@
 			.io-component{ padding-right: 10px; }
 			.io-connector{ right: -5px; }
 		}
+	}
+
+	.content{
+		padding: 5px;
+		color: @text-color;
 	}
 }

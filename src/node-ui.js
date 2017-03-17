@@ -34,6 +34,7 @@ class Node extends React.Component{
 				})}
 				</div>
 			</div>
+			<div className="content">{this.renderEditor()}</div>
 		</div>
 	}
 
