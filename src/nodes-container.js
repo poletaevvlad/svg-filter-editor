@@ -21,6 +21,37 @@ class ConnectionGraphics extends React.Component{
 	}
 }
 
+class NodeSelector extends React.Component{
+	render(){
+		return <div id="node-selector" style={{left: this._getX(), top: this._getY()}}>
+			<div className="column">
+				<div className="section">Primitives</div>
+				<div className="item" onClick={()=>{console.log("blend")}}>Blend</div>
+				<div className="item">Color matrix</div>
+				<div className="item">Component transfer</div>
+				<div className="item">Composite</div>
+				<div className="item">Convolve matrix</div>
+				<div className="item">Difuse lighting</div>
+				<div className="item">Displacement map</div>
+				<div className="item">Flood</div>
+			</div>
+			<div className="column">
+				<div className="item">Gaussian blur</div>
+				<div className="item">Image</div>
+				<div className="item">Merge</div>
+				<div className="item">Morphology</div>
+				<div className="item">Offset</div>
+				<div className="item">Specular lighting</div>
+				<div className="item">Tile</div>
+				<div className="item">Turbulence</div>
+			</div>
+		</div>
+	}
+
+	_getX = () => this.props.x + 10;
+	_getY = () => this.props.y + 10;
+}
+
 class NodesContainer extends React.Component{
 	constructor(){
 		super();
@@ -33,6 +64,7 @@ class NodesContainer extends React.Component{
 		this._handleMouseDown = this._onMouseDown.bind(this);
 		this._handleMouseUp = this._onMouseUp.bind(this);
 		this._handleMouseMove = this._onMouseMove.bind(this);
+		this._handleDoubleClick = this._onDoubleClick.bind(this);
 
 		this._mouseX = 0;
 		this._mouseY = 0;
@@ -43,14 +75,22 @@ class NodesContainer extends React.Component{
 		this._connectionEnd = null;
 		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
 		this._handleKeyPress = this._onKeyPressed.bind(this);
+		this._handleGlobalClick = this._onGlobalClick.bind(this);
+		this._handleBlur = this._onWindowBlur.bind(this);
 		this.selected = [];
+
+		this._nodeSelectorOpen = false;
+		this._nodeSelectorX = 0;
+		this._nodeSelectorY = 0;
 	}
 
 	render(){
 		return <div id="nodes-container" 
 				onMouseDown={this._handleMouseDown} 
 				onMouseUp={this._handleMouseUp} 
-				onMouseMove={this._handleMouseMove}>
+				onMouseMove={this._handleMouseMove}
+				onDoubleClick={this._handleDoubleClick}>
+			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} /> : null}
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
 				{this.state.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
@@ -83,10 +123,14 @@ class NodesContainer extends React.Component{
 
 	componentWillMount(){
 		document.addEventListener("keypress", this._handleKeyPress);
+		document.addEventListener("click", this._handleGlobalClick);
+		window.addEventListener("blur", this._handleBlur);
 	}
 
 	componentWillUnmount(){
 		document.removeEventListener("keypress", this._handleKeyPress);
+		document.removeEventListener("click", this._handleGlobalClick);
+		window.removeEventListener("blur", this._handleBlur);
 	}
 
 	_isConnectionSelected(connection){
@@ -196,6 +240,36 @@ class NodesContainer extends React.Component{
 		if (e.key == "Delete"){
 			this.selected.forEach(primitive => this.state.filter.removePrimitive(primitive));
 			this.selected = [];
+			this.setState(this.state);
+		}
+	}
+
+	_onDoubleClick(e){
+		if (! this._nodeSelectorOpen && (e.target.id == "nodes-origin" || e.target.id == "nodes-connections")){
+			this._nodeSelectorOpen = true;
+			this._nodeSelectorX = e.nativeEvent.clientX;
+			this._nodeSelectorY = e.nativeEvent.clientY;
+			this.setState(this.state);
+		}
+		return true;
+	}
+
+	_onGlobalClick(e){
+		if (this._nodeSelectorOpen){
+			let node = e.target;
+			while (node != null && node.id != "node-selector"){
+				node = node.parentElement;
+			}
+			if (node == null){
+				this._nodeSelectorOpen = false;
+				this.setState(this.state);
+			}
+		}
+	}
+
+	_onWindowBlur(e){
+		if (this._nodeSelectorOpen){
+			this._nodeSelectorOpen = false;
 			this.setState(this.state);
 		}
 	}
