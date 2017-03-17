@@ -14,10 +14,20 @@ class ConnectionGraphics extends React.Component{
 	}
 
 	generatePath(){
-		let x1 = this.props.x1, y1 = this.props.y1;
-		let x2 = this.props.x2, y2 = this.props.y2;
-		let offset1 = this.props.d1 == "input" ? -20: 20, offset2 = this.props.d2 == "input" ? -20: 20;
-		return `M ${x1} ${y1} L ${x1 + offset1} ${y1} L ${x2 + offset2} ${y2} L ${x2} ${y2}`;
+		let x1, x2, y1, y2;
+		if (this.props.d1 == "output"){
+			x1 = this.props.x1;
+			y1 = this.props.y1;
+			x2 = this.props.x2;
+			y2 = this.props.y2;
+		}else{
+			x1 = this.props.x2;
+			y1 = this.props.y2;
+			x2 = this.props.x1;
+			y2 = this.props.y1;
+		}
+		let offset = Math.abs(x2 - x1) * 0.3;
+		return `M ${x1} ${y1} C ${x1 + offset} ${y1}, ${x2 - offset} ${y2}, ${x2} ${y2}`;
 	}
 }
 
