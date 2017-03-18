@@ -1,4 +1,5 @@
 import Primitive from "./primitive.js"
+import Output from "./primitives/output.js"
 
 class Filter{
 
@@ -7,11 +8,7 @@ class Filter{
 		this.connections = []
 		this.primitivesById = {}
 
-		// to be removed
-		this.addPrimitive(new Primitive());
-		this.addPrimitive(new Primitive());
-		this.primitives[1].positionX += 250;
-		this.primitives[1].positionY += 150;
+		this.addPrimitive(new Output());
 	}
 
 	addConnection(connection){

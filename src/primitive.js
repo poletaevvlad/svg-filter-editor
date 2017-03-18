@@ -17,13 +17,21 @@ class Primitive{
 	constructor(){
 		this.id = generateId();
 
-		this.inputs = [input("Input 1", 1), input("Input 2", 2)];
-		this.outputs = [output("Output 1", 1), output("Output 2", 2), output("Output 3", 3)];
+		this.inputs = [];
+		this.outputs = [];
 
 		this.positionX = 50;
 		this.positionY = 40;
 
 		this.nodeComponentClass = Node;
+	}
+
+	createInput(name, id){
+		this.inputs.push(input(name, id));
+	}
+
+	createOutput(name, id){
+		this.outputs.push(output(name, id));
 	}
 
 	getInputId(inp){
