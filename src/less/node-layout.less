@@ -1,0 +1,23 @@
+.horizontalFields{
+	display: flex;
+
+	.field-section{
+		flex-grow: 1;
+		display: flex;
+		margin-right: 10px;
+		align-items: baseline;
+
+		&:last-child{
+			margin-right: 0;
+		}
+	}
+
+	.field-label{
+		margin-right: 5px;
+	}
+
+	input{
+		flex-grow: 1;
+		width: 0px;
+	}
+}

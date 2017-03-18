@@ -1,13 +1,10 @@
-import Primitive from "../primitive.js";Output
-Result
-Connect your nodes to the Result input
-
+import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 
 class Output extends Primitive{
 	constructor(){
 		super();
-		this.createInput("Result", 0);
+		this.createInput("Result",0);
 		this.nodeComponentClass = OutputNode;
 	}
 }
