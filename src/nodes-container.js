@@ -1,9 +1,10 @@
 import React from "react";
-import Node from "./node-ui.js"
-import Primitive from "./primitive.js"
-import Connection from "./connection.js"
+import Node from "./node-ui.js";
+import Primitive from "./primitive.js";
+import Connection from "./connection.js";
 
-import Offset from "./primitives/offset.js"
+import Offset from "./primitives/offset.js";
+import GaussianBlur from "./primitives/gaussian-blur.js";
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -52,7 +53,7 @@ class NodeSelector extends React.Component{
 				<div className="item">Flood</div>
 			</div>
 			<div className="column">
-				<div className="item">Gaussian blur</div>
+				<div className="item" onClick={() => this._selectPrimitive(new GaussianBlur())}>+ Gaussian blur</div>
 				<div className="item">Image</div>
 				<div className="item">Merge</div>
 				<div className="item">Morphology</div>
