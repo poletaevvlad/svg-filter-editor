@@ -17,6 +17,7 @@ class Primitive{
 	constructor(){
 		this.id = generateId();
 
+		this.isRemovable = true;
 		this.inputs = [];
 		this.outputs = [];
 

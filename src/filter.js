@@ -7,8 +7,9 @@ class Filter{
 		this.primitives = [],
 		this.connections = []
 		this.primitivesById = {}
+		this.output = new Output();
 
-		this.addPrimitive(new Output());
+		this.addPrimitive(this.output);
 	}
 
 	addConnection(connection){
@@ -49,6 +50,9 @@ class Filter{
 	}
 
 	removePrimitive(primitive){
+		if (!primitive.isRemovable){
+			return;
+		}
 		this.primitives.splice(this.primitives.indexOf(primitive), 1);
 		delete this.primitivesById[primitive.id];
 		this.connections = this.connections.filter(connection => {

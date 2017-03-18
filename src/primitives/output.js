@@ -5,6 +5,7 @@ class Output extends Primitive{
 	constructor(){
 		super();
 		this.createInput("Result",0);
+		this.isRemovable = false;
 		this.nodeComponentClass = OutputNode;
 	}
 }
