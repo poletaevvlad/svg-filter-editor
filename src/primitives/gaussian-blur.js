@@ -17,6 +17,10 @@ class GaussianBlur extends Primitive{
 		
 		this.stdDeviation = 5;
 	}
+
+	createInput(name, id){
+		super.createInput(name, id);
+	}
 }
 
 class GaussianBlurNode extends Node{

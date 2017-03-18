@@ -57,6 +57,8 @@ class Primitive{
 	getOutputName(id){
 		return `f${this.id}-${id}`;
 	}
+
+	onConnectionsChanged(){}
 }
 
 Primitive.getInputId = (primitive, ioId) => `pr${primitive}_in${ioId}`

@@ -12,6 +12,11 @@ class Filter{
 		this.addPrimitive(this.output);
 	}
 
+	_notifyConnectionChange(connection){
+		this.getPrimitive(connection.inputPrimitive).onConnectionsChanged();
+		this.getPrimitive(connection.outputPrimitive).onConnectionsChanged();
+	}
+
 	addConnection(connection){
 		this.connections.push(connection);
 		let inputPrimitive = this.getPrimitive(connection.inputPrimitive);
@@ -20,6 +25,7 @@ class Filter{
 			this.removeConnection(io.connection);
 		}
 		io.connection = connection;
+		this._notifyConnectionChange(connection);
 	}
 
 	dettachConnection(primitive, inputIO){
@@ -27,17 +33,22 @@ class Filter{
 		let io = inputPrimitive.getInput(inputIO);
 		if (io && io.connection != null){
 			let connection = io.connection;
-			this.removeConnection(connection);
+			this.removeConnection(connection, false);
 			io.connection = null;
+			this._notifyConnectionChange(connection);
 			return connection;
 		}
 		return null;
 	}
 
-	removeConnection(connection){
+	removeConnection(connection, notify){
 		let index = this.connections.indexOf(connection);
 		if (index < 0) return;
 		this.connections.splice(index, 1);
+		
+		if (typeof notify == "undefined" || notify){
+			this._notifyConnectionChange(connection);
+		}
 	}
 
 	addPrimitive(primitive){
