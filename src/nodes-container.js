@@ -2,7 +2,6 @@ import React from "react";
 import Node from "./node-ui.js"
 import Primitive from "./primitive.js"
 import Connection from "./connection.js"
-import Filter from "./filter.js"
 
 import Offset from "./primitives/offset.js"
 
@@ -80,8 +79,7 @@ class NodesContainer extends React.Component{
 		super();
 		this.state = {
 			left: 0, 
-			top: 0,
-			filter: new Filter()
+			top: 0
 		}
 
 		this._handleMouseDown = this._onMouseDown.bind(this);
@@ -117,7 +115,7 @@ class NodesContainer extends React.Component{
 			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
 				onSelected={this._handleAddPrimitive} /> : null}
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
-				{this.state.filter.primitives.map(primitive => {
+				{this.props.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					let selected = this.selected.findIndex(val => primitive.id == val.id) >= 0;
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
@@ -128,7 +126,7 @@ class NodesContainer extends React.Component{
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
-				{this.state.filter.connections.map(connection => {
+				{this.props.filter.connections.map(connection => {
 					let inputPosition = this.getElementCenter(Primitive.getInputId(connection.inputPrimitive, connection.inputIOID));
 					let outputPosition = this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID));
 					return <ConnectionGraphics x1={inputPosition.x} y1={inputPosition.y} d1="input" 
@@ -179,7 +177,7 @@ class NodesContainer extends React.Component{
 				let io = parseInt(element.getAttribute("data-ioid"));
 				let connectionStart = null;
 				if (type == "input"){
-					let connection = this.state.filter.dettachConnection(primitive, io);
+					let connection = this.props.filter.dettachConnection(primitive, io);
 					if (connection != null){
 						connectionStart = {type: "output", primitive: connection.outputPrimitive, io: connection.outputIOID, 
 							position: this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID))}
@@ -215,7 +213,7 @@ class NodesContainer extends React.Component{
 					output = this._connectionStart;
 				}
 				let connection = new Connection(output.primitive, output.io, input.primitive, input.io);
-				this.state.filter.addConnection(connection);
+				this.props.filter.addConnection(connection);
 			}
 			this._connectionStart = null;
 			this._connectionEnd = null;
@@ -263,7 +261,7 @@ class NodesContainer extends React.Component{
 
 	_onKeyPressed(e){
 		if (e.key == "Delete"){
-			this.selected.forEach(primitive => this.state.filter.removePrimitive(primitive));
+			this.selected.forEach(primitive => this.props.filter.removePrimitive(primitive));
 			this.selected = [];
 			this.setState(this.state);
 		}
@@ -302,7 +300,7 @@ class NodesContainer extends React.Component{
 	_onPrimitiveAdded(primitive){
 		primitive.positionX = this._nodeSelectorX - primitive.nodeWidth / 2 |0;
 		primitive.positionY = this._nodeSelectorY - 30;
-		this.state.filter.addPrimitive(primitive);
+		this.props.filter.addPrimitive(primitive);
 		this._nodeSelectorOpen = false;
 		this.setState(this.state);
 	}
