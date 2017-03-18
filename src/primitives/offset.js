@@ -20,7 +20,8 @@ class OffsetNode extends Node{
 	constructor(){
 		super();
 		this.title = "Offset";
-	
+		this.state = {};
+
 		this._xChanged = this._xChanged.bind(this);
 		this._yChanged = this._yChanged.bind(this);
 	}
@@ -40,13 +41,17 @@ class OffsetNode extends Node{
 		</div>
 	}
 
+	_parse(val){
+		return parseFloat(val.replace(",", "."));
+	}
+
 	_xChanged(newValue){
-		this.props.primitive.x = parseInt(newValue);
+		this.props.primitive.x = this._parse(newValue);
 		this.setState(this.state);
 	}
 
 	_yChanged(newValue){
-		this.props.primitive.y = parseInt(newValue);
+		this.props.primitive.y = this._parse(newValue);
 		this.setState(this.state);
 	}
 }

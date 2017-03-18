@@ -1,5 +1,7 @@
 import React from "react";
 
+import validators from "./validators.js"
+
 class TextInput extends React.Component{
 	constructor(props){
 		super(props);
@@ -18,12 +20,14 @@ class TextInput extends React.Component{
 	}
 
 	_onChange(e){
-		let valid = true;
+		let valid = validators.VALID;
 		if (typeof this.props.validator != "undefined"){
 			valid = this.props.validator(e.target.value);
 		}
-		this.setState({value: e.target.value, valid: valid});
-		if (valid && typeof this.props.onChange != "undefined"){
+		if (valid != validators.INVALID){
+			this.setState({value: e.target.value, valid: valid == validators.VALID});
+		}
+		if (valid == validators.VALID && typeof this.props.onChange != "undefined"){
 			this.props.onChange(e.target.value);
 		}
 	}
