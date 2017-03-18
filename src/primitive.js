@@ -22,6 +22,7 @@ class Primitive{
 
 		this.positionX = 50;
 		this.positionY = 40;
+		this.nodeWidth = 150;
 
 		this.nodeComponentClass = Node;
 	}

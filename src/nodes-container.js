@@ -4,6 +4,8 @@ import Primitive from "./primitive.js"
 import Connection from "./connection.js"
 import Filter from "./filter.js"
 
+import Offset from "./primitives/offset.js"
+
 class ConnectionGraphics extends React.Component{
 	render(){
 		let path = this.generatePath();
@@ -32,11 +34,16 @@ class ConnectionGraphics extends React.Component{
 }
 
 class NodeSelector extends React.Component{
+	constructor(){
+		super();
+		this._selectPrimitive = this._onPrimitiveSelected.bind(this);
+	}
+
 	render(){
 		return <div id="node-selector" style={{left: this._getX(), top: this._getY()}}>
 			<div className="column">
 				<div className="section">Primitives</div>
-				<div className="item" onClick={()=>{console.log("blend")}}>Blend</div>
+				<div className="item">Blend</div>
 				<div className="item">Color matrix</div>
 				<div className="item">Component transfer</div>
 				<div className="item">Composite</div>
@@ -50,7 +57,7 @@ class NodeSelector extends React.Component{
 				<div className="item">Image</div>
 				<div className="item">Merge</div>
 				<div className="item">Morphology</div>
-				<div className="item">Offset</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Offset())}>+ Offset</div>
 				<div className="item">Specular lighting</div>
 				<div className="item">Tile</div>
 				<div className="item">Turbulence</div>
@@ -60,6 +67,12 @@ class NodeSelector extends React.Component{
 
 	_getX = () => this.props.x + 10;
 	_getY = () => this.props.y + 10;
+
+	_onPrimitiveSelected(component){
+		if (typeof this.props.onSelected != "undefined"){
+			this.props.onSelected(component);
+		}
+	}
 }
 
 class NodesContainer extends React.Component{
@@ -87,6 +100,7 @@ class NodesContainer extends React.Component{
 		this._handleKeyPress = this._onKeyPressed.bind(this);
 		this._handleGlobalClick = this._onGlobalClick.bind(this);
 		this._handleBlur = this._onWindowBlur.bind(this);
+		this._handleAddPrimitive = this._onPrimitiveAdded.bind(this);
 		this.selected = [];
 
 		this._nodeSelectorOpen = false;
@@ -100,7 +114,8 @@ class NodesContainer extends React.Component{
 				onMouseUp={this._handleMouseUp} 
 				onMouseMove={this._handleMouseMove}
 				onDoubleClick={this._handleDoubleClick}>
-			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} /> : null}
+			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
+				onSelected={this._handleAddPrimitive} /> : null}
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
 				{this.state.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
@@ -282,6 +297,14 @@ class NodesContainer extends React.Component{
 			this._nodeSelectorOpen = false;
 			this.setState(this.state);
 		}
+	}
+
+	_onPrimitiveAdded(primitive){
+		primitive.positionX = this._nodeSelectorX - primitive.nodeWidth / 2 |0;
+		primitive.positionY = this._nodeSelectorY - 30;
+		this.state.filter.addPrimitive(primitive);
+		this._nodeSelectorOpen = false;
+		this.setState(this.state);
 	}
 }
 

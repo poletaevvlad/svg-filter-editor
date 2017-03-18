@@ -6,13 +6,12 @@ class Node extends React.Component{
 		super()
 		this.title = "undefined";
 		this._renderEditor = this.renderEditor.bind(this);
-
 		this._handleDragMouseDown = this._onDragMouseDown.bind(this);
 	}
 
 	render(){
 		return <div className={"node" + (this.props.selected ? " selected" : "")} 
-			style={{left: `${this.props.left}px`, top: `${this.props.top}px`}}>
+			style={{left: `${this.props.left}px`, top: `${this.props.top}px`, width: `${this.props.primitive.nodeWidth}px`}}>
 			<div className={"header" + (this.props.dragging? " dragging": "")} onMouseDown={this._handleDragMouseDown}>{this.title}</div>
 			<div className="io">
 				<div className="inputs">
