@@ -7,4 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	ReactDOM.render(<FilterEditor />, rootElement)
 })
 
-document.addEventListener("mousedown", (e) => e.preventDefault());
+document.addEventListener("mousedown", (e) => {
+	// let element = e.target;
+	// while (element != null && !(element instanceof HTMLInputElement)){
+	// 	element = element.parentElement;
+	// }
+	// if (element == null){
+	// 	// e.preventDefault();
+	// }
+});
