@@ -33,7 +33,7 @@ class GaussianBlurNode extends Node{
 			<div className="field-section">
 				<div className="field-label">std. deviation:</div>
 				<TextInput className="field" value={this.props.primitive.stdDeviation} 
-					onChange={this._stdDeviationChanged} validator={validators.isNumber} />
+					onChange={this._stdDeviationChanged} validator={validators.isPositiveNumber} />
 			</div>
 		</div>
 	}

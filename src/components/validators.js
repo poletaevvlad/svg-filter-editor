@@ -8,7 +8,7 @@ module.exports = (()=>{
 		VALID: VALID,
 		MAY_BE_VALID: MAY_BE_VALID,
 
-		isNumber: (n) => {
+		isNumber: n => {
 			if (n.length == 0){
 				return MAY_BE_VALID;
 			}
@@ -35,6 +35,25 @@ module.exports = (()=>{
 				}
 			}
 			return VALID;
+		},
+
+		isPositiveNumber: n => {
+			if (n.length == 0){
+				return MAY_BE_VALID;
+			}
+			let separatorFound = false;
+			for (let i = 0; i < n.length; i++){
+				if (n[i] == '.' || n[i] == ","){
+					if (separatorFound){
+						return INVALID;
+					}else{
+						separatorFound = true;
+					}
+				}else if ("0123456789".indexOf(n[i]) < 0){
+					return INVALID;
+				}
+			}
+			return VALID;	
 		}
 	}
 })();
