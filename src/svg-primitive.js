@@ -11,11 +11,12 @@ class SVGPrimitive extends React.Component{
 		if(input.connection == null){
 			return undefined;
 		}
-		return `r${input.connection.outputPrimitive}-${input.connection.outputIOID}`;
+		let otherPrimitive = this.props.filter.getPrimitive(input.connection.outputPrimitive);
+		return otherPrimitive.getOutputName(input.connection.outputIOID);
 	}
 
 	getOutput(id){
-		return `r${this.props.primitive.id}-${id}`;
+		return this.props.primitive.getOutputName(id);
 	}
 
 }

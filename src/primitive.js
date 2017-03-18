@@ -53,6 +53,10 @@ class Primitive{
 	getOutput(id){
 		return this.outputs.find(e => e.id == id);
 	}
+
+	getOutputName(id){
+		return `f${this.id}-${id}`;
+	}
 }
 
 Primitive.getInputId = (primitive, ioId) => `pr${primitive}_in${ioId}`

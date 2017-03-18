@@ -11,7 +11,8 @@ class Preview extends React.Component{
 					<filter id="filter" width="1000" height="1000" x="-500" y="-500">
 						{primitives.map(primitive => {
 							let PrimitiveComponent = primitive.svgComponentClass;
-							return <PrimitiveComponent primitive={primitive} key={primitive.id} />
+							return <PrimitiveComponent primitive={primitive} filter={this.props.filter} 
+								key={primitive.id} />
 						})}
 					</filter>
 				</defs>
