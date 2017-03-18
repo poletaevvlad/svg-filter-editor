@@ -4,6 +4,8 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
+import SVGPrimitive from "../svg-primitive.js";
+
 
 class Offset extends Primitive{
 	constructor(){
@@ -11,6 +13,7 @@ class Offset extends Primitive{
 		this.createInput("Input", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = OffsetNode;
+		this.svgComponentClass = OffsetPrimitive;
 		this.x = 0;
 		this.y = 0;
 	}
@@ -48,11 +51,20 @@ class OffsetNode extends Node{
 	_xChanged(newValue){
 		this.props.primitive.x = this._parse(newValue);
 		this.setState(this.state);
+		this.props.onUpdate();
 	}
 
 	_yChanged(newValue){
 		this.props.primitive.y = this._parse(newValue);
 		this.setState(this.state);
+		this.props.onUpdate();
+	}
+}
+
+class OffsetPrimitive extends SVGPrimitive{
+	render(){
+		return <feOffset dx={this.props.primitive.x} dy={this.props.primitive.y} 
+			in={this.getInput(0)} result={this.getOutput(0)} />
 	}
 }
 

@@ -8,17 +8,22 @@ class FilterEditor extends React.Component{
 	constructor(){
 		super();
 		this.filter = new Filter();
+		this._handleUpdate = this._onUpdate.bind(this);
 	}
 
 	render(){
 		return <div id="app-root">
-			<NodesContainer filter={this.filter} />
+			<NodesContainer filter={this.filter} onUpdate={this._handleUpdate} />
 			<div id="result-preview">
 				<div id="separator"></div>
 				<div id="toolbar"></div>
 				<Preview filter={this.filter} />
 			</div>
 		</div>
+	}
+
+	_onUpdate(){
+		this.forceUpdate();
 	}
 }
 

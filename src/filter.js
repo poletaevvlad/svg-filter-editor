@@ -64,6 +64,54 @@ class Filter{
 		})
 	}
 
+	getOrderedPrimitives(){
+		if (this.output.getInput(0).connection == null){
+			return []
+		}
+
+		let primitives = this.primitives.slice();
+		primitives.splice(primitives.indexOf(this.output), 1);
+		let outputPrimitiveConnection = this.output.getInput(0).connection;
+		let desiredResult = [`${outputPrimitiveConnection.outputPrimitive}-${outputPrimitiveConnection.outputIOID}`];
+		let input = [];
+		let result = [];
+		var over = false;
+		do{
+			var found = false;
+			for (var i = 0; i < primitives.length; i++){
+				let j
+				for (j = 0; j < primitives[i].inputs.length; j++){
+					let inputIO = primitives[i].inputs[j];
+					if (inputIO.connection != null){
+						let connection = `${inputIO.connection.outputPrimitive}-${inputIO.connection.outputIOID}`;
+						if (input.indexOf(connection) < 0){
+							break;						
+						}
+					}
+				}
+				if (j == primitives[i].inputs.length){
+					primitives[i].outputs.forEach(o => input.push(`${primitives[i].id}-${o.id}`))
+					result.push(primitives[i]);
+					primitives.splice(i, 1);
+					found = true;
+					break;
+				}
+			}
+
+			over = true;
+			for (let k = 0; k < desiredResult.length; k++){
+				if (input.indexOf(desiredResult[k]) < 0){
+					over = false;
+					break;
+				}
+			}
+
+			if (!over && !found){
+				return null;
+			}
+		}while(! over);
+		return result;
+	}
 }
 
 module.exports = Filter;

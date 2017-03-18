@@ -121,8 +121,10 @@ class NodesContainer extends React.Component{
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
 						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
 						dragging={this._isDragging && selected} selected={selected}
+						onUpdate={this.props.onUpdate}
 						{... (this._isConnecting && this._connectionEnd != null && this._connectionEnd.primitive == primitive.id) ? 
-							{ ioSelectionType: this._connectionEnd.type, ioSelectionId: this._connectionEnd.io } : {} }/>
+							{ ioSelectionType: this._connectionEnd.type, ioSelectionId: this._connectionEnd.io } : {} }
+						/>
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
@@ -182,6 +184,7 @@ class NodesContainer extends React.Component{
 						connectionStart = {type: "output", primitive: connection.outputPrimitive, io: connection.outputIOID, 
 							position: this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID))}
 					}
+					this.props.onUpdate();
 				}
 				this._isConnecting = true;
 				if (connectionStart == null){
@@ -214,6 +217,7 @@ class NodesContainer extends React.Component{
 				}
 				let connection = new Connection(output.primitive, output.io, input.primitive, input.io);
 				this.props.filter.addConnection(connection);
+				this.props.onUpdate();
 			}
 			this._connectionStart = null;
 			this._connectionEnd = null;

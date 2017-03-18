@@ -1,4 +1,5 @@
 import Node from "./node-ui.js"
+import SVGPrimitive from "./svg-primitive.js"
 
 var lastId = 0;
 function generateId(){
@@ -26,6 +27,7 @@ class Primitive{
 		this.nodeWidth = 150;
 
 		this.nodeComponentClass = Node;
+		this.svgComponentClass = SVGPrimitive;
 	}
 
 	createInput(name, id){
