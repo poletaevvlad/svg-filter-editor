@@ -42,10 +42,6 @@ class GaussianBlurNode extends Node{
 		</div>
 	}
 
-	_parse(val){
-		return parseFloat(val.replace(",", "."));
-	}
-
 	_stdDeviationChanged(newValue){
 		this.props.primitive.stdDeviation = parseFloat(newValue.replace(",", "."));
 		this.setState(this.state);

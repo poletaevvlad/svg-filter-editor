@@ -9,7 +9,7 @@ module.exports = (()=>{
 		MAY_BE_VALID: MAY_BE_VALID,
 
 		isNumber: n => {
-			if (n.length == 0){
+			if (n.length == 0 || n == "." || n == ","){
 				return MAY_BE_VALID;
 			}
 			let separatorFound = false;
@@ -38,7 +38,7 @@ module.exports = (()=>{
 		},
 
 		isPositiveNumber: n => {
-			if (n.length == 0){
+			if (n.length == 0 || n == "," || n == "."){
 				return MAY_BE_VALID;
 			}
 			let separatorFound = false;

@@ -16,7 +16,9 @@ class Preview extends React.Component{
 						})}
 					</filter>
 				</defs>
-				<circle fill="orange" filter="url(#filter)" r="30" cx="50%" cy="50%" />
+				<g filter="url(#filter)">
+					<circle fill="orange" r="30" cx="50%" cy="50%" />
+				</g>
 			</svg>
 		}
 	}

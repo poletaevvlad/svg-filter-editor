@@ -56,7 +56,7 @@ class MorphologyNode extends Node{
 	}
 
 	_radiusChanged(newRadius){
-		this.props.primitive.radius = newRadius;
+		this.props.primitive.radius = parseFloat(newRadius.replace(",", "."));;
 		this._update();
 	}
 }

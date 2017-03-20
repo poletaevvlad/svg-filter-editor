@@ -8,6 +8,7 @@ import GaussianBlur from "./primitives/gaussian-blur.js";
 import Merge from "./primitives/merge.js";
 import Blend from "./primitives/blend.js";
 import Morphology from "./primitives/morphology.js";
+import ColorMatrix from "./primitives/color-matrix.js";
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -47,7 +48,7 @@ class NodeSelector extends React.Component{
 			<div className="column">
 				<div className="section">Primitives</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Blend())}>+ Blend</div>
-				<div className="item">Color matrix</div>
+				<div className="item" onClick={() => this._selectPrimitive(new ColorMatrix())}>+ Color matrix</div>
 				<div className="item">Component transfer</div>
 				<div className="item">Composite</div>
 				<div className="item">Convolve matrix</div>
