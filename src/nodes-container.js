@@ -7,6 +7,7 @@ import Offset from "./primitives/offset.js";
 import GaussianBlur from "./primitives/gaussian-blur.js";
 import Merge from "./primitives/merge.js";
 import Blend from "./primitives/blend.js";
+import Morphology from "./primitives/morphology.js";
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -58,7 +59,7 @@ class NodeSelector extends React.Component{
 				<div className="item" onClick={() => this._selectPrimitive(new GaussianBlur())}>+ Gaussian blur</div>
 				<div className="item">Image</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Merge())}>+ Merge</div>
-				<div className="item">Morphology</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Morphology())}>+ Morphology</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Offset())}>+ Offset</div>
 				<div className="item">Specular lighting</div>
 				<div className="item">Tile</div>
