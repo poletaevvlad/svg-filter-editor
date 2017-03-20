@@ -1,17 +1,18 @@
+@import (reference) "./focus.less";
+
 input[type=text]{
 	font-size: 12px;
     background: #393939;
     border: 1px solid #333;
     color: #ccc;
     padding: 0 3px;
-    outline: none;
-	transition: box-shadow 0.1s;
+    .focusable();
 
     &:focus{
-    	box-shadow: 0 0 1px 1px orange;
+        .focused();
     }
 
     &.invalid:focus{
-    	box-shadow: 0 0 1px 1px red;
+        .focused-invalid();
     }
 }
