@@ -6,6 +6,7 @@ import Connection from "./connection.js";
 import Offset from "./primitives/offset.js";
 import GaussianBlur from "./primitives/gaussian-blur.js";
 import Merge from "./primitives/merge.js";
+import Blend from "./primitives/blend.js";
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -44,7 +45,7 @@ class NodeSelector extends React.Component{
 		return <div id="node-selector" style={{left: this._getX(), top: this._getY()}}>
 			<div className="column">
 				<div className="section">Primitives</div>
-				<div className="item">Blend</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Blend())}>+ Blend</div>
 				<div className="item">Color matrix</div>
 				<div className="item">Component transfer</div>
 				<div className="item">Composite</div>

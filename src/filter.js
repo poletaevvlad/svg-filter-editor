@@ -13,8 +13,12 @@ class Filter{
 	}
 
 	_notifyConnectionChange(connection){
-		this.getPrimitive(connection.inputPrimitive).onConnectionsChanged();
-		this.getPrimitive(connection.outputPrimitive).onConnectionsChanged();
+		if (connection.inputPrimitive != null){
+			this.getPrimitive(connection.inputPrimitive).onConnectionsChanged();
+		}
+		if (connection.outputPrimitive != null){
+			this.getPrimitive(connection.outputPrimitive).onConnectionsChanged();
+		}
 	}
 
 	addConnection(connection){

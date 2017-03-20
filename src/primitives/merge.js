@@ -22,7 +22,6 @@ class Merge extends Primitive{
 			inputsCount--;
 		}
 		inputsCount++;
-		console.log(inputsCount);
 		if (inputsCount < this.inputs.length){
 			this.inputs.splice(inputsCount, this.inputs.length - inputsCount);
 		} else while (inputsCount > this.inputs.length){
