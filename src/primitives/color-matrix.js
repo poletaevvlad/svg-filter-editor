@@ -1,4 +1,5 @@
 import React from "react";
+import ReactSlider from "react-slider";
 
 import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
@@ -73,7 +74,15 @@ class ColorMatrixNode extends Node{
 	}
 
 	_renderSaturate(){
-		return null;
+		return <div className="horizontalFields">
+			<div className="field-section">
+				<div className="field-label">
+					<ReactSlider max={250} value={this.props.primitive.value * 250} onChange={e => this._valueChanged(e / 250)}/>
+				</div>
+				<TextInput className="field" value={this.props.primitive.value} 
+					onChange={this._valueChanged} validator={validators.isNumber01} />
+			</div>
+		</div>;
 	}
 
 	_renderHueRotate(){
@@ -98,7 +107,7 @@ class ColorMatrixNode extends Node{
 	}
 
 	_valueChanged(newValue){
-		this.props.primitive.value = parseFloat(newValue.replace(",", "."));
+		this.props.primitive.value = typeof newValue == "number" ? newValue : parseFloat(newValue.replace(",", "."));
 		this.props.onUpdate();
 		this.forceUpdate();
 	}

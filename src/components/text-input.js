@@ -7,16 +7,25 @@ class TextInput extends React.Component{
 		super(props);
 		this._handleChange = this._onChange.bind(this);
 		this._handleBlur = this._onBlur.bind(this);
+		this._handleFocus = this._onFocus.bind(this);
 
 		this.state = {
 			value: props.value,
-			valid: true
+			valid: true,
+			focused: false
+		}
+	}
+
+	componentWillUpdate(){
+		if (! this.state.focused){
+			this.state.value = this.props.value;
 		}
 	}
 
 	render(){
 		return <input className={this.props.className + (this.state.valid ? "" : " invalid")} 
-			type="text" value={this.state.value} onChange={this._handleChange} onBlur={this._handleBlur}/>
+			type="text" value={this.state.value} onChange={this._handleChange} onFocus={this._handleFocus} 
+			onBlur={this._handleBlur}/>
 	}
 
 	_onChange(e){
@@ -33,10 +42,17 @@ class TextInput extends React.Component{
 	}
 
 	_onBlur(e){
-		this._onChange(e);
-		if (!this.state.valid){
-			this.setState({value: this.props.value, valid: true});
+		if (this.state.valid){
+			this._onChange(e);
 		}
+		
+		this.setState({value: this.props.value, valid: true, focused: false});
+	}
+
+	_onFocus(e){
+		this.state.focused = true;
+		this.setState(this.state);
+		
 	}
 }
 

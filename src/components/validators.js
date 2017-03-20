@@ -54,6 +54,30 @@ module.exports = (()=>{
 				}
 			}
 			return VALID;	
+		},
+
+		isNumber01: n => {
+			if (n.length == 0 || n == "," || n == "."){
+				return MAY_BE_VALID;
+			}
+			let i = 0;
+			while (i < n.length && n[i] == '0'){
+				i++
+			}
+			if (i == n.length){
+				return VALID;
+			}else if (n[i] == "." || n[i] == ","){
+				i++;
+				for (; i < n.length; i++){
+					if ("0123456789".indexOf(n[i]) < 0){
+						return INVALID
+					}
+				}
+				return VALID;
+			}else{
+				return INVALID;
+			}
+
 		}
 	}
 })();
