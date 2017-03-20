@@ -21,6 +21,19 @@ class ColorMatrix extends Primitive{
 		this.types = ["matrix", "saturate", "hueRotate", "luminanceToAlpha"];
 		this.value = [[1, 0, 0, 0, 0], [0, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0]];
 	}
+
+	updateValueType(){
+		switch(this.type){
+			case "matrix":
+				this.value = [[1, 0, 0, 0, 0], [0, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0]];
+				break;
+			case "saturate":
+				this.value = 1;
+				break;
+			default:
+				this.value = 0;
+		}
+	}
 }
 
 class ColorMatrixNode extends Node{
@@ -64,7 +77,13 @@ class ColorMatrixNode extends Node{
 	}
 
 	_renderHueRotate(){
-		return null;
+		return <div className="horizontalFields compact">
+			<div className="field-section">
+				<TextInput className="field" value={this.props.primitive.value} 
+					onChange={this._valueChanged} validator={validators.isNumber} />
+				<div className="field-label"> deg.</div>
+			</div>
+		</div>
 	}
 
 	_renderLuminanceToAlpha(){
@@ -73,6 +92,7 @@ class ColorMatrixNode extends Node{
 
 	_typeChanged(newType){
 		this.props.primitive.type = newType;
+		this.props.primitive.updateValueType();
 		this.props.onUpdate();
 		this.forceUpdate();
 	}
@@ -97,14 +117,12 @@ class ColorMatrixPrimitive extends SVGPrimitive{
 			case "matrix":
 				return <feColorMatrix in={this.getInput(0)} result={this.getOutput(0)} type="matrix"
 					values={this._makeMatrix()} />
-			case "saturate":
-				return null;
-			case "hueRotate":
-				return null;
 			case "luminanceToAlpha":
-				return null;
+				return <feColorMatrix in={this.getInput(0)} result={this.getOutput(0)} 
+					type={this.props.primitive.type} />
 			default:
-				return null;
+				return <feColorMatrix in={this.getInput(0)} result={this.getOutput(0)} 
+					type={this.props.primitive.type} values={this.props.primitive.value} />
 		}
 	}
 
