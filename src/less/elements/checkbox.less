@@ -1,0 +1,26 @@
+@import (reference) "./focus.less";
+
+input[type="checkbox"]{
+	margin: 0;
+    visibility: hidden;
+
+	&:after{
+		content: "";
+		width: 10px;
+		height: 10px;
+		background-color: #555;
+		display: block;
+		border: 1px solid #333;
+		box-shadow: 0 1px 0 0 #616161 inset;
+		visibility: visible;
+		.focusable();
+	}	
+
+	&:focus:after{
+		.focused();
+	}
+
+	&:checked:after{
+		background-image: data-uri('image/svg+xml;charset=UTF-8', 'elements/checkbox-icon.svg');
+	}
+}
