@@ -13,7 +13,6 @@ import ColorPicker from "../components/color-picker.js";
 class Flood extends Primitive{
 	constructor(){
 		super();
-		this.createInput("Input", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = FloodNode;
 		this.svgComponentClass = FloodPrimitive;
@@ -67,7 +66,8 @@ class FloodNode extends Node{
 
 class FloodPrimitive extends SVGPrimitive{
 	render(){
-		return <feFlood floodColor={this.props.primitive.color} floodOpacity={this.props.primitive.alpha} />
+		return <feFlood floodColor={this.props.primitive.color} floodOpacity={this.props.primitive.alpha} 
+			result={this.getOutput(0)} />
 	}
 }
 
