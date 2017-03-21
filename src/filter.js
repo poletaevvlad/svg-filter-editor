@@ -1,6 +1,8 @@
 import Primitive from "./primitive.js"
 import Output from "./primitives/output.js"
 
+import Flood from "./primitives/flood.js";
+
 class Filter{
 
 	constructor(){
@@ -10,6 +12,7 @@ class Filter{
 		this.output = new Output();
 
 		this.addPrimitive(this.output);
+		this.addPrimitive(new Flood());
 	}
 
 	_notifyConnectionChange(connection){

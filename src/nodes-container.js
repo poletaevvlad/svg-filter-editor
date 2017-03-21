@@ -9,6 +9,7 @@ import Merge from "./primitives/merge.js";
 import Blend from "./primitives/blend.js";
 import Morphology from "./primitives/morphology.js";
 import ColorMatrix from "./primitives/color-matrix.js";
+import Flood from "./primitives/flood.js";
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -54,7 +55,7 @@ class NodeSelector extends React.Component{
 				<div className="item">Convolve matrix</div>
 				<div className="item">Difuse lighting</div>
 				<div className="item">Displacement map</div>
-				<div className="item">Flood</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Flood())}>+ Flood</div>
 			</div>
 			<div className="column">
 				<div className="item" onClick={() => this._selectPrimitive(new GaussianBlur())}>+ Gaussian blur</div>
