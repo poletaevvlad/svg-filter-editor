@@ -10,6 +10,7 @@ import Blend from "./primitives/blend.js";
 import Morphology from "./primitives/morphology.js";
 import ColorMatrix from "./primitives/color-matrix.js";
 import Flood from "./primitives/flood.js";
+import Turbulence from "./primitives/turbulence.js";
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -65,7 +66,7 @@ class NodeSelector extends React.Component{
 				<div className="item" onClick={() => this._selectPrimitive(new Offset())}>+ Offset</div>
 				<div className="item">Specular lighting</div>
 				<div className="item">Tile</div>
-				<div className="item">Turbulence</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Turbulence())}>+ Turbulence</div>
 			</div>
 		</div>
 	}

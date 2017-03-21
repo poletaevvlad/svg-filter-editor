@@ -12,7 +12,6 @@ class Filter{
 		this.output = new Output();
 
 		this.addPrimitive(this.output);
-		this.addPrimitive(new Flood());
 	}
 
 	_notifyConnectionChange(connection){

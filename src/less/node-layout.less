@@ -7,6 +7,10 @@
 		margin-right: 10px;
 		align-items: baseline;
 
+		&.noalign{
+			align-items: stretch;
+		}
+
 		&:last-child{
 			margin-right: 0;
 		}
@@ -32,7 +36,7 @@
 		}
 	}
 
-	input{
+	input[type="text"]{
 		flex-grow: 1;
 		width: 0px;
 	}
