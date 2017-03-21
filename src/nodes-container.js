@@ -11,6 +11,10 @@ import Morphology from "./primitives/morphology.js";
 import ColorMatrix from "./primitives/color-matrix.js";
 import Flood from "./primitives/flood.js";
 import Turbulence from "./primitives/turbulence.js";
+import Lighting from "./primitives/lighting.js";
+import Input from "./primitives/input.js";
+import Composite from "./primitives/composite.js";
+
 
 class ConnectionGraphics extends React.Component{
 	render(){
@@ -48,13 +52,14 @@ class NodeSelector extends React.Component{
 	render(){
 		return <div id="node-selector" style={{left: this._getX(), top: this._getY()}}>
 			<div className="column">
+				<div className="item" onClick={() => this._selectPrimitive(new Input())}>+ Input</div>
 				<div className="section">Primitives</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Blend())}>+ Blend</div>
 				<div className="item" onClick={() => this._selectPrimitive(new ColorMatrix())}>+ Color matrix</div>
 				<div className="item">Component transfer</div>
-				<div className="item">Composite</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Composite())}> +Composite</div>
 				<div className="item">Convolve matrix</div>
-				<div className="item">Difuse lighting</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Lighting())}>+ Difuse lighting</div>
 				<div className="item">Displacement map</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Flood())}>+ Flood</div>
 			</div>

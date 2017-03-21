@@ -9,7 +9,7 @@ class SVGPrimitive extends React.Component{
 	getInput(id){
 		let input = this.props.primitive.getInput(id);
 		if(input.connection == null){
-			return undefined;
+			return "SourceGraphic";
 		}
 		let otherPrimitive = this.props.filter.getPrimitive(input.connection.outputPrimitive);
 		return otherPrimitive.getOutputName(input.connection.outputIOID);

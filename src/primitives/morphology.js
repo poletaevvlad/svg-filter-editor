@@ -64,7 +64,7 @@ class MorphologyNode extends Node{
 class MorphologyPrimitive extends SVGPrimitive{
 	render(){
 		return <feMorphology operator={this.props.primitive.operator} radius={this.props.primitive.radius}
-			in={this.getInput(0)} result={this.getOutput()} />
+			in={this.getInput(0)} result={this.getOutput(0)} />
 	}
 }
 
