@@ -16,13 +16,10 @@ class TextInput extends React.Component{
 		}
 	}
 
-	componentWillUpdate(){
-		if (! this.state.focused){
-			this.state.value = this.props.value;
-		}
-	}
-
 	render(){
+		if (! this.state.focused){
+			this.state.value = this.props.value;	
+		}
 		return <input className={this.props.className + (this.state.valid ? "" : " invalid")} 
 			type="text" value={this.state.value} onChange={this._handleChange} onFocus={this._handleFocus} 
 			onBlur={this._handleBlur}/>
@@ -37,7 +34,7 @@ class TextInput extends React.Component{
 			this.setState({value: e.target.value, valid: valid == validators.VALID});
 		}
 		if (valid == validators.VALID && typeof this.props.onChange != "undefined"){
-			this.props.onChange(e.target.value);
+			this.props.onChange(e.target.value, e);
 		}
 	}
 

@@ -78,6 +78,41 @@ module.exports = (()=>{
 				return INVALID;
 			}
 
+		},
+
+		isColorComponent: n => {
+			if(n.length == 0){
+				return MAY_BE_VALID;
+			}
+			for (let i = 0; i < n.length; i++){
+				if ("0123456789".indexOf(n[i]) < 0){
+					return INVALID;
+				}
+			}
+			let number = parseInt(n);
+			if (n < 0 || n > 255){
+				return MAY_BE_VALID;
+			}
+			return VALID;
+		},
+
+		isColorHex: n => {
+			if (n.length == 0){
+				return MAY_BE_VALID;
+			}
+			let i = 0;
+			if (n[0] == "#"){
+				i++;
+			}
+			for (; i < n.length; i++){
+				if ("0123456789ABCDEFabcdef".indexOf(n[i]) < 0){
+					return INVALID;
+				}
+			}
+			if ((n[0] == "#" && (n.length == 4 || n.length == 7)) || (n[0] != "#" && (n.length == 3 || n.length == 6))){
+				return VALID;
+			}
+			return MAY_BE_VALID;
 		}
 	}
 })();
