@@ -1,5 +1,6 @@
 import React from "react";
 
+import focused from "./focused.js";
 import validators from "./validators.js"
 
 class TextInput extends React.Component{
@@ -47,6 +48,7 @@ class TextInput extends React.Component{
 	}
 
 	_onFocus(e){
+		focused(this);
 		this.state.focused = true;
 		this.setState(this.state);
 		

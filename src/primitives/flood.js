@@ -8,7 +8,7 @@ import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
 import SVGPrimitive from "../svg-primitive.js";
 import ColorPicker from "../components/color-picker.js";
-
+import focused from "../components/focused.js";
 
 class Flood extends Primitive{
 	constructor(){
@@ -27,6 +27,7 @@ class FloodNode extends Node{
 		super();
 		this.title = "Flood";
 		this._colorChanged = this._colorChanged.bind(this);
+		this._alphaChanged = this._alphaChanged.bind(this);
 	}
 
 	renderEditor(){
@@ -58,6 +59,7 @@ class FloodNode extends Node{
 	}
 
 	_alphaChanged(e){
+		focused(this);
 		this.props.primitive.alpha = e;
 		this._update();	
 	}

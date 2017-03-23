@@ -44,7 +44,7 @@ class MergeNode extends Node{
 class MergePrimitive extends SVGPrimitive{
 	render(){
 		let nodes = [];
-		for (let i = 0; i < this.props.primitive.inputs.length; i++){
+		for (let i = 0; i < this.props.primitive.inputs.length - 1; i++){
 			let connection = this.getInput(this.props.primitive.inputs[i].id);
 			if (typeof connection != "undefined"){
 				nodes.push(<feMergeNode key={i} in={connection} />);

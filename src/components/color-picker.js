@@ -3,6 +3,7 @@ import { CustomPicker } from 'react-color';
 import { Saturation, Hue } from "react-color/lib/components/common";
 
 import TextInput from "./text-input.js";
+import focused from "./focused.js";
 import validators from "./validators.js";
 
 class ColorPickerPointer extends React.Component{
@@ -22,8 +23,8 @@ class ColorPicker extends React.Component{
 
 	render(){
 		return <div className="color-picker">
-			<div className="saturation"><Saturation {... this.props} onChange={this.props.onChange} /></div>
-			<div className="hue"><Hue {... this.props} pointer={ColorPickerPointer} 
+			<div className="saturation" onMouseDown={focused}><Saturation {... this.props} onChange={this.props.onChange} /></div>
+			<div className="hue" onMouseDown={focused}><Hue {... this.props} pointer={ColorPickerPointer} 
 				onChange={this.props.onChange}/></div>
 			<div className="color-preview" style={{backgroundColor: this.props.hex}}></div>
 			<div className="rgb horizontalFields compact">

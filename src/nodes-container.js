@@ -111,6 +111,7 @@ class NodesContainer extends React.Component{
 		this._handleGlobalClick = this._onGlobalClick.bind(this);
 		this._handleBlur = this._onWindowBlur.bind(this);
 		this._handleAddPrimitive = this._onPrimitiveAdded.bind(this);
+		this._handleElementFocused = this._onElementFocused.bind(this);
 		this.selected = [];
 
 		this._nodeSelectorOpen = false;
@@ -161,12 +162,14 @@ class NodesContainer extends React.Component{
 	componentWillMount(){
 		document.addEventListener("keypress", this._handleKeyPress);
 		document.addEventListener("click", this._handleGlobalClick);
+		document.addEventListener("elementFocused", this._handleElementFocused);
 		window.addEventListener("blur", this._handleBlur);
 	}
 
 	componentWillUnmount(){
 		document.removeEventListener("keypress", this._handleKeyPress);
 		document.removeEventListener("click", this._handleGlobalClick);
+		document.removeEventListener("elementFocused", this._handleElementFocused);
 		window.removeEventListener("blur", this._handleBlur);
 	}
 
@@ -211,6 +214,7 @@ class NodesContainer extends React.Component{
 		}
 		this._mouseX = e.nativeEvent.clientX;
 		this._mouseY = e.nativeEvent.clientY;
+		return true;
 	}
 
 	_onMouseUp(e){
@@ -271,6 +275,7 @@ class NodesContainer extends React.Component{
 
 	_onStartedNodeDragging(node){
 		this.selected = [node];
+		document.activeElement.blur();
 		this._isDragging = true;
 		this.setState(this.state);
 	}
@@ -318,6 +323,11 @@ class NodesContainer extends React.Component{
 		primitive.positionY = this._nodeSelectorY - 30;
 		this.props.filter.addPrimitive(primitive);
 		this._nodeSelectorOpen = false;
+		this.setState(this.state);
+	}
+
+	_onElementFocused(){
+		this.selected = [];
 		this.setState(this.state);
 	}
 }
