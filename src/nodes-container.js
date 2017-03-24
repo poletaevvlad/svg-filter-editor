@@ -86,6 +86,14 @@ class NodeSelector extends React.Component{
 	}
 }
 
+function SelectionBox(props){
+	let x = props.width < 0 ? props.x + props.width : props.x;
+	let y = props.height < 0 ? props.y + props.height : props.y;
+	return <div id="selection-rect" style={{
+		left: x, top: y, width: Math.abs(props.width), height: Math.abs(props.height)
+	}} />
+}
+
 class NodesContainer extends React.Component{
 	constructor(){
 		super();
@@ -104,6 +112,7 @@ class NodesContainer extends React.Component{
 		this._isPanning = false;
 		this._isDragging = false;
 		this._isConnecting = false;
+		this._isSelecting = false;
 		this._connectionStart = null;
 		this._connectionEnd = null;
 		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
@@ -113,10 +122,21 @@ class NodesContainer extends React.Component{
 		this._handleAddPrimitive = this._onPrimitiveAdded.bind(this);
 		this._handleElementFocused = this._onElementFocused.bind(this);
 		this.selected = [];
+		this.tempSelected = [];
+
+		this._selectionBoxX = 0;
+		this._selectionBoxY = 0;
 
 		this._nodeSelectorOpen = false;
 		this._nodeSelectorX = 0;
 		this._nodeSelectorY = 0;
+	}
+
+	_isSelected(node, list){
+		if (typeof list == "undefined"){
+			list = this.selected;
+		}
+		return list.findIndex(val => val.id == node.id) >= 0
 	}
 
 	render(){
@@ -127,10 +147,12 @@ class NodesContainer extends React.Component{
 				onDoubleClick={this._handleDoubleClick}>
 			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
 				onSelected={this._handleAddPrimitive} /> : null}
+			{this._shouldShowSelectionBox() ? <SelectionBox x={this._selectionBoxX} y={this._selectionBoxY} 
+				width={this._mouseX - this._selectionBoxX} height={this._mouseY - this._selectionBoxY} /> : null}
 			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
 				{this.props.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
-					let selected = this.selected.findIndex(val => primitive.id == val.id) >= 0;
+					let selected = this._isSelected(primitive) || this._isSelected(primitive, this.tempSelected);
 					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
 						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
 						dragging={this._isDragging && selected} selected={selected}
@@ -157,6 +179,11 @@ class NodesContainer extends React.Component{
 				 : null}
 			</svg>
 		</div>
+	}
+
+	_shouldShowSelectionBox(){
+		return this._isSelecting && Math.abs(this._selectionBoxX - this._mouseX) > 2 && 
+			Math.abs(this._selectionBoxY - this._mouseY) > 2;
 	}
 
 	componentWillMount(){
@@ -224,7 +251,12 @@ class NodesContainer extends React.Component{
 				this._connectionStart = connectionStart;
 				this._connectionEnd = null;
 			}else if (element.id == "nodes-container" || element.id == "nodes-connections"){
-				this.selected = [];
+				if (!e.nativeEvent.shiftKey){
+					this.selected = [];
+				}
+				this._isSelecting = true;
+				this._selectionBoxX = e.nativeEvent.clientX;
+				this._selectionBoxY = e.nativeEvent.clientY;
 			}
 			this.setState(this.state);
 		}
@@ -236,6 +268,15 @@ class NodesContainer extends React.Component{
 	_onMouseUp(e){
 		this._isPanning = false;
 		this._isDragging = false;
+		if (this._isSelecting){
+			this._isSelecting = null;
+			for(let i = 0; i < this.tempSelected.length; i++){
+				if (! this._isSelected(this.tempSelected[i])){
+					this.selected.push(this.tempSelected[i]);
+				}
+			}
+			this.tempSelected = [];
+		}
 		if (this._isConnecting){
 			this._isConnecting = false;
 			if (this._connectionStart != null && this._connectionEnd != null){
@@ -255,6 +296,7 @@ class NodesContainer extends React.Component{
 			this._connectionEnd = null;
 		}
 		this.setState(this.state);
+		return false;
 	}
 
 	_onMouseMove(e){
@@ -282,6 +324,22 @@ class NodesContainer extends React.Component{
 				}
 			}else{
 				this._connectionEnd = null;
+			}
+			this.setState(this.state);
+		}else if (this._isSelecting){
+			let width = Math.abs(this._mouseX - this._selectionBoxX);
+			let height = Math.abs(this._mouseY - this._selectionBoxY);
+			let x = this._mouseX < this._selectionBoxX ? this._mouseX : this._selectionBoxX;
+			let y = this._mouseY < this._selectionBoxY ? this._mouseY : this._selectionBoxY;
+			
+			this.tempSelected = [];
+			let nodes = document.getElementsByClassName("node");
+			for(let i = 0; i < nodes.length; i++){
+				let bbox = nodes[i].getBoundingClientRect();
+				if (x <= bbox.left && x + width >= bbox.right && y <= bbox.top && y + height >= bbox.bottom){
+					let id = parseInt(nodes[i].getAttribute("data-primitiveid"));
+					this.tempSelected.push(this.props.filter.getPrimitive(id));
+				}
 			}
 			this.setState(this.state);
 		}
