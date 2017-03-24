@@ -19,9 +19,9 @@ import Composite from "./primitives/composite.js";
 class ConnectionGraphics extends React.Component{
 	render(){
 		let path = this.generatePath();
-		return <g>
-			<path d={path} stroke="black" strokeWidth="4" fill="transparent" />
-			<path d={path} stroke={this.props.selected ? "white" : "gray"} strokeWidth="2" fill="transparent" />
+		return <g className={"connection" + (this.props.selected ? " selected" : "")}>
+			<path d={path} className="outline" />
+			<path d={path} className="line" />
 		</g>
 	}
 
@@ -229,6 +229,8 @@ class NodesContainer extends React.Component{
 	_onMouseDown(e){
 		if(e.nativeEvent.button == 1){
 			this._isPanning = true;
+			document.activeElement.blur();
+			e.preventDefault();
 		}else if (e.nativeEvent.button == 0){
 			let element = e.target;
 			if (element.hasAttribute("data-iotype")){
@@ -250,6 +252,8 @@ class NodesContainer extends React.Component{
 				}
 				this._connectionStart = connectionStart;
 				this._connectionEnd = null;
+				document.activeElement.blur();
+				e.preventDefault();
 			}else if (element.id == "nodes-container" || element.id == "nodes-connections"){
 				if (!e.nativeEvent.shiftKey){
 					this.selected = [];
@@ -257,6 +261,8 @@ class NodesContainer extends React.Component{
 				this._isSelecting = true;
 				this._selectionBoxX = e.nativeEvent.clientX;
 				this._selectionBoxY = e.nativeEvent.clientY;
+				document.activeElement.blur();
+				e.preventDefault();
 			}
 			this.setState(this.state);
 		}
