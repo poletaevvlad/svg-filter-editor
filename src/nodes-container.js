@@ -140,11 +140,9 @@ class NodesContainer extends React.Component{
 	}
 
 	render(){
-		return <div id="nodes-container" 
-				onMouseDown={this._handleMouseDown} 
-				onMouseUp={this._handleMouseUp} 
-				onMouseMove={this._handleMouseMove}
-				onDoubleClick={this._handleDoubleClick}>
+		return <div id="nodes-container" style={{right: `${this.props.right + 7}px`}}
+				onMouseDown={this._handleMouseDown} onMouseUp={this._handleMouseUp} 
+				onMouseMove={this._handleMouseMove} onDoubleClick={this._handleDoubleClick}>
 			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
 				onSelected={this._handleAddPrimitive} /> : null}
 			{this._shouldShowSelectionBox() ? <SelectionBox x={this._selectionBoxX} y={this._selectionBoxY} 

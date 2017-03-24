@@ -28,6 +28,7 @@
 
 #separator{
 	@width: 5px;
+	@background: #404040;
 	position: absolute;
 	left: -@width - 2;
 	bottom: 0;
@@ -37,6 +38,16 @@
 	border-color: #494949;
 	border-width: 1px;
 	border-style: none solid;
+	z-index: 2;
+	cursor: ew-resize;
+	background-image: data-uri('image/svg+xml;charset=UTF-8', 'handler.svg');
+    background-repeat: no-repeat;
+    background-position-x: 1px;
+    background-position-y: calc(50% - 7px);
+    
+	&:active{
+		background-color: lighten(@background, 1%);
+	}
 }
 
 #toolbar{
