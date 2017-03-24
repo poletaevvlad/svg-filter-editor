@@ -53,7 +53,7 @@ class Node extends React.Component{
 		if (e.nativeEvent.button == 0){
 			e.preventDefault();
 			if (typeof this.props.onEnterDraggingState != "undefined"){
-				this.props.onEnterDraggingState(this.props.primitive);
+				this.props.onEnterDraggingState(this.props.primitive, e);
 			}
 		}
 	}

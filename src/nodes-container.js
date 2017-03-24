@@ -289,8 +289,14 @@ class NodesContainer extends React.Component{
 		this._mouseY = e.nativeEvent.clientY;
 	}
 
-	_onStartedNodeDragging(node){
-		this.selected = [node];
+	_onStartedNodeDragging(node, e){
+		if (this.selected.indexOf(node) < 0){
+			if (e.nativeEvent.shiftKey){
+				this.selected.push(node);
+			}else{
+				this.selected = [node];
+			}
+		}
 		document.activeElement.blur();
 		this._isDragging = true;
 		this.setState(this.state);
