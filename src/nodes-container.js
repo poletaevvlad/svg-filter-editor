@@ -116,7 +116,7 @@ class NodesContainer extends React.Component{
 		this._connectionStart = null;
 		this._connectionEnd = null;
 		this._handleNodeEnderDraggingState = this._onStartedNodeDragging.bind(this);
-		this._handleKeyPress = this._onKeyPressed.bind(this);
+		this._handleKeyDown = this._onKeyDown.bind(this);
 		this._handleGlobalClick = this._onGlobalClick.bind(this);
 		this._handleBlur = this._onWindowBlur.bind(this);
 		this._handleAddPrimitive = this._onPrimitiveAdded.bind(this);
@@ -187,14 +187,14 @@ class NodesContainer extends React.Component{
 	}
 
 	componentWillMount(){
-		document.addEventListener("keypress", this._handleKeyPress);
+		document.addEventListener("keydown", this._handleKeyDown);
 		document.addEventListener("click", this._handleGlobalClick);
 		document.addEventListener("elementFocused", this._handleElementFocused);
 		window.addEventListener("blur", this._handleBlur);
 	}
 
 	componentWillUnmount(){
-		document.removeEventListener("keypress", this._handleKeyPress);
+		document.removeEventListener("keydown", this._handleKeyDown);
 		document.removeEventListener("click", this._handleGlobalClick);
 		document.removeEventListener("elementFocused", this._handleElementFocused);
 		window.removeEventListener("blur", this._handleBlur);
@@ -360,11 +360,18 @@ class NodesContainer extends React.Component{
 		this.setState(this.state);
 	}
 
-	_onKeyPressed(e){
-		if (e.key == "Delete"){
+	_onKeyDown(e){
+		if (e.code == "Delete"){
 			this.selected.forEach(primitive => this.props.filter.removePrimitive(primitive));
 			this.selected = [];
 			this.setState(this.state);
+		}else if (e.code == "KeyA" && e.ctrlKey && ! e.shiftKey && ! e.altKey){
+			if (!(document.activeElement instanceof HTMLInputElement && document.activeElement.getAttribute("type") == "text")){
+				this.selected = this.props.filter.primitives.slice();
+				document.activeElement.blur();
+				this.setState(this.state);
+				e.preventDefault();
+			}
 		}
 	}
 
