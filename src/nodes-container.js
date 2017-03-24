@@ -142,8 +142,8 @@ class NodesContainer extends React.Component{
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
 				{this.props.filter.connections.map(connection => {
-					let inputPosition = this.getElementCenter(Primitive.getInputId(connection.inputPrimitive, connection.inputIOID));
-					let outputPosition = this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID));
+					let inputPosition = this.getConnectorCenter(Primitive.getInputId(connection.inputPrimitive, connection.inputIOID));
+					let outputPosition = this.getConnectorCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID));
 					return <ConnectionGraphics x1={inputPosition.x} y1={inputPosition.y} d1="input" 
 						x2 = {outputPosition.x} y2={outputPosition.y} d2="output" key={connection.id} 
 						selected={this._isConnectionSelected(connection)}/>
@@ -177,10 +177,26 @@ class NodesContainer extends React.Component{
 		return this.selected.findIndex(e => e.id == connection.inputPrimitive || e.id == connection.outputPrimitive) >= 0
 	}
 
-	getElementCenter(id){
+	getConnectorCenter(id){
 		let element = document.getElementById(id);
-		let bbox = element.getBoundingClientRect();
-		return {x: (bbox.left + bbox.right) / 2, y: bbox.top + bbox.height / 2}
+		let nodeElement = element;
+		while (nodeElement != null && !nodeElement.classList.contains("node")){
+			nodeElement = nodeElement.parentElement;
+		}
+		
+		let connectorBBox = element.getBoundingClientRect();
+		if (nodeElement == null){
+			return {x: (connectorBBox.left + connectorBBox.right) / 2, 
+				y: connectorBBox.top + connectorBBox.height / 2};
+		}else{
+			let nodeBBox = nodeElement.getBoundingClientRect(); 
+			let nodeX = (connectorBBox.left + connectorBBox.right) / 2 - nodeBBox.left;
+			let nodeY = (connectorBBox.top + connectorBBox.bottom) / 2 - nodeBBox.top;
+			let primitive = this.props.filter.getPrimitive(element.getAttribute("data-primitiveid"));
+			let x = nodeX + primitive.positionX + this.state.left;
+			let y = nodeY + primitive.positionY + this.state.top;
+			return {x: x, y: y};
+		}
 	}
 
 	_onMouseDown(e){
@@ -197,13 +213,13 @@ class NodesContainer extends React.Component{
 					let connection = this.props.filter.dettachConnection(primitive, io);
 					if (connection != null){
 						connectionStart = {type: "output", primitive: connection.outputPrimitive, io: connection.outputIOID, 
-							position: this.getElementCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID))}
+							position: this.getConnectorCenter(Primitive.getOutputId(connection.outputPrimitive, connection.outputIOID))}
 					}
 					this.props.onUpdate();
 				}
 				this._isConnecting = true;
 				if (connectionStart == null){
-					connectionStart = { type: type, primitive: primitive, io: io, position: this.getElementCenter(element.id) }
+					connectionStart = { type: type, primitive: primitive, io: io, position: this.getConnectorCenter(element.id) }
 				}
 				this._connectionStart = connectionStart;
 				this._connectionEnd = null;
@@ -262,7 +278,7 @@ class NodesContainer extends React.Component{
 					type: element.getAttribute("data-iotype"),
 					primitive: parseInt(element.getAttribute("data-primitiveid")),
 					io: parseInt(element.getAttribute("data-ioid")),
-					position: this.getElementCenter(element.id)
+					position: this.getConnectorCenter(element.id)
 				}
 			}else{
 				this._connectionEnd = null;
