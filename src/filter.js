@@ -1,7 +1,7 @@
 import Primitive from "./primitive.js"
 import Output from "./primitives/output.js"
 
-import Flood from "./primitives/flood.js";
+import Merge from "./primitives/merge.js";
 
 class Filter{
 
@@ -83,7 +83,7 @@ class Filter{
 
 	getOrderedPrimitives(){
 		if (this.output.getInput(0).connection == null){
-			return []
+			return [new Merge()]
 		}
 
 		let primitives = this.primitives.slice();

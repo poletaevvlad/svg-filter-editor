@@ -44,10 +44,14 @@ class MergeNode extends Node{
 class MergePrimitive extends SVGPrimitive{
 	render(){
 		let nodes = [];
-		for (let i = 0; i < this.props.primitive.inputs.length - 1; i++){
-			let connection = this.getInput(this.props.primitive.inputs[i].id);
-			if (typeof connection != "undefined"){
-				nodes.push(<feMergeNode key={i} in={connection} />);
+		if (this.props.primitive.inputs.length == 1){
+			nodes.push(<feMergeNode key="0" in="SourceGraphic" />);
+		}else{
+			for (let i = 0; i < this.props.primitive.inputs.length - 1; i++){
+				let connection = this.getInput(this.props.primitive.inputs[i].id);
+				if (typeof connection != "undefined"){
+					nodes.push(<feMergeNode key={i} in={connection} />);
+				}
 			}
 		}
 		return <feMerge result={this.getOutput(0)}>
