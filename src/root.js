@@ -57,9 +57,10 @@ class FilterEditor extends React.Component{
 
 		this.state = {
 			previewWidth: 400,
-			bgType: "transparent",
+			bgType: "checkerboard",
 			bgColor: "black",
-			bgCheckerboard: "dark"
+			bgCheckerboard: "dark",
+			editing: "none"
 		}
 
 	}
@@ -80,22 +81,40 @@ class FilterEditor extends React.Component{
 			<div id="result-preview" style={{width: `${this.state.previewWidth}px`}}>
 				<div id="separator" onMouseDown={this._separatorMouseDown}></div>
 				<div id="toolbar">
-					<div className="section">Shape <div className="dropdown-icon" /></div>
-					<div className="section">Background <div className="dropdown-icon" /></div>
+					<div className={"section" + (this.state.editing == "shape" ? " active" : "")} onClick={() => this._toggleEditor("shape")}>Shape</div>
+					<div className={"section" + (this.state.editing == "background" ? " active" : "")} onClick={() => this._toggleEditor("background")}>Background</div>
 				</div>
-
-				<div id="preview-editor">
-					<BackgroundEditor type={this.state.bgType} color={this.state.bgColor}
-						width={this.state.previewWidth} checkerboard={this.state.bgCheckerboard}
-						onTypeChange={val => this.setState({bgType: val})} 
-						onColorChanged={val => this.setState({bgColor: val.hex})}
-						onCheckerboardChanged={val => this.setState({bgCheckerboard: val})} />
-				</div>
-
+				{this._renderEditor()}
 				<Preview filter={this.filter} bgType={this.state.bgType} 
 					bgColor={this.state.bgColor} bgCheckerboard={this.state.bgCheckerboard} />
 			</div>
 		</div>
+	}
+
+	_renderEditor(){
+		if (this.state.editing == "background"){
+			return <div id="preview-editor">
+				<BackgroundEditor type={this.state.bgType} color={this.state.bgColor}
+					width={this.state.previewWidth} checkerboard={this.state.bgCheckerboard}
+					onTypeChange={val => this.setState({bgType: val})} 
+					onColorChanged={val => this.setState({bgColor: val.hex})}
+					onCheckerboardChanged={val => this.setState({bgCheckerboard: val})} />
+			</div>
+		}
+		if (this.state.editing == "shape"){
+			return <div id="preview-editor">
+				NOT YET IMPLEMENTED
+			</div>	
+		}
+		return null;
+	}
+
+	_toggleEditor(editing){
+		if (this.state.editing == editing){
+			this.setState({"editing": "none"});
+		}else{
+			this.setState({"editing": editing});
+		}
 	}
 
 	_separatorMouseDown(e){
