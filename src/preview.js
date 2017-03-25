@@ -23,9 +23,32 @@ class Preview extends React.Component{
 				</defs>
 				<rect x="0" y="0" width="100%" height="100%" {... this._getBackground()} />
 				<g filter="url(#filter)">
-					<circle fill="orange" r="30" cx="50%" cy="50%" />
+					{this._getShape()}
 				</g>
 			</svg>
+		}
+	}
+
+	_getShape(){
+		let args = {}
+		if (this.props.fillEnabled){
+			args["fill"] = this.props.fillColor;
+		}else{
+			args["fill"] = "transparent";
+		}
+		if (this.props.strokeEnabled){
+			args["stroke"] = this.props.strokeColor;
+			args["strokeWidth"] = this.props.strokeWidth;
+		}
+		switch(this.props.shapeType){
+			case "ellipse":
+				return <ellipse rx={this.props.shapeWidth / 2} ry={this.props.shapeHeight / 2} cx="50%" cy="50%" {... args} />
+			case "rect":
+				return <rect x="50%" y="50%" height={this.props.shapeHeight} width={this.props.shapeWidth} 
+					transform={`translate(${-this.props.shapeWidth / 2 |0}.5 ${-this.props.shapeHeight / 2 |0}.5)`} {... args}/>
+			case "path":
+			default:
+				return <circle fill="orange" r="30" cx="50%" cy="50%" />
 		}
 	}
 

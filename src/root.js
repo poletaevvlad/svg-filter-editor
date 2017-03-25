@@ -6,6 +6,8 @@ import Filter from "./filter.js";
 import ComboBox from "./components/combobox.js";
 import ColorPicker from "./components/color-picker.js";
 import Selector from "./components/selector.js";
+import TextInput from "./components/text-input.js";
+import validators from "./components/validators.js";
 
 
 class BackgroundEditor extends React.Component{
@@ -43,6 +45,59 @@ class BackgroundEditor extends React.Component{
 	}
 }
 
+class ShapeEditor extends React.Component{
+	constructor(){
+		super();
+		this.shapes = [
+			{value: "ellipse", label: "Ellipse"},
+			{value: "rect", label: "Rectangle"},
+			{value: "path", label: "Path"},
+		]
+	}
+
+	render(){
+		return <div className="vertical-list">
+			<ComboBox value={this.props.shape} width={200 - 18} values={this.shapes} 
+				label="shape:" onChange={this.props.onShapeChange} />
+			<div className="content horizontalFields">
+				<div className="field-section">
+					<div className="field-label">width:</div>
+					<TextInput value={this.props.width} onChange={this.props.onWidthChange}
+						validator={validators.isNumber}/>
+				</div>
+				<div className="field-section">
+					<div className="field-label">height:</div>
+					<TextInput value={this.props.height} onChange={this.props.onHeightChange}
+						validator={validators.isNumber}/>
+				</div>
+			</div>
+
+			<div className="horizontalFields">
+				<label className="section-name field-section noalign">
+					<input type="checkbox" checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
+					<div className="field-label">Fill</div>
+				</label>
+			</div>
+			<ColorPicker color={this.props.fillColor} onChange={this.props.onFillColorChange}/>
+			<div className="horizontalFields">
+				<label className="section-name field-section noalign">
+					<input type="checkbox" checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
+					<div className="field-label">Stroke</div>
+				</label>
+			</div>
+			<ColorPicker color={this.props.strokeColor} onChange={this.props.onStrokeColorChange}/>
+
+			<div className="horizontalFields">
+				<div className="field-section">
+					<div className="field-label">stroke width:</div>
+					<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}
+					validator={validators.isNumber}/>
+				</div>
+			</div>
+		</div>
+	}
+}
+
 class FilterEditor extends React.Component{
 	constructor(){
 		super();
@@ -60,7 +115,15 @@ class FilterEditor extends React.Component{
 			bgType: "checkerboard",
 			bgColor: "black",
 			bgCheckerboard: "dark",
-			editing: "none"
+			editing: "shape",
+			shapeType: "ellipse",
+			shapeWidth: 30,
+			shapeHeight: 30,
+			fillEnabled: true,
+			fillColor: "#FFA500",
+			strokeEnabled: true,
+			strokeColor: "#000000",
+			strokeWidth: 1
 		}
 
 	}
@@ -86,7 +149,10 @@ class FilterEditor extends React.Component{
 				</div>
 				{this._renderEditor()}
 				<Preview filter={this.filter} bgType={this.state.bgType} 
-					bgColor={this.state.bgColor} bgCheckerboard={this.state.bgCheckerboard} />
+					bgColor={this.state.bgColor} bgCheckerboard={this.state.bgCheckerboard}
+					shapeType={this.state.shapeType} shapeWidth={this.state.shapeWidth} shapeHeight={this.state.shapeHeight}
+					fillEnabled={this.state.fillEnabled} fillColor={this.state.fillColor} strokeEnabled={this.state.strokeEnabled}
+					strokeColor={this.state.strokeColor} strokeWidth={this.state.strokeWidth} />
 			</div>
 		</div>
 	}
@@ -103,7 +169,23 @@ class FilterEditor extends React.Component{
 		}
 		if (this.state.editing == "shape"){
 			return <div id="preview-editor">
-				NOT YET IMPLEMENTED
+				<ShapeEditor shape={this.state.shapeType} 
+					onShapeChange={val => this.setState({shapeType: val})}
+					width={this.state.shapeWidth} 
+					onWidthChange={val => this.setState({shapeWidth: parseFloat(val.replace(",", "."))})}
+					height={this.state.shapeHeight} 
+					onHeightChange={val => this.setState({shapeHeight: parseFloat(val.replace(",", "."))})}
+					strokeEnabled={this.state.strokeEnabled} 
+					onStrokeEnabledChange={val => this.setState({strokeEnabled: val.target.checked})}
+					fillEnabled={this.state.fillEnabled} 
+					onFillEnabledChange={val => this.setState({fillEnabled: val.target.checked})}
+					fillColor={this.state.fillColor}
+					onFillColorChange={val => this.setState({fillColor: val.hex})}
+					strokeColor={this.state.strokeColor}
+					onStrokeColorChange={val => this.setState({strokeColor: val.hex})}
+					strokeWidth={this.state.strokeWidth}
+					onStrokeWidthChange={val => this.setState({strokeWidth: parseFloat(val.replace(",", "."))})}
+					/>
 			</div>	
 		}
 		return null;
