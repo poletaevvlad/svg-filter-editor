@@ -1,0 +1,32 @@
+#preview-editor{
+	position: absolute;
+	left: 0;
+	top: 25px;
+	background-color: #3c3c3c;
+	border-top: none;
+	border: 1px solid #282828;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+	padding: 5px;
+	z-index: 2;
+	color: #999;
+
+	&.background{
+		width: 180px;
+	}
+
+	.content{
+		margin-top: 7px;
+	}
+
+	.checkerboard-dark{
+		background-image: data-uri('image/svg+xml;charset=UTF-8', 'checkerboard-dark.svg');
+	}
+
+	.checkerboard-light{
+		background-image: data-uri('image/svg+xml;charset=UTF-8', 'checkerboard-light.svg');
+	}
+
+	.checkerboard-contrast{
+		background-image: data-uri('image/svg+xml;charset=UTF-8', 'checkerboard-contrast.svg');
+	}
+}
