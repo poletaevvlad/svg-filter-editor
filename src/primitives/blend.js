@@ -18,7 +18,7 @@ class Blend extends Primitive{
 	}
 
 	getSVG(){
-		return this.svgTag("feBlend").arg("mode", this.props.primitive.mode, null)
+		return this.svgTag("feBlend").arg("mode", this.mode, null)
 			.input("in", 0).input("in2", 1).output("result", 0);
 	}
 }
