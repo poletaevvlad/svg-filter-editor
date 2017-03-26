@@ -5,7 +5,7 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 import ComboBox from "../components/combobox.js";
 
 
@@ -16,7 +16,6 @@ class ColorMatrix extends Primitive{
 		this.createOutput("Output", 0);
 
 		this.nodeComponentClass = ColorMatrixNode;
-		this.svgComponentClass = ColorMatrixPrimitive;
 
 		this.type = "matrix";
 		this.types = ["matrix", "saturate", "hueRotate", "luminanceToAlpha"];
@@ -34,6 +33,37 @@ class ColorMatrix extends Primitive{
 			default:
 				this.value = 0;
 		}
+	}
+
+	getSVG(){
+		let tag = this.svgTag("feColorMatrix");
+		let values = undefined;
+		switch(this.type){
+			case "matrix":
+				values=this._makeMatrix();
+				break;
+			case "luminanceToAlpha":
+				break;
+			default:
+				values = this.value;
+		}
+		tag.arg("type", this.type, null)
+		if (typeof values != "undefined"){
+			tag.arg("values", values, null)
+		}
+		tag.input("in", 0).output("result", 0)
+		return tag;
+	}
+
+	_makeMatrix(){
+		let matrix = this.value;
+		let matrixString = ""
+		for (let i = 0; i < 4; i++){
+			for (let j = 0; j < 5; j++){
+				matrixString += `${matrix[i][j]} `;
+			}
+		}
+		return matrixString;
 	}
 }
 
@@ -117,33 +147,6 @@ class ColorMatrixNode extends Node{
 		this.props.onUpdate();
 		this.forceUpdate();
 
-	}
-}
-
-class ColorMatrixPrimitive extends SVGPrimitive{
-	render(){
-		switch(this.props.primitive.type){
-			case "matrix":
-				return <feColorMatrix in={this.getInput(0)} result={this.getOutput(0)} type="matrix"
-					values={this._makeMatrix()} />
-			case "luminanceToAlpha":
-				return <feColorMatrix in={this.getInput(0)} result={this.getOutput(0)} 
-					type={this.props.primitive.type} />
-			default:
-				return <feColorMatrix in={this.getInput(0)} result={this.getOutput(0)} 
-					type={this.props.primitive.type} values={this.props.primitive.value} />
-		}
-	}
-
-	_makeMatrix(){
-		let matrix = this.props.primitive.value;
-		let matrixString = ""
-		for (let i = 0; i < 4; i++){
-			for (let j = 0; j < 5; j++){
-				matrixString += `${matrix[i][j]} `;
-			}
-		}
-		return matrixString;
 	}
 }
 

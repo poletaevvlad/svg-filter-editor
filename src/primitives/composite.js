@@ -5,7 +5,7 @@ import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 
 
 class Composite extends Primitive{
@@ -23,6 +23,16 @@ class Composite extends Primitive{
 		this.k2 = 0;
 		this.k3 = 0;
 		this.k4 = 0;
+	}
+
+	getSVG(){
+		let tag = this.svgTag("feComposite")
+			.arg("operator", this.operator, null)
+			.input("in", 0).input("in2", 1).output("result", 0);
+		if (this.operator == "arithmetic"){
+			tag.arg("k1", this.k1, null).arg("k2", this.k2, null).arg("k3", this.k3, null).arg("k4", this.k4, null);
+		}
+		return tag;
 	}
 }
 
@@ -64,15 +74,6 @@ class CompositeNode extends Node{
 	_update(){
 		this.props.onUpdate();
 		this.forceUpdate();
-	}
-}
-
-class CompositePrimitive extends SVGPrimitive{
-	render(){
-		return <feComposite operator={this.props.primitive.operator} 
-			{... this.props.primitive.operator == "arithmetic" ? {k1: this.props.primitive.k1, 
-				k2: this.props.primitive.k2, k3: this.props.primitive.k3, k4: this.props.primitive.k4}: {null}}
-			in={this.getInput(0)} in2={this.getInput(1)} result={this.getOutput(0)} />
 	}
 }
 

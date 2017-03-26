@@ -5,7 +5,7 @@ import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 
 
 class Morphology extends Primitive{
@@ -14,11 +14,17 @@ class Morphology extends Primitive{
 		this.createInput("Input", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = MorphologyNode;
-		this.svgComponentClass = MorphologyPrimitive;
 
 		this.operator = "erode";
 		this.operators = ["erode", "dilate"];
 		this.radius = 0;
+	}
+
+	getSVG(){
+		return this.svgTag("feMorphology")
+			.arg("operator", this.operator, null)
+			.arg("radius", this.radius, "0")
+			.input("in", 0).output("result", 0);
 	}
 }
 
@@ -58,13 +64,6 @@ class MorphologyNode extends Node{
 	_radiusChanged(newRadius){
 		this.props.primitive.radius = parseFloat(newRadius.replace(",", "."));;
 		this._update();
-	}
-}
-
-class MorphologyPrimitive extends SVGPrimitive{
-	render(){
-		return <feMorphology operator={this.props.primitive.operator} radius={this.props.primitive.radius}
-			in={this.getInput(0)} result={this.getOutput(0)} />
 	}
 }
 

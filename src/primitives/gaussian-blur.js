@@ -4,7 +4,7 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 
 
 class GaussianBlur extends Primitive{
@@ -13,13 +13,17 @@ class GaussianBlur extends Primitive{
 		this.createInput("Input", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = GaussianBlurNode;
-		this.svgComponentClass = GaussianBlurPrimitive;
 		
 		this.stdDeviation = 5;
 	}
 
 	createInput(name, id){
 		super.createInput(name, id);
+	}
+
+	getSVG(){
+		return this.svgTag("feGaussianBlur").input("in", 0).output("result", 0)
+			.arg("stdDeviation", this.stdDeviation, "0");
 	}
 }
 
@@ -46,12 +50,6 @@ class GaussianBlurNode extends Node{
 		this.props.primitive.stdDeviation = parseFloat(newValue.replace(",", "."));
 		this.setState(this.state);
 		this.props.onUpdate();
-	}
-}
-
-class GaussianBlurPrimitive extends SVGPrimitive{
-	render(){
-		return <feGaussianBlur stdDeviation={this.props.primitive.stdDeviation} in={this.getInput(0)} result={this.getOutput(0)} />
 	}
 }
 

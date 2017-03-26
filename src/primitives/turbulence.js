@@ -5,7 +5,7 @@ import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 
 
 class Turbulence extends Primitive{
@@ -13,11 +13,9 @@ class Turbulence extends Primitive{
 		super();
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = TurbulenceNode;
-		this.svgComponentClass = TurbulencePrimitive;
-		
+
 		this.type = "turbulence";
 		this.types = ["fractalNoise", "turbulence"];
-
 		this.baseFrequencyX = 0;
 		this.baseFrequencyY = 0;
 		this.numOctaves = 1;
@@ -27,6 +25,16 @@ class Turbulence extends Primitive{
 
 	createInput(name, id){
 		super.createInput(name, id);
+	}
+
+	getSVG(){
+		return this.svgTag("feTurbulence").
+			arg("type", this.type, "turbulence")
+			.arg("baseFrequency", `${this.baseFrequencyX} ${this.baseFrequencyY}`, "0 0")
+			.arg("numOctaves", this.numOctaves, "1")
+			.arg("seed", this.seed, "0")
+			.arg("stitchTiles", this.stitchTiles ? "stitch" : "noStitch", "noStitch")
+			.output("result", 0)
 	}
 }
 
@@ -119,15 +127,6 @@ class TurbulenceNode extends Node{
 	_stitchTilesChanged(e){
 		this.props.primitive.stitchTiles = e.target.checked;
 		this._update();
-	}
-}
-
-class TurbulencePrimitive extends SVGPrimitive{
-	render(){
-		return <feTurbulence type={this.props.primitive.type} result={this.getOutput(0)}
-			baseFrequency={`${this.props.primitive.baseFrequencyX} ${this.props.primitive.baseFrequencyY}`}  
-			numOctaves={this.props.primitive.numOctaves} seed={this.props.primitive.seed}
-			stitchTiles={this.props.primitive.stitchTiles ? "stitch" : "noStitch"} />
 	}
 }
 

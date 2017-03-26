@@ -6,19 +6,17 @@ class Preview extends React.Component{
 		if (primitives == null){
 			return <div>ERROR</div>;
 		}else{
+			let i = 0;
 			return <svg id="preview-root">
 				<defs>
-					<pattern id="checkerboard" patternUnits="userSpaceOnUse" width="18" height="18" className={"checkerboard " + this.props.bgCheckerboard}>
+					<pattern id="checkerboard" patternUnits="userSpaceOnUse" width="18" height="18" 
+						className={"checkerboard " + this.props.bgCheckerboard}>
 						<rect className="light" x="0" y="0" width="18" height="18" />
 						<rect className="dark" x="0" y="0" width="9" height="9" />
 						<rect className="dark" x="9" y="9" width="9" height="9" />
 					</pattern>
 					<filter id="filter" width="1000" height="1000" x="-500" y="-500">
-						{primitives.map(primitive => {
-							let PrimitiveComponent = primitive.svgComponentClass;
-							return <PrimitiveComponent primitive={primitive} filter={this.props.filter} 
-								key={primitive.id} />
-						})}
+						{primitives.map(primitive => this._getSVGComponent(primitive.getSVG(), i++))}
 					</filter>
 				</defs>
 				<rect x="0" y="0" width="100%" height="100%" {... this._getBackground()} />
@@ -26,6 +24,19 @@ class Preview extends React.Component{
 					{this._getShape()}
 				</g>
 			</svg>
+		}
+	}
+
+	_getSVGComponent(svgTag, key){
+		if (svgTag == null){
+			return null;
+		}else{
+			if (typeof key != "undefined"){
+				svgTag.arg("key", key);
+			}
+			let i = 0;
+			return React.createElement(svgTag.name, svgTag.args,
+					svgTag.children.map(tag => this._getSVGComponent(tag, i++)));
 		}
 	}
 

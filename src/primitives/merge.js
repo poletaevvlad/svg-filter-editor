@@ -4,7 +4,7 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 
 
 class Merge extends Primitive{
@@ -13,7 +13,6 @@ class Merge extends Primitive{
 		this.createInput("Input 1", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = MergeNode;
-		this.svgComponentClass = MergePrimitive;
 	}
 
 	onConnectionsChanged(){
@@ -28,6 +27,22 @@ class Merge extends Primitive{
 			this.createInput(`Input ${this.inputs.length + 1}`, this.inputs.length);
 		}
 	}
+
+	getSVG(){
+		let tag = this.svgTag("feMerge").output("result", 0)
+
+		if (this.inputs.length == 1){
+			tag.child(this.svgTag("feMergeNode").arg("in", "SourceGraphic", null));
+		}else{
+			for (let i = 0; i < this.inputs.length - 1; i++){
+				let connection = this.getInputName(this.inputs[i].id);
+				if (typeof connection != "undefined"){
+					tag.child(this.svgTag("feMergeNode").arg("in", connection, null));
+				}
+			}
+		}
+		return tag;
+	}
 }
 
 class MergeNode extends Node{
@@ -41,23 +56,5 @@ class MergeNode extends Node{
 	}
 }
 
-class MergePrimitive extends SVGPrimitive{
-	render(){
-		let nodes = [];
-		if (this.props.primitive.inputs.length == 1){
-			nodes.push(<feMergeNode key="0" in="SourceGraphic" />);
-		}else{
-			for (let i = 0; i < this.props.primitive.inputs.length - 1; i++){
-				let connection = this.getInput(this.props.primitive.inputs[i].id);
-				if (typeof connection != "undefined"){
-					nodes.push(<feMergeNode key={i} in={connection} />);
-				}
-			}
-		}
-		return <feMerge result={this.getOutput(0)}>
-		{nodes}
-		</feMerge>
-	}
-}
 
 module.exports = Merge;

@@ -59,6 +59,7 @@ class Filter{
 
 	addPrimitive(primitive){
 		this.primitives.push(primitive);
+		primitive.filter = this;
 		this.primitivesById[primitive.id] = primitive;
 	}
 

@@ -1,5 +1,5 @@
 import Node from "./node-ui.js"
-import SVGPrimitive from "./svg-primitive.js"
+import SVGTag from "./svg-tag.js"
 
 var lastId = 0;
 function generateId(){
@@ -27,7 +27,6 @@ class Primitive{
 		this.nodeWidth = 150;
 
 		this.nodeComponentClass = Node;
-		this.svgComponentClass = SVGPrimitive;
 	}
 
 	createInput(name, id){
@@ -59,6 +58,23 @@ class Primitive{
 	}
 
 	onConnectionsChanged(){}
+
+	getInputName(id){
+		let input = this.getInput(id);
+		if(input.connection == null){
+			return "SourceGraphic";
+		}
+		let otherPrimitive = this.filter.getPrimitive(input.connection.outputPrimitive);
+		return otherPrimitive.getOutputName(input.connection.outputIOID);
+	}
+
+	getSVG(){ return null; }
+
+	svgTag(name){
+		let tag = new SVGTag(name);
+		tag.primitive = this;
+		return tag;
+	}
 }
 
 Primitive.getInputId = (primitive, ioId) => `pr${primitive}_in${ioId}`

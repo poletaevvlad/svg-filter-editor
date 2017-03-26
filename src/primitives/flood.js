@@ -6,7 +6,7 @@ import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 import ColorPicker from "../components/color-picker.js";
 import focused from "../components/focused.js";
 
@@ -15,10 +15,15 @@ class Flood extends Primitive{
 		super();
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = FloodNode;
-		this.svgComponentClass = FloodPrimitive;
 
 		this.color = "orange";
 		this.alpha = 1;
+	}
+
+	getSVG(){
+		return this.svgTag("feFlood").output("result", 0)
+			.arg("floodColor", this.color, null)
+			.arg("floodOpacity", this.alpha ,null);
 	}
 }
 
@@ -66,11 +71,5 @@ class FloodNode extends Node{
 
 }
 
-class FloodPrimitive extends SVGPrimitive{
-	render(){
-		return <feFlood floodColor={this.props.primitive.color} floodOpacity={this.props.primitive.alpha} 
-			result={this.getOutput(0)} />
-	}
-}
 
 module.exports = Flood;

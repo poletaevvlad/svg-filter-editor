@@ -1,7 +1,5 @@
 import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
-import SVGPrimitive from "../svg-primitive.js";
-
 
 class Output extends Primitive{
 	constructor(){
@@ -9,7 +7,6 @@ class Output extends Primitive{
 		this.createInput("Result",0);
 		this.isRemovable = false;
 		this.nodeComponentClass = OutputNode;
-		this.svgComponentClass = null;
 	}
 }
 

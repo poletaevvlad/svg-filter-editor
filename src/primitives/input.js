@@ -6,7 +6,6 @@ import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
-import SVGPrimitive from "../svg-primitive.js";
 import ColorPicker from "../components/color-picker.js";
 
 
@@ -16,7 +15,6 @@ class Input extends Primitive{
 		this.createOutput("Graphics", 0);
 		this.createOutput("Alpha", 1);
 		this.nodeComponentClass = InputNode;
-		this.svgComponentClass = InputPrimitive;
  	}
 
  	getOutputName(id){
@@ -35,10 +33,5 @@ class InputNode extends Node{
 	}
 }
 
-class InputPrimitive extends SVGPrimitive{
-	render(){
-		return null;
-	}
-}
 
 module.exports = Input;

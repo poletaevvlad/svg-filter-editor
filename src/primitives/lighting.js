@@ -6,7 +6,7 @@ import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import ComboBox from "../components/combobox.js";
-import SVGPrimitive from "../svg-primitive.js";
+import SVGTag from "../svg-tag.js";
 import ColorPicker from "../components/color-picker.js";
 
 
@@ -16,7 +16,6 @@ class Lighting extends Primitive{
 		this.createInput("Input", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = LightingNode;
-		this.svgComponentClass = LightingPrimitive;
 
 		this.surfaceScale = 1;
 		this.constant = 1;
@@ -31,6 +30,18 @@ class Lighting extends Primitive{
 		this.x = 0;
 		this.y = 0;
 		this.z = 0;
+ 	}
+
+ 	getSVG(){
+ 		let tag = this.svgTag("feDifuseLighting").input("in", 0).output("result", 0)
+ 			.arg("surfaceScale", this.surfaceScale, "1")
+ 			.arg("diffuseConstant", this.diffuseConstant, "1")
+ 			.arg("kernelUnitLength", `${primitive.kernelUnitLengthX} ${primitive.kernelUnitLengthY}`, "1 1")
+ 			.arg("lightingColor", "white", null);
+ 		if (this.lightType == "point"){
+			tag.child(this.svgTag("fePointLight").arg("x", this.x, null).arg("y", primitive.y, null)
+				.arg("z", primitive.z, null));
+ 		}
  	}
 }
 
@@ -134,23 +145,6 @@ class LightingNode extends Node{
 	_listTypeChanged(e){
 		this.props.primitive.lightType = e;
 		this._update();
-	}
-}
-
-class LightingPrimitive extends SVGPrimitive{
-	render(){
-		let primitive = this.props.primitive;
-		return <feDifuseLighting in={this.getInput(0)} result={this.getOutput(0)} 
-			surfaceScale={primitive.surfaceScale} diffuseConstant={primitive.constant} 
-			kernelUnitLength={`${primitive.kernelUnitLengthX} ${primitive.kernelUnitLengthY}`} lightingColor="white">
-			{ primitive.lightType == "point" ? 
-			 	<fePointLight x={primitive.x} y={primitive.y} z={primitive.z} />
-			 : primitive.lightType == "spot" ? 
-			 	null
-			 :primitive.lightType == "distant" ? 
-			 	null
-			 : null }
-		</feDifuseLighting>
 	}
 }
 
