@@ -29,6 +29,10 @@ class Preview extends React.Component{
 		}
 	}
 
+	componentDidMount(){
+		window.addEventListener("resize", this.componentDidUpdate.bind(this));
+	}
+
 	_getShape(){
 		let args = {}
 		if (this.props.fillEnabled){
@@ -47,8 +51,23 @@ class Preview extends React.Component{
 				return <rect x="50%" y="50%" height={this.props.shapeHeight} width={this.props.shapeWidth} 
 					transform={`translate(${-this.props.shapeWidth / 2 |0}.5 ${-this.props.shapeHeight / 2 |0}.5)`} {... args}/>
 			case "path":
+				return <path ref="path" d={this.props.path} {... args} />
 			default:
 				return <circle fill="orange" r="30" cx="50%" cy="50%" />
+		}
+	}
+
+	componentDidUpdate(){
+		if (this.props.shapeType == "path"){
+			let path = this.refs.path;
+			let bbox = path.getBoundingClientRect();
+
+			let parent = document.getElementById("preview-root");
+			let parentBbox = parent.getBoundingClientRect();
+		
+			let x = ((parentBbox.right - parentBbox.left) - (bbox.right - bbox.left)) / 2;
+			let y = ((parentBbox.bottom - parentBbox.top) - (bbox.bottom - bbox.top)) / 2;
+			path.setAttribute("transform", `translate(${x} ${y})`);
 		}
 	}
 

@@ -8,6 +8,7 @@ import ColorPicker from "./components/color-picker.js";
 import Selector from "./components/selector.js";
 import TextInput from "./components/text-input.js";
 import validators from "./components/validators.js";
+import focused from "./components/focused.js";
 
 
 class BackgroundEditor extends React.Component{
@@ -27,7 +28,7 @@ class BackgroundEditor extends React.Component{
 	}
 
 	render(){
-		return <div>
+		return <div className="vertical-list">
 			<ComboBox value={this.props.type} width={200 - 18} values={this.types} 
 				label="background type:" onChange={this.props.onTypeChange} />
 			{ this.props.type == "color" ? 
@@ -59,41 +60,51 @@ class ShapeEditor extends React.Component{
 		return <div className="vertical-list">
 			<ComboBox value={this.props.shape} width={200 - 18} values={this.shapes} 
 				label="shape:" onChange={this.props.onShapeChange} />
-			<div className="content horizontalFields">
-				<div className="field-section">
-					<div className="field-label">width:</div>
-					<TextInput value={this.props.width} onChange={this.props.onWidthChange}
-						validator={validators.isNumber}/>
+			{this.props.shape == "rect" || this.props.shape == "ellipse" ? 
+				<div className="content horizontalFields">
+					<div className="field-section">
+						<div className="field-label">width:</div>
+						<TextInput value={this.props.width} onChange={this.props.onWidthChange}
+							validator={validators.isPositiveNumber}/>
+					</div>
+					<div className="field-section">
+						<div className="field-label">height:</div>
+						<TextInput value={this.props.height} onChange={this.props.onHeightChange}
+							validator={validators.isPositiveNumber}/>
+					</div>
 				</div>
-				<div className="field-section">
-					<div className="field-label">height:</div>
-					<TextInput value={this.props.height} onChange={this.props.onHeightChange}
-						validator={validators.isNumber}/>
+			: this.props.shape == "path" ? 
+				<div className="content">
+					<textarea rows="3" value={this.props.path} onChange={this.props.onPathChange}/>
 				</div>
-			</div>
-
+			: null}
+			
 			<div className="horizontalFields">
 				<label className="section-name field-section noalign">
 					<input type="checkbox" checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
 					<div className="field-label">Fill</div>
 				</label>
 			</div>
-			<ColorPicker color={this.props.fillColor} onChange={this.props.onFillColorChange}/>
+			{this.props.fillEnabled ? 
+				<ColorPicker color={this.props.fillColor} onChange={this.props.onFillColorChange}/>
+			: null}
+
 			<div className="horizontalFields">
 				<label className="section-name field-section noalign">
 					<input type="checkbox" checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
 					<div className="field-label">Stroke</div>
 				</label>
 			</div>
-			<ColorPicker color={this.props.strokeColor} onChange={this.props.onStrokeColorChange}/>
-
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">stroke width:</div>
-					<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}
-					validator={validators.isNumber}/>
+			{this.props.strokeEnabled ? <div>
+				<ColorPicker color={this.props.strokeColor} onChange={this.props.onStrokeColorChange}/>
+				<div className="horizontalFields">
+					<div className="field-section">
+						<div className="field-label">stroke width:</div>
+						<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}
+						validator={validators.isNumber}/>
+					</div>
 				</div>
-			</div>
+			</div> : null}
 		</div>
 	}
 }
@@ -115,15 +126,16 @@ class FilterEditor extends React.Component{
 			bgType: "checkerboard",
 			bgColor: "black",
 			bgCheckerboard: "dark",
-			editing: "shape",
+			editing: "none",
 			shapeType: "ellipse",
-			shapeWidth: 30,
-			shapeHeight: 30,
+			shapeWidth: 60,
+			shapeHeight: 60,
 			fillEnabled: true,
-			fillColor: "#FFA500",
-			strokeEnabled: true,
+			fillColor: "#FFFFFF",
+			strokeEnabled: false,
 			strokeColor: "#000000",
-			strokeWidth: 1
+			strokeWidth: 1,
+			path: "M0 0H100V50H0Z"
 		}
 
 	}
@@ -152,7 +164,7 @@ class FilterEditor extends React.Component{
 					bgColor={this.state.bgColor} bgCheckerboard={this.state.bgCheckerboard}
 					shapeType={this.state.shapeType} shapeWidth={this.state.shapeWidth} shapeHeight={this.state.shapeHeight}
 					fillEnabled={this.state.fillEnabled} fillColor={this.state.fillColor} strokeEnabled={this.state.strokeEnabled}
-					strokeColor={this.state.strokeColor} strokeWidth={this.state.strokeWidth} />
+					strokeColor={this.state.strokeColor} strokeWidth={this.state.strokeWidth} path={this.state.path} />
 			</div>
 		</div>
 	}
@@ -185,6 +197,8 @@ class FilterEditor extends React.Component{
 					onStrokeColorChange={val => this.setState({strokeColor: val.hex})}
 					strokeWidth={this.state.strokeWidth}
 					onStrokeWidthChange={val => this.setState({strokeWidth: parseFloat(val.replace(",", "."))})}
+					path={this.state.path}
+					onPathChange={val => this.setState({path: val.trget.value})}
 					/>
 			</div>	
 		}
