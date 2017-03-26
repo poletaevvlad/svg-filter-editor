@@ -3,111 +3,11 @@ import React from "react";
 import NodesContainer from "./nodes-container.js";
 import Preview from "./preview.js";
 import Filter from "./filter.js";
-import ComboBox from "./components/combobox.js";
-import ColorPicker from "./components/color-picker.js";
-import Selector from "./components/selector.js";
-import TextInput from "./components/text-input.js";
-import validators from "./components/validators.js";
-import focused from "./components/focused.js";
+import CodeDisplay from "./code-display.js";
+
+import { BackgroundEditor, ShapeEditor } from "./preview-editors.js";
 
 
-class BackgroundEditor extends React.Component{
-	constructor(){
-		super();
-		this.types = [
-			{value: "transparent", label: "Transparent"},
-			{value: "color", label: "Solid color"},
-			{value: "checkerboard", label: "Checkerboard"}
-		]
-
-		this.checkerboardTypes = [
-			{value: "dark", "class": "checkerboard-dark"},
-			{value: "light", "class": "checkerboard-light"},
-			{value: "contrast", "class": "checkerboard-contrast"}
-		]
-	}
-
-	render(){
-		return <div className="vertical-list">
-			<ComboBox value={this.props.type} width={200 - 18} values={this.types} 
-				label="background type:" onChange={this.props.onTypeChange} />
-			{ this.props.type == "color" ? 
-				<div className="content">
-					<ColorPicker color={this.props.color} onChange={this.props.onColorChanged}/>
-				</div>
-			: this.props.type == "checkerboard" ?
-				<div className="content">
-					<Selector values={this.checkerboardTypes} value={this.props.checkerboard} 
-						onChange={this.props.onCheckerboardChanged}/>
-				</div>
-			: null
-			}
-		</div>
-	}
-}
-
-class ShapeEditor extends React.Component{
-	constructor(){
-		super();
-		this.shapes = [
-			{value: "ellipse", label: "Ellipse"},
-			{value: "rect", label: "Rectangle"},
-			{value: "path", label: "Path"},
-		]
-	}
-
-	render(){
-		return <div className="vertical-list">
-			<ComboBox value={this.props.shape} width={200 - 18} values={this.shapes} 
-				label="shape:" onChange={this.props.onShapeChange} />
-			{this.props.shape == "rect" || this.props.shape == "ellipse" ? 
-				<div className="content horizontalFields">
-					<div className="field-section">
-						<div className="field-label">width:</div>
-						<TextInput value={this.props.width} onChange={this.props.onWidthChange}
-							validator={validators.isPositiveNumber}/>
-					</div>
-					<div className="field-section">
-						<div className="field-label">height:</div>
-						<TextInput value={this.props.height} onChange={this.props.onHeightChange}
-							validator={validators.isPositiveNumber}/>
-					</div>
-				</div>
-			: this.props.shape == "path" ? 
-				<div className="content">
-					<textarea rows="3" value={this.props.path} onChange={this.props.onPathChange}/>
-				</div>
-			: null}
-			
-			<div className="horizontalFields">
-				<label className="section-name field-section noalign">
-					<input type="checkbox" checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
-					<div className="field-label">Fill</div>
-				</label>
-			</div>
-			{this.props.fillEnabled ? 
-				<ColorPicker color={this.props.fillColor} onChange={this.props.onFillColorChange}/>
-			: null}
-
-			<div className="horizontalFields">
-				<label className="section-name field-section noalign">
-					<input type="checkbox" checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
-					<div className="field-label">Stroke</div>
-				</label>
-			</div>
-			{this.props.strokeEnabled ? <div>
-				<ColorPicker color={this.props.strokeColor} onChange={this.props.onStrokeColorChange}/>
-				<div className="horizontalFields">
-					<div className="field-section">
-						<div className="field-label">stroke width:</div>
-						<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}
-						validator={validators.isNumber}/>
-					</div>
-				</div>
-			</div> : null}
-		</div>
-	}
-}
 
 class FilterEditor extends React.Component{
 	constructor(){
@@ -126,7 +26,7 @@ class FilterEditor extends React.Component{
 			bgType: "checkerboard",
 			bgColor: "black",
 			bgCheckerboard: "dark",
-			editing: "none",
+			editing: "code",
 			shapeType: "ellipse",
 			shapeWidth: 60,
 			shapeHeight: 60,
@@ -156,15 +56,19 @@ class FilterEditor extends React.Component{
 			<div id="result-preview" style={{width: `${this.state.previewWidth}px`}}>
 				<div id="separator" onMouseDown={this._separatorMouseDown}></div>
 				<div id="toolbar">
+					<div className={"section" + (this.state.editing == "code" ? " active" : "")} onClick={() => this._toggleEditor("code")}>Show code</div>
 					<div className={"section" + (this.state.editing == "shape" ? " active" : "")} onClick={() => this._toggleEditor("shape")}>Shape</div>
 					<div className={"section" + (this.state.editing == "background" ? " active" : "")} onClick={() => this._toggleEditor("background")}>Background</div>
 				</div>
 				{this._renderEditor()}
+				{this.state.editing == "code" ? 
+				<CodeDisplay filter={this.filter}/> :
 				<Preview filter={this.filter} bgType={this.state.bgType} 
 					bgColor={this.state.bgColor} bgCheckerboard={this.state.bgCheckerboard}
 					shapeType={this.state.shapeType} shapeWidth={this.state.shapeWidth} shapeHeight={this.state.shapeHeight}
 					fillEnabled={this.state.fillEnabled} fillColor={this.state.fillColor} strokeEnabled={this.state.strokeEnabled}
 					strokeColor={this.state.strokeColor} strokeWidth={this.state.strokeWidth} path={this.state.path} />
+				}
 			</div>
 		</div>
 	}

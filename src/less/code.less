@@ -1,0 +1,48 @@
+#code{
+	@lines-width: 20px;
+
+	position: absolute;
+	top: 25px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #252525;
+	overflow: auto;
+
+	#code-lines{
+		display: table;
+		z-index: 2;
+		position: absolute;
+		font-family: "Roboto Mono";
+	}
+
+	.line{
+		display: table-row;
+	}
+
+	.line-number, .code{
+		display: table-cell;
+	}
+
+	.line-number{
+		width: @lines-width - 3px;
+		color: #666;
+		text-align: right;
+		padding-right: 3px;
+	}
+
+	.code{
+		padding-left: 3px;
+		color: #999;
+	}
+
+	.line-numbers{
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: @lines-width;
+		background-color: #2b2b2b;
+	}
+
+}
