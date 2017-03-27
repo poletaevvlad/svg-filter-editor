@@ -26,7 +26,7 @@ class FilterEditor extends React.Component{
 			bgType: "checkerboard",
 			bgColor: "black",
 			bgCheckerboard: "dark",
-			editing: "code",
+			editing: "none",
 			shapeType: "ellipse",
 			shapeWidth: 60,
 			shapeHeight: 60,
@@ -35,7 +35,7 @@ class FilterEditor extends React.Component{
 			strokeEnabled: false,
 			strokeColor: "#000000",
 			strokeWidth: 1,
-			path: "M0 0H100V50H0Z"
+			path: "M0 0 H100 V50 H0 Z"
 		}
 
 	}

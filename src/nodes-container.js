@@ -140,14 +140,14 @@ class NodesContainer extends React.Component{
 	}
 
 	render(){
-		return <div id="nodes-container" style={{right: `${this.props.right + 7}px`}}
+		return <div id="nodes-container" ref="container" style={{right: `${this.props.right + 7}px`}}
 				onMouseDown={this._handleMouseDown} onMouseUp={this._handleMouseUp} 
 				onMouseMove={this._handleMouseMove} onDoubleClick={this._handleDoubleClick}>
 			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
 				onSelected={this._handleAddPrimitive} /> : null}
 			{this._shouldShowSelectionBox() ? <SelectionBox x={this._selectionBoxX} y={this._selectionBoxY} 
 				width={this._mouseX - this._selectionBoxX} height={this._mouseY - this._selectionBoxY} /> : null}
-			<div id="nodes-origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
+			<div id="nodes-origin" ref="origin" style={{left: `${this.state.left}px`, top: `${this.state.top}px`}}>
 				{this.props.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					let selected = this._isSelected(primitive) || this._isSelected(primitive, this.tempSelected);
@@ -189,6 +189,23 @@ class NodesContainer extends React.Component{
 		document.addEventListener("click", this._handleGlobalClick);
 		document.addEventListener("elementFocused", this._handleElementFocused);
 		window.addEventListener("blur", this._handleBlur);
+	}
+
+	componentDidMount(){
+		let origin = this.refs.origin;
+		let containerBbox = this.refs.container.getBoundingClientRect();
+		for (let i = 0; i < origin.childNodes.length; i++){
+			let node = origin.childNodes[i];
+			if (node.hasAttribute("data-primitiveid")){
+				let primitive = this.props.filter.getPrimitive(parseInt(node.getAttribute("data-primitiveid")));
+				let bbox = node.getBoundingClientRect();
+				primitive.positionX = (containerBbox.right - containerBbox.left) - (bbox.right - bbox.left) - 15;
+				primitive.positionY = ((containerBbox.bottom - containerBbox.top) - (bbox.bottom - bbox.top)) / 2;
+				this.setState(this.state);
+				break;
+			}
+		}
+
 	}
 
 	componentWillUnmount(){
