@@ -15,7 +15,6 @@ class Composite extends Primitive{
 		this.createInput("Input 2", 1);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = CompositeNode;
-		this.svgComponentClass = CompositePrimitive;
 
 		this.operator = "over";
 		this.operators = ["over", "in", "out", "atop", "xor", "arithmetic"];

@@ -16,10 +16,16 @@ class Filter{
 
 	_notifyConnectionChange(connection){
 		if (connection.inputPrimitive != null){
-			this.getPrimitive(connection.inputPrimitive).onConnectionsChanged();
+			let primitive = this.getPrimitive(connection.inputPrimitive);
+			if (typeof primitive != "undefined"){
+				primitive.onConnectionsChanged();
+			}
 		}
 		if (connection.outputPrimitive != null){
-			this.getPrimitive(connection.outputPrimitive).onConnectionsChanged();
+			let primitive = this.getPrimitive(connection.outputPrimitive);
+			if (typeof primitive != "undefined"){
+				primitive.onConnectionsChanged();
+			}
 		}
 	}
 
@@ -47,11 +53,17 @@ class Filter{
 		return null;
 	}
 
-	removeConnection(connection, notify){
+	removeConnection(connection, notify, del){
 		let index = this.connections.indexOf(connection);
 		if (index < 0) return;
-		this.connections.splice(index, 1);
-		
+		if (typeof del == "undefined" || del){
+			this.connections.splice(index, 1);
+		}
+
+		let primitive = this.getPrimitive(connection.inputPrimitive);
+		if (typeof primitive != "undefined"){
+			primitive.getInput(connection.inputIOID).connection = null;
+		}
 		if (typeof notify == "undefined" || notify){
 			this._notifyConnectionChange(connection);
 		}
@@ -71,15 +83,16 @@ class Filter{
 		if (!primitive.isRemovable){
 			return;
 		}
+		
 		this.primitives.splice(this.primitives.indexOf(primitive), 1);
 		delete this.primitivesById[primitive.id];
 		this.connections = this.connections.filter(connection => {
 			if (connection.inputPrimitive == primitive.id || connection.outputPrimitive == primitive.id){
-				this.removeConnection(connection);
+				this.removeConnection(connection, true, false);
 				return false;
 			}
 			return true;
-		})
+		});
 	}
 
 	getOrderedPrimitives(){
