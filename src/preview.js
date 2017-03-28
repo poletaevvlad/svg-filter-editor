@@ -14,17 +14,15 @@ class Preview extends React.Component{
 		}else{
 			let i = 0;
 			return <svg id="preview-root">
-				<defs>
-					<pattern id="checkerboard" patternUnits="userSpaceOnUse" width="18" height="18" 
-						className={"checkerboard " + this.props.bgCheckerboard}>
-						<rect className="light" x="0" y="0" width="18" height="18" />
-						<rect className="dark" x="0" y="0" width="9" height="9" />
-						<rect className="dark" x="9" y="9" width="9" height="9" />
-					</pattern>
-					<filter id="filter" width="1000" height="1000" x="-500" y="-500">
-						{primitives.map(primitive => this._getSVGComponent(primitive.getSVG(), i++))}
-					</filter>
-				</defs>
+				<pattern id="checkerboard" patternUnits="userSpaceOnUse" width="18" height="18" 
+					className={"checkerboard " + this.props.bgCheckerboard}>
+					<rect className="light" x="0" y="0" width="18" height="18" />
+					<rect className="dark" x="0" y="0" width="9" height="9" />
+					<rect className="dark" x="9" y="9" width="9" height="9" />
+				</pattern>
+				<filter id="filter" width="5000%" height="5000%" x="-2500%" y="-2500%">
+					{primitives.map(primitive => this._getSVGComponent(primitive.getSVG(), i++))}
+				</filter>
 				<rect x="0" y="0" width="100%" height="100%" {... this._getBackground()} />
 				<g filter="url(#filter)">
 					{this._getShape()}
