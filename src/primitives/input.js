@@ -9,16 +9,26 @@ import ComboBox from "../components/combobox.js";
 import ColorPicker from "../components/color-picker.js";
 
 
+let OUTPUTS = [
+	{name: "SourceGraphic", label: "Graphics"},
+	{name: "SourceAlpha", label: "Alpha"},
+]
+
 class Input extends Primitive{
 	constructor(){
 		super();
-		this.createOutput("Graphics", 0);
-		this.createOutput("Alpha", 1);
+		for (let i = 0; i < OUTPUTS.length; i++){
+			this.createOutput(OUTPUTS[i].label, i);	
+		}
 		this.nodeComponentClass = InputNode;
  	}
 
  	getOutputName(id){
-		return ["SourceGraphic", "SourceAlpha"][id];
+		return OUTPUTS[id].name;
+	}
+
+	getInputIndexByName(name){
+		return OUTPUTS.findIndex(val => val.name == name);
 	}
 }
 

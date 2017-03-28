@@ -1,7 +1,9 @@
 import Primitive from "./primitive.js"
 import Output from "./primitives/output.js"
 
-import Merge from "./primitives/merge.js";
+import Connection from "./connection.js";
+
+let RESERVED_INPUT = ["SourceGraphic", "SourceAlpha"];
 
 class Filter{
 
@@ -96,8 +98,12 @@ class Filter{
 	}
 
 	getOrderedPrimitives(){
-		if (this.output.getInput(0).connection == null){
-			return [new Merge()]
+		let outputName = this.output.getInputName(0)
+		if (RESERVED_INPUT.indexOf(outputName) >= 0){
+			class PassthroughOutput extends Primitive{
+				getSVG = () => this.svgTag("feMerge").child(this.svgTag("feMergeNode").arg("in", outputName, null));
+			}
+			return [new PassthroughOutput()];
 		}
 
 		let primitives = this.primitives.slice();
