@@ -1,10 +1,16 @@
 import React from "react";
 
+let ERROR_SCREEN = <div id="preview-root">
+	<div id="preview-error-title">There is an error somewhere</div>
+	<div id="preview-error-description">
+	There cannot be any node whitch input is dependent on it's output.</div>
+</div>
+
 class Preview extends React.Component{
 	render(){
 		let primitives = this.props.filter.getOrderedPrimitives();
 		if (primitives == null){
-			return <div>ERROR</div>;
+			return ERROR_SCREEN;
 		}else{
 			let i = 0;
 			return <svg id="preview-root">
