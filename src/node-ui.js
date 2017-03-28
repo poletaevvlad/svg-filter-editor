@@ -11,7 +11,7 @@ class Node extends React.Component{
 
 	render(){
 		return <div className={"node" + (this.props.selected ? " selected" : "")} data-primitiveid={this.props.primitive.id}
-			style={{left: `${this.props.left}px`, top: `${this.props.top}px`, width: `${this.props.primitive.nodeWidth}px`}}>
+			style={{left: `${this.props.left}px`, top: `${this.props.top}px`, width: `${this.props.primitive.nodeWidth}px`, zIndex: this.props.zIndex}}>
 			<div className={"header" + (this.props.dragging? " dragging": "")} onMouseDown={this._handleDragMouseDown}>{this.title}</div>
 			<div className="io">
 				{this.props.primitive.inputs.length == 0 ? null :

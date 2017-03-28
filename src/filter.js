@@ -149,6 +149,23 @@ class Filter{
 		}while(! over);
 		return result;
 	}
+
+	pushToFront(nodes){
+		let removable = [];
+		let offset = 0;
+		let i = 0;
+		for(; i < this.primitives.length; i++){
+			if (nodes.indexOf(this.primitives[i]) >= 0){
+				removable.push(this.primitives[i]);
+				offset++;
+			}else{
+				this.primitives[i - offset] = this.primitives[i];
+			}
+		}
+		for (let j = 0; j < removable.length; j++){
+			this.primitives[i + j] = removable[j];
+		}
+	}
 }
 
 module.exports = Filter;

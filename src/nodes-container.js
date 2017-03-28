@@ -140,6 +140,7 @@ class NodesContainer extends React.Component{
 	}
 
 	render(){
+		let i = 0;
 		return <div id="nodes-container" ref="container" style={{right: `${this.props.right + 7}px`}}
 				onMouseDown={this._handleMouseDown} onDoubleClick={this._handleDoubleClick}>
 			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
@@ -150,7 +151,7 @@ class NodesContainer extends React.Component{
 				{this.props.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					let selected = this._isSelected(primitive) || this._isSelected(primitive, this.tempSelected);
-					return <NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} 
+					return <NodeComponent zIndex={++i} onEnterDraggingState={this._handleNodeEnderDraggingState} 
 						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
 						dragging={this._isDragging && selected} selected={selected}
 						onUpdate={this.props.onUpdate}
@@ -206,7 +207,6 @@ class NodesContainer extends React.Component{
 				break;
 			}
 		}
-
 	}
 
 	componentWillUnmount(){
@@ -299,6 +299,7 @@ class NodesContainer extends React.Component{
 					this.selected.push(this.tempSelected[i]);
 				}
 			}
+			this._didSelect();
 			this.tempSelected = [];
 		}
 		if (this._isConnecting){
@@ -371,6 +372,10 @@ class NodesContainer extends React.Component{
 		this._mouseY = e.clientY;
 	}
 
+	_didSelect(){
+		this.props.filter.pushToFront(this.selected);
+	}
+
 	_onStartedNodeDragging(node, e){
 		if (this.selected.indexOf(node) < 0){
 			if (e.nativeEvent.shiftKey){
@@ -379,6 +384,7 @@ class NodesContainer extends React.Component{
 				this.selected = [node];
 			}
 		}
+		this._didSelect();
 		document.activeElement.blur();
 		this._isDragging = true;
 		this.setState(this.state);
@@ -396,6 +402,7 @@ class NodesContainer extends React.Component{
 				document.activeElement.blur();
 				this.setState(this.state);
 				e.preventDefault();
+				this._didSelect();
 			}
 		}
 	}
