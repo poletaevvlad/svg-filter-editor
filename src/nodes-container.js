@@ -389,6 +389,7 @@ class NodesContainer extends React.Component{
 			this.selected.forEach(primitive => this.props.filter.removePrimitive(primitive));
 			this.selected = [];
 			this.setState(this.state);
+			this.props.onUpdate();
 		}else if (e.code == "KeyA" && e.ctrlKey && ! e.shiftKey && ! e.altKey){
 			if (!(document.activeElement instanceof HTMLInputElement && document.activeElement.getAttribute("type") == "text")){
 				this.selected = this.props.filter.primitives.slice();
