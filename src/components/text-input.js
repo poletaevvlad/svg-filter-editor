@@ -3,7 +3,7 @@ import React from "react";
 import focused from "./focused.js";
 import validators from "./validators.js"
 
-class TextInput extends React.Component{
+class TextInput extends React.PureComponent{
 	constructor(props){
 		super(props);
 		this._handleChange = this._onChange.bind(this);

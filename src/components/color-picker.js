@@ -6,13 +6,13 @@ import TextInput from "./text-input.js";
 import focused from "./focused.js";
 import validators from "./validators.js";
 
-class ColorPickerPointer extends React.Component{
+class ColorPickerPointer extends React.PureComponent{
 	render(){
 		return <div className="pointer" />
 	}
 }
 
-class ColorPicker extends React.Component{
+class ColorPicker extends React.PureComponent{
 	constructor(){
 		super();
 		this._redChanged = this._redChanged.bind(this);

@@ -2,7 +2,7 @@ import React from "react";
 
 import focused from "./focused.js";
 
-class ComboBox extends React.Component{
+class ComboBox extends React.PureComponent{
 	constructor(){
 		super();
 		this.state = {focused: false}

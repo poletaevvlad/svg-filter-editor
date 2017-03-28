@@ -1,6 +1,6 @@
 import React from "react";
 
-class Node extends React.Component{
+class Node extends React.PureComponent{
 	
 	constructor(){
 		super()
@@ -10,6 +10,7 @@ class Node extends React.Component{
 	}
 
 	render(){
+		console.log("rendered");
 		return <div className={"node" + (this.props.selected ? " selected" : "")} data-primitiveid={this.props.primitive.id}
 			style={{width: `${this.props.primitive.nodeWidth}px`}}>
 			<div className={"header" + (this.props.dragging? " dragging": "")} onMouseDown={this._handleDragMouseDown}>{this.title}</div>

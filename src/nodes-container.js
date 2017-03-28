@@ -16,7 +16,7 @@ import Input from "./primitives/input.js";
 import Composite from "./primitives/composite.js";
 
 
-class ConnectionGraphics extends React.Component{
+class ConnectionGraphics extends React.PureComponent{
 	render(){
 		let path = this.generatePath();
 		return <g className={"connection" + (this.props.selected ? " selected" : "")}>
@@ -43,7 +43,7 @@ class ConnectionGraphics extends React.Component{
 	}
 }
 
-class NodeSelector extends React.Component{
+class NodeSelector extends React.PureComponent{
 	constructor(){
 		super();
 		this._selectPrimitive = this._onPrimitiveSelected.bind(this);

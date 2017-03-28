@@ -1,7 +1,7 @@
 import React from "react";
 import focused from "./focused.js";
 
-class Selector extends React.Component{
+class Selector extends React.PureComponent{
 	render(){
 		return <div className="selector">
 			{this.props.values.map(val => {
