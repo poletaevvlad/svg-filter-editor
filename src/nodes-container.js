@@ -151,13 +151,13 @@ class NodesContainer extends React.Component{
 				{this.props.filter.primitives.map(primitive => {
 					let NodeComponent = primitive.nodeComponentClass;
 					let selected = this._isSelected(primitive) || this._isSelected(primitive, this.tempSelected);
-					return <NodeComponent zIndex={++i} onEnterDraggingState={this._handleNodeEnderDraggingState} 
-						left={primitive.positionX} top={primitive.positionY} key={primitive.id} primitive={primitive}
-						dragging={this._isDragging && selected} selected={selected}
-						onUpdate={this.props.onUpdate}
-						{... (this._isConnecting && this._connectionEnd != null && this._connectionEnd.primitive == primitive.id) ? 
-							{ ioSelectionType: this._connectionEnd.type, ioSelectionId: this._connectionEnd.io } : {} }
-						/>
+					return <div className="node-position" key={primitive.id} style={{left: `${primitive.positionX}px`, top: `${primitive.positionY}px`, zIndex: i++}}>
+							<NodeComponent onEnterDraggingState={this._handleNodeEnderDraggingState} primitive={primitive} 
+							dragging={this._isDragging && selected} selected={selected} onUpdate={this.props.onUpdate}
+							{... (this._isConnecting && this._connectionEnd != null && this._connectionEnd.primitive == primitive.id) ? 
+								{ ioSelectionType: this._connectionEnd.type, ioSelectionId: this._connectionEnd.io } : {} }
+							/>
+						</div>
 				})}
 			</div>
 			<svg id="nodes-connections" width="100%" height="100%">
@@ -198,13 +198,16 @@ class NodesContainer extends React.Component{
 		let containerBbox = this.refs.container.getBoundingClientRect();
 		for (let i = 0; i < origin.childNodes.length; i++){
 			let node = origin.childNodes[i];
-			if (node.hasAttribute("data-primitiveid")){
-				let primitive = this.props.filter.getPrimitive(parseInt(node.getAttribute("data-primitiveid")));
-				let bbox = node.getBoundingClientRect();
-				primitive.positionX = (containerBbox.right - containerBbox.left) - (bbox.right - bbox.left) - 15;
-				primitive.positionY = ((containerBbox.bottom - containerBbox.top) - (bbox.bottom - bbox.top)) / 2;
-				this.setState(this.state);
-				break;
+			if (node.classList.contains("node-position")){
+				let child = node.childNodes[0];
+				if (child.hasAttribute("data-primitiveid")){
+					let primitive = this.props.filter.getPrimitive(parseInt(child.getAttribute("data-primitiveid")));
+					let bbox = child.getBoundingClientRect();
+					primitive.positionX = (containerBbox.right - containerBbox.left) - (bbox.right - bbox.left) - 15;
+					primitive.positionY = ((containerBbox.bottom - containerBbox.top) - (bbox.bottom - bbox.top)) / 2;
+					this.setState(this.state);
+					break;
+				}
 			}
 		}
 	}
