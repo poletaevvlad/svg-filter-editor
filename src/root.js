@@ -7,7 +7,7 @@ import CodeDisplay from "./code-display.js";
 
 import { BackgroundEditor, ShapeEditor } from "./preview-editors.js";
 
-
+const MIN_PREVIEW_WIDTH = 212;
 
 class FilterEditor extends React.Component{
 	constructor(){
@@ -129,7 +129,7 @@ class FilterEditor extends React.Component{
 	_separatorMouseMove(e){
 		if (this._separatorDragging){
 			let dx = e.clientX - this._separatorX;
-			this.setState({previewWidth: this.state.previewWidth - dx});
+			this.setState({previewWidth: Math.max(this.state.previewWidth - dx, MIN_PREVIEW_WIDTH)});
 			this._separatorX = e.clientX;
 		}
 	}
