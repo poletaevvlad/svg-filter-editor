@@ -141,8 +141,7 @@ class NodesContainer extends React.Component{
 
 	render(){
 		return <div id="nodes-container" ref="container" style={{right: `${this.props.right + 7}px`}}
-				onMouseDown={this._handleMouseDown} onMouseUp={this._handleMouseUp} 
-				onMouseMove={this._handleMouseMove} onDoubleClick={this._handleDoubleClick}>
+				onMouseDown={this._handleMouseDown} onDoubleClick={this._handleDoubleClick}>
 			{this._nodeSelectorOpen ? <NodeSelector x={this._nodeSelectorX} y={this._nodeSelectorY} 
 				onSelected={this._handleAddPrimitive} /> : null}
 			{this._shouldShowSelectionBox() ? <SelectionBox x={this._selectionBoxX} y={this._selectionBoxY} 
@@ -188,6 +187,8 @@ class NodesContainer extends React.Component{
 		document.addEventListener("keydown", this._handleKeyDown);
 		document.addEventListener("click", this._handleGlobalClick);
 		document.addEventListener("elementFocused", this._handleElementFocused);
+		window.addEventListener("mousemove", this._handleMouseMove);
+		document.addEventListener("mouseup", this._handleMouseUp);
 		window.addEventListener("blur", this._handleBlur);
 	}
 
@@ -212,6 +213,8 @@ class NodesContainer extends React.Component{
 		document.removeEventListener("keydown", this._handleKeyDown);
 		document.removeEventListener("click", this._handleGlobalClick);
 		document.removeEventListener("elementFocused", this._handleElementFocused);
+		window.removeEventListener("mousemove", this._handleMouseMove);
+		document.removeEventListener("mouseup", this._handleMouseUp);
 		window.removeEventListener("blur", this._handleBlur);
 	}
 
@@ -321,8 +324,8 @@ class NodesContainer extends React.Component{
 	}
 
 	_onMouseMove(e){
-		let dx = e.nativeEvent.clientX - this._mouseX;
-		let dy = e.nativeEvent.clientY - this._mouseY;
+		let dx = e.clientX - this._mouseX;
+		let dy = e.clientY - this._mouseY;
 		if(this._isPanning){
 			this.setState({
 				left: this.state.left + dx,
@@ -364,8 +367,8 @@ class NodesContainer extends React.Component{
 			}
 			this.setState(this.state);
 		}
-		this._mouseX = e.nativeEvent.clientX;
-		this._mouseY = e.nativeEvent.clientY;
+		this._mouseX = e.clientX;
+		this._mouseY = e.clientY;
 	}
 
 	_onStartedNodeDragging(node, e){
