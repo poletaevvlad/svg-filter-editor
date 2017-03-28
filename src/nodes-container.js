@@ -431,8 +431,8 @@ class NodesContainer extends React.Component{
 	}
 
 	_onPrimitiveAdded(primitive){
-		primitive.positionX = this._nodeSelectorX - primitive.nodeWidth / 2 |0;
-		primitive.positionY = this._nodeSelectorY - 30;
+		primitive.positionX = -this.state.left + this._nodeSelectorX - primitive.nodeWidth / 2 |0;
+		primitive.positionY = -this.state.top + this._nodeSelectorY - 30;
 		this.props.filter.addPrimitive(primitive);
 		this._nodeSelectorOpen = false;
 		this.setState(this.state);
