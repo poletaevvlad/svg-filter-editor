@@ -94,7 +94,7 @@ class ShapeEditor extends React.Component{
 			</div>
 			{this.props.strokeEnabled ? <div>
 				<ColorPicker color={this.props.strokeColor} onChange={this.props.onStrokeColorChange}/>
-				<div className="horizontalFields">
+				<div className="horizontalFields offset-top">
 					<div className="field-section">
 						<div className="field-label">stroke width:</div>
 						<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}

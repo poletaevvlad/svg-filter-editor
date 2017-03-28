@@ -18,9 +18,6 @@ class TextInput extends React.Component{
 	}
 
 	render(){
-		if (! this.state.focused){
-			this.state.value = this.props.value;	
-		}
 		return <input className={this.props.className + (this.state.valid ? "" : " invalid")} 
 			type="text" value={this.state.value} onChange={this._handleChange} onFocus={this._handleFocus} 
 			onBlur={this._handleBlur}/>
