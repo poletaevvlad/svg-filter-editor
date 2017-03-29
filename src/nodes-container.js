@@ -31,8 +31,6 @@ class ConnectionGraphics extends React.PureComponent{
 	}
 }
 
-
-
 function SelectionBox(props){
 	let x = props.width < 0 ? props.x + props.width : props.x;
 	let y = props.height < 0 ? props.y + props.height : props.y;

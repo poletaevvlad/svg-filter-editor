@@ -9,9 +9,11 @@
     left: 250px;
     top: 100px;
 	display: flex;
+    width: 200px;
 
 	.column{
 		margin-right: 10px;
+        flex-shrink: 0;
 
 		&:last-child{
 			margin-right: 0;
@@ -23,6 +25,7 @@
     	border-radius: 3px;
     	color: #bbb;
     	transform: color 0.2s, background-color 0.2s;
+        word-wrap: nowrap;
 
     	&:hover{
     		background-color: orange;

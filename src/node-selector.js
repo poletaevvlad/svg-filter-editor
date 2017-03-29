@@ -14,13 +14,36 @@ import Composite from "./primitives/composite.js";
 
 
 class NodeSelector extends React.PureComponent{
-	constructor(){
+	constructor(props){
 		super();
 		this._selectPrimitive = this._onPrimitiveSelected.bind(this);
+		this.state = {
+			x: props.x + 5,
+			y: props.y + 5
+		}
+	}
+
+	componentDidMount(){
+		let rect = this.refs.root.getBoundingClientRect();
+		let containerRect = document.getElementById("nodes-container").getBoundingClientRect();
+		let x = this.state.x;
+		let y = this.state.y;
+		if (x < 5){
+			x = 5;
+		}else if (x > containerRect.width - rect.width - 5){
+			x = containerRect.width - rect.width - 5;
+		}
+
+		if (y < 5){
+			y = 5;
+		}else if (y > containerRect.height - rect.height - 5){
+			y = containerRect.height - rect.height - 5;
+		}
+		this.setState({x: x, y: y});
 	}
 
 	render(){
-		return <div id="node-selector" style={{left: this._getX(), top: this._getY()}}>
+		return <div ref="root" id="node-selector" style={{left: this.state.x, top: this.state.y}}>
 			<div className="column">
 				<div className="item" onClick={() => this._selectPrimitive(new Input())}>+ Input</div>
 				<div className="section">Primitives</div>
@@ -45,9 +68,6 @@ class NodeSelector extends React.PureComponent{
 			</div>
 		</div>
 	}
-
-	_getX = () => this.props.x + 10;
-	_getY = () => this.props.y + 10;
 
 	_onPrimitiveSelected(component){
 		if (typeof this.props.onSelected != "undefined"){
