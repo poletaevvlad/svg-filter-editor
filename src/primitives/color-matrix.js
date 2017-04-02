@@ -40,7 +40,7 @@ class ColorMatrix extends Primitive{
 		let values = undefined;
 		switch(this.type){
 			case "matrix":
-				values=this._makeMatrix();
+				values=this.makeMatrix(this.value);
 				break;
 			case "luminanceToAlpha":
 				break;
@@ -53,17 +53,6 @@ class ColorMatrix extends Primitive{
 		}
 		tag.input("in", 0).output("result", 0)
 		return tag;
-	}
-
-	_makeMatrix(){
-		let matrix = this.value;
-		let matrixString = ""
-		for (let i = 0; i < 4; i++){
-			for (let j = 0; j < 5; j++){
-				matrixString += `${matrix[i][j]} `;
-			}
-		}
-		return matrixString;
 	}
 }
 

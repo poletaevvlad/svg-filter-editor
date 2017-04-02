@@ -1,12 +1,26 @@
 import React from "react";
+import shallowCompare from "react-addons-shallow-compare";
 
-class Node extends React.PureComponent{
+class Node extends React.Component{
 	
 	constructor(){
 		super()
 		this.title = "undefined";
 		this._renderEditor = this.renderEditor.bind(this);
 		this._handleDragMouseDown = this._onDragMouseDown.bind(this);
+
+		this.valSetter = (name) => {
+			let setter = (value) => {
+				let props = {};
+				props[name] = value;
+				this.setPrimitiveProps(props);
+			}
+			return setter.bind(this);
+		}
+	}
+
+	componentWillUpdate(){
+		this.props.primitive.changed = false;
 	}
 
 	render(){
@@ -62,6 +76,15 @@ class Node extends React.PureComponent{
 				this.props.onEnterDraggingState(this.props.primitive, e);
 			}
 		}
+	}
+
+	shouldComponentUpdate(nextProps, nextState){
+		return this.props.primitive.changed || shallowCompare(this, nextProps, nextState)
+	}
+
+	setPrimitiveProps(props){
+		this.props.primitive.setProps(props);
+		this.setState({});
 	}
 }
 

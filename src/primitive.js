@@ -27,6 +27,7 @@ class Primitive{
 		this.nodeWidth = 150;
 
 		this.nodeComponentClass = Node;
+		this.changed = false;
 	}
 
 	createInput(name, id){
@@ -74,6 +75,23 @@ class Primitive{
 		let tag = new SVGTag(name);
 		tag.primitive = this;
 		return tag;
+	}
+
+	makeMatrix(matrix){
+		let matrixString = ""
+		for (let i = 0; i < 4; i++){
+			for (let j = 0; j < 5; j++){
+				matrixString += `${matrix[i][j]} `;
+			}
+		}
+		return matrixString;
+	}
+
+	setProps(props){
+		for (let key in props){
+			this[key] = props[key]
+		}
+		this.changed = true;
 	}
 }
 
