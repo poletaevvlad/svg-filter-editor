@@ -4,6 +4,7 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
+import converters from "../components/converters.js";
 import ComboBox from "../components/combobox.js";
 import SVGTag from "../svg-tag.js";
 
@@ -45,17 +46,17 @@ class CompositeNode extends Node{
 		return <div className="vertical">
 			<ComboBox value={this.props.primitive.operator} width={this.props.primitive.nodeWidth - 18}
 				values={this.props.primitive.operators.map(op => {return {value: op, label: op}})} 
-				label="operator:" onChange={(val) => {this.props.primitive.operator = val; this._update();}} />
+				label="operator:" onChange={this.valSetter("operator")} />
 			{this.props.primitive.operator == "arithmetic" ? 
 				<div className="horizontal">
 					<TextInput className="field" value={this.props.primitive.k1} validator={validators.isNumber}
-						onChange={(val) => {this.props.primitive.k1 = this._parse(val); this._update()}} />
+						onChange={this.valSetter("k1")} converter={converters.float} />
 					<TextInput className="field" value={this.props.primitive.k2} validator={validators.isNumber}
-						onChange={(val) => {this.props.primitive.k2 = this._parse(val); this._update()}} />
+						onChange={this.valSetter("k2")} converter={converters.float} />
 					<TextInput className="field" value={this.props.primitive.k3} validator={validators.isNumber}
-						onChange={(val) => {this.props.primitive.k3 = this._parse(val); this._update()}} />
+						onChange={this.valSetter("k3")} converter={converters.float} />
 					<TextInput className="field" value={this.props.primitive.k4} validator={validators.isNumber}
-						onChange={(val) => {this.props.primitive.k4 = this._parse(val); this._update()}} />
+						onChange={this.valSetter("k4")} converter={converters.float} />
 				</div>
 			: null}
 		</div>;
