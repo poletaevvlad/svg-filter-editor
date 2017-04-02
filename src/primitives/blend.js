@@ -27,19 +27,12 @@ class BlendNode extends Node{
 	constructor(){
 		super();
 		this.title = "Blend";
-		this._modeChanged = this._modeChanged.bind(this);
 	}
 
 	renderEditor(){
 		return <ComboBox value={this.props.primitive.mode} width={this.props.primitive.nodeWidth - 18}
-			values={this.props.primitive.modes.map(mode => {return {value: mode, label: mode}})} label="mode:" 
-			onChange={this._modeChanged}/>
-	}
-
-	_modeChanged(newMode){
-		this.props.primitive.mode = newMode;
-		this.props.onUpdate();
-		this.forceUpdate();
+			values={this.props.primitive.modes.map(mode => {return {value: mode, label: mode}})} 
+			label="mode:" onChange={this.valSetter("mode")}/>
 	}
 }
 
