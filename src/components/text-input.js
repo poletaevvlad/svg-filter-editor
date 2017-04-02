@@ -2,6 +2,7 @@ import React from "react";
 
 import focused from "./focused.js";
 import validators from "./validators.js"
+import converters from "./converters.js"
 
 class TextInput extends React.Component{
 	constructor(props){
@@ -24,15 +25,12 @@ class TextInput extends React.Component{
 	}
 
 	_onChange(e){
-		let valid = validators.VALID;
-		if (typeof this.props.validator != "undefined"){
-			valid = this.props.validator(e.target.value);
-		}
+		let valid = this.props.validator(e.target.value);
 		if (valid != validators.INVALID){
 			this.setState({value: e.target.value, valid: valid == validators.VALID});
 		}
-		if (valid == validators.VALID && typeof this.props.onChange != "undefined"){
-			this.props.onChange(e.target.value, e);
+		if (valid == validators.VALID){
+			this.props.onChange(this.props.converter(e.target.value), e);
 		}
 	}
 
@@ -50,6 +48,13 @@ class TextInput extends React.Component{
 		this.setState(this.state);
 		
 	}
+}
+
+TextInput.defaultProps = {
+	className: "field",
+	validator: validators.any,
+	converter: converters.passthrough,
+	onChange: ()=>{}
 }
 
 module.exports = TextInput;
