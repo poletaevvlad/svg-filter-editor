@@ -89,10 +89,29 @@ class Primitive{
 
 	setProps(props){
 		for (let key in props){
-			this[key] = props[key]
+			let oldValue = this[key];
+			if (oldValue != props[key]){
+				this[key] = props[key];
+				this.onPropertyValueChanged(key, oldValue, props[key]);
+			}
 		}
 		this.changed = true;
 	}
+
+	setPropArrayValue(name, index, value){
+		if (! index instanceof Array){
+			index = [index];
+		}
+
+		let array = this[name];
+		for (let i = 0; i < index.length - 1; i++){
+			array = array[index[i]];
+		}
+		array[index[index.length - 1]] = value;
+		this.changed = true;
+	}
+
+	onPropertyValueChanged(propertyName, oldValue, newValue){}
 }
 
 Primitive.getInputId = (primitive, ioId) => `pr${primitive}_in${ioId}`
