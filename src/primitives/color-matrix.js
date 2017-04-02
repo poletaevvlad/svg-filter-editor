@@ -76,7 +76,7 @@ class ColorMatrixNode extends Node{
 	}
 
 	renderEditor(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			<ComboBox value={this.props.primitive.type} width={this.props.primitive.nodeWidth - 18}
 				values={this.props.primitive.types.map(type => {return {value: type, label: type}})} 
 				label="type:" onChange={this._typeChanged}/>
@@ -88,15 +88,13 @@ class ColorMatrixNode extends Node{
 	}
 
 	_renderMatrix(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			{[0, 1, 2, 3].map(i => 
-				<div key={i} className="horizontalFields compact">
+				<div key={i} className="horizontal">
 					{[0, 1, 2, 3, 4].map(j => 
-						<div key={j} className="field-section">
-							<TextInput className="field" value={this.props.primitive.value[i][j]} 
-								onChange={(val) => this._matrixValueChanged(i, j, val)} 
-								validator={validators.isNumber} />
-						</div>
+						<TextInput key={j} className="field" value={this.props.primitive.value[i][j]} 
+							onChange={(val) => this._matrixValueChanged(i, j, val)} 
+							validator={validators.isNumber} />
 					)}
 				</div>
 			)}
@@ -104,24 +102,18 @@ class ColorMatrixNode extends Node{
 	}
 
 	_renderSaturate(){
-		return <div className="horizontalFields">
-			<div className="field-section">
-				<div className="field-label">
-					<ReactSlider max={250} value={this.props.primitive.value * 250} onChange={e => this._valueChanged(e / 250)}/>
-				</div>
-				<TextInput className="field" value={this.props.primitive.value} 
-					onChange={this._valueChanged} validator={validators.isNumber01} />
-			</div>
+		return <div className="horizontal">
+			<ReactSlider max={250} value={this.props.primitive.value * 250} onChange={e => this._valueChanged(e / 250)}/>
+			<TextInput className="field" value={this.props.primitive.value} 
+				onChange={this._valueChanged} validator={validators.isNumber01} />
 		</div>;
 	}
 
 	_renderHueRotate(){
-		return <div className="horizontalFields compact">
-			<div className="field-section">
-				<TextInput className="field" value={this.props.primitive.value} 
-					onChange={this._valueChanged} validator={validators.isNumber} />
-				<div className="field-label"> deg.</div>
-			</div>
+		return <div className="horizontal">
+			<TextInput className="field" value={this.props.primitive.value} 
+				onChange={this._valueChanged} validator={validators.isNumber} />
+			<div className="label">deg.</div>
 		</div>
 	}
 

@@ -42,25 +42,20 @@ class CompositeNode extends Node{
 	}
 
 	renderEditor(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			<ComboBox value={this.props.primitive.operator} width={this.props.primitive.nodeWidth - 18}
 				values={this.props.primitive.operators.map(op => {return {value: op, label: op}})} 
 				label="operator:" onChange={(val) => {this.props.primitive.operator = val; this._update();}} />
 			{this.props.primitive.operator == "arithmetic" ? 
-				<div className="horizontalFields">
-					<div className="field-section">
-						<TextInput className="field" value={this.props.primitive.k1} validator={validators.isNumber}
-							onChange={(val) => {this.props.primitive.k1 = this._parse(val); this._update()}} />
-						<div className="field-label"></div>
-						<TextInput className="field" value={this.props.primitive.k2} validator={validators.isNumber}
-							onChange={(val) => {this.props.primitive.k2 = this._parse(val); this._update()}} />
-						<div className="field-label"></div>
-						<TextInput className="field" value={this.props.primitive.k3} validator={validators.isNumber}
-							onChange={(val) => {this.props.primitive.k3 = this._parse(val); this._update()}} />
-						<div className="field-label"></div>
-						<TextInput className="field" value={this.props.primitive.k4} validator={validators.isNumber}
-							onChange={(val) => {this.props.primitive.k4 = this._parse(val); this._update()}} />
-					</div>
+				<div className="horizontal">
+					<TextInput className="field" value={this.props.primitive.k1} validator={validators.isNumber}
+						onChange={(val) => {this.props.primitive.k1 = this._parse(val); this._update()}} />
+					<TextInput className="field" value={this.props.primitive.k2} validator={validators.isNumber}
+						onChange={(val) => {this.props.primitive.k2 = this._parse(val); this._update()}} />
+					<TextInput className="field" value={this.props.primitive.k3} validator={validators.isNumber}
+						onChange={(val) => {this.props.primitive.k3 = this._parse(val); this._update()}} />
+					<TextInput className="field" value={this.props.primitive.k4} validator={validators.isNumber}
+						onChange={(val) => {this.props.primitive.k4 = this._parse(val); this._update()}} />
 				</div>
 			: null}
 		</div>;

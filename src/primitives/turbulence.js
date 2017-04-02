@@ -53,44 +53,35 @@ class TurbulenceNode extends Node{
 	}
 
 	renderEditor(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			<ComboBox value={this.props.primitive.type} width={this.props.primitive.nodeWidth - 18}
 				values={this.props.primitive.types.map(type => {return {value: type, label: type}})} 
 				label="type:" onChange={this._typeChanged}/>
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">base freq.:</div>
-					<TextInput className="field" value={this.props.primitive.baseFrequencyX} 
-						onChange={this._baseFrequencyXChanged} validator={validators.isPositiveNumber} />
-					<div className="field-label"></div>
-					<TextInput className="field" value={this.props.primitive.baseFrequencyY} 
-						onChange={this._baseFrequencyYChanged} validator={validators.isPositiveNumber} />
-				</div>
+			<div className="horizontal">
+				<div className="label">base freq.:</div>
+				<TextInput className="field" value={this.props.primitive.baseFrequencyX} 
+					onChange={this._baseFrequencyXChanged} validator={validators.isPositiveNumber} />
+				<TextInput className="field" value={this.props.primitive.baseFrequencyY} 
+					onChange={this._baseFrequencyYChanged} validator={validators.isPositiveNumber} />
 			</div>
 
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">num octaves:</div>
-					<TextInput className="field" value={this.props.primitive.numOctaves} 
-						onChange={this._numOctavesChanged} validator={validators.isPositiveNumber} />
-				</div>
+			<div className="horizontal">
+				<div className="label">num octaves:</div>
+				<TextInput className="field" value={this.props.primitive.numOctaves} 
+					onChange={this._numOctavesChanged} validator={validators.isPositiveNumber} />
 			</div>
 
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">seed:</div>
-					<TextInput className="field" value={this.props.primitive.seed} 
-						onChange={this._seedChanged} validator={validators.isPositiveNumber} />
-				</div>
+			<div className="horizontal">
+				<div className="label">seed:</div>
+				<TextInput className="field" value={this.props.primitive.seed} 
+					onChange={this._seedChanged} validator={validators.isPositiveNumber} />
 			</div>
 
-			<div className="horizontalFields">
-				<label className="field-section noalign">
-					<input type="checkbox" checked={this.props.primitive.stitchTiles} 
-						onChange={this._stitchTilesChanged}/> 
-					<div className="field-label">stitch tiles</div>
-				</label>
-			</div>
+			<label className="horizontal align-middle">
+				<input type="checkbox" checked={this.props.primitive.stitchTiles} 
+					onChange={this._stitchTilesChanged}/> 
+				<div className="label">stitch tiles</div>
+			</label>
 		</div>
 	}
 

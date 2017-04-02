@@ -1,36 +1,22 @@
-.horizontalFields{
+@padding: 4px;
+
+.horizontal{
 	display: flex;
+	align-items: baseline;
 
-	.field-section{
-		flex-grow: 1;
-		display: flex;
-		margin-right: 10px;
-		align-items: baseline;
-
-		&.noalign{
-			align-items: stretch;
-		}
-
+	&>*{
+		margin-right: @padding;
 		&:last-child{
 			margin-right: 0;
 		}
 	}
 
-	&.compact .field-section{
-		margin-right: 4px;
-		&:last-child{
-			margin-right: 0;
-		}
+	&.align-middle{
+		align-items: center;
 	}
 
-	.field-label{
-		margin-right: 5px;
-		margin-left: 5px;
-
-		&:first-child{
-			margin-left: 0;
-		}
-
+	input[type="checkbox"]{
+		margin-right: @padding !important;
 		&:last-child{
 			margin-right: 0;
 		}
@@ -40,14 +26,21 @@
 		flex-grow: 1;
 		width: 0px;
 	}
+
+	.inline-next{
+		margin-left: 5px;
+	}
 }
 
-.vertical-list>*{
-	margin-bottom: 5px;
-}
+.vertical{
+	&>*{
+		margin-bottom: @padding;
 
-.vertical-list>*:last-child{
-	margin-bottom: 0;
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+
 }
 
 .split{

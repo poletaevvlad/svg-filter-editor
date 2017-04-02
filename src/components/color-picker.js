@@ -27,27 +27,19 @@ class ColorPicker extends React.PureComponent{
 			<div className="hue" onMouseDown={focused}><Hue {... this.props} pointer={ColorPickerPointer} 
 				onChange={this.props.onChange}/></div>
 			<div className="color-preview" style={{backgroundColor: this.props.hex}}></div>
-			<div className="rgb horizontalFields compact">
-				<div className="field-section">
-					<div className="field-label">rgb:</div>
-					<TextInput className="field" value={this.props.rgb.r} onChange={this._redChanged} 
-						validator={validators.isColorComponent} />
-				</div>
-				<div className="field-section">
-					<TextInput className="field" value={this.props.rgb.g} onChange={this._greenChanged} 
-						validator={validators.isColorComponent} />
-				</div>
-				<div className="field-section">
-					<TextInput className="field" value={this.props.rgb.b} onChange={this._blueChanged} 
-						validator={validators.isColorComponent} />
-				</div>
+			<div className="rgb horizontal compact">
+				<div className="label">rgb:</div>
+				<TextInput className="field" value={this.props.rgb.r} onChange={this._redChanged} 
+					validator={validators.isColorComponent} />
+				<TextInput className="field" value={this.props.rgb.g} onChange={this._greenChanged} 
+					validator={validators.isColorComponent} />
+				<TextInput className="field" value={this.props.rgb.b} onChange={this._blueChanged} 
+					validator={validators.isColorComponent} />
 			</div>
-			<div className="hex horizontalFields compact">
-				<div className="field-section">
-					<div className="field-label">hex:</div>
-					<TextInput className="field" value={this.props.hex.substr(1)} onChange={this._hexChanged} 
-						validator={validators.isColorHex} />
-				</div>
+			<div className="hex horizontal compact">
+				<div className="label">hex:</div>
+				<TextInput className="field" value={this.props.hex.substr(1)} onChange={this._hexChanged} 
+					validator={validators.isColorHex} />
 			</div>
 		</div>
 	}

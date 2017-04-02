@@ -36,17 +36,13 @@ class OffsetNode extends Node{
 	}
 
 	renderEditor(){
-		return <div className="horizontalFields">
-			<div className="field-section">
-				<div className="field-label">x:</div>
-				<TextInput className="field" value={this.props.primitive.x} onChange={this._xChanged} 
-					validator={validators.isNumber} />
-			</div>
-			<div className="field-section">
-				<div className="field-label">y:</div>
-				<TextInput className="field" value={this.props.primitive.y} onChange={this._yChanged}
-					validator={validators.isNumber} />
-			</div>
+		return <div className="horizontal">
+			<div className="label">x:</div>
+			<TextInput className="field" value={this.props.primitive.x} onChange={this._xChanged} 
+				validator={validators.isNumber} />
+			<div className="label inline-next">y:</div>
+			<TextInput className="field" value={this.props.primitive.y} onChange={this._yChanged}
+				validator={validators.isNumber} />
 		</div>
 	}
 

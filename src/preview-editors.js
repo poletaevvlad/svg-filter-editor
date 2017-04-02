@@ -25,7 +25,7 @@ class BackgroundEditor extends React.Component{
 	}
 
 	render(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			<ComboBox value={this.props.type} width={200 - 18} values={this.types} 
 				label="background type:" onChange={this.props.onTypeChange} />
 			{ this.props.type == "color" ? 
@@ -54,21 +54,17 @@ class ShapeEditor extends React.Component{
 	}
 
 	render(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			<ComboBox value={this.props.shape} width={200 - 18} values={this.shapes} 
 				label="shape:" onChange={this.props.onShapeChange} />
 			{this.props.shape == "rect" || this.props.shape == "ellipse" ? 
-				<div className="content horizontalFields">
-					<div className="field-section">
-						<div className="field-label">width:</div>
-						<TextInput value={this.props.width} onChange={this.props.onWidthChange}
-							validator={validators.isPositiveNumber}/>
-					</div>
-					<div className="field-section">
-						<div className="field-label">height:</div>
-						<TextInput value={this.props.height} onChange={this.props.onHeightChange}
-							validator={validators.isPositiveNumber}/>
-					</div>
+				<div className="content horizontal">
+					<div className="label">width:</div>
+					<TextInput value={this.props.width} onChange={this.props.onWidthChange}
+						validator={validators.isPositiveNumber}/>
+					<div className="label">height:</div>
+					<TextInput value={this.props.height} onChange={this.props.onHeightChange}
+						validator={validators.isPositiveNumber}/>
 				</div>
 			: this.props.shape == "path" ? 
 				<div className="content">
@@ -76,30 +72,24 @@ class ShapeEditor extends React.Component{
 				</div>
 			: null}
 			
-			<div className="horizontalFields">
-				<label className="section-name field-section noalign">
-					<input type="checkbox" checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
-					<div className="field-label">Fill</div>
-				</label>
-			</div>
+			<label className="horizontal align-middle section-name field-section">
+				<input type="checkbox" checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
+				<div className="label">Fill</div>
+			</label>
 			{this.props.fillEnabled ? 
 				<ColorPicker color={this.props.fillColor} onChange={this.props.onFillColorChange}/>
 			: null}
 
-			<div className="horizontalFields">
-				<label className="section-name field-section noalign">
-					<input type="checkbox" checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
-					<div className="field-label">Stroke</div>
-				</label>
-			</div>
+			<label className="horizontal align-middle section-name field-section">
+				<input type="checkbox" checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
+				<div className="field-label">Stroke</div>
+			</label>
 			{this.props.strokeEnabled ? <div>
 				<ColorPicker color={this.props.strokeColor} onChange={this.props.onStrokeColorChange}/>
-				<div className="horizontalFields offset-top">
-					<div className="field-section">
-						<div className="field-label">stroke width:</div>
-						<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}
+				<div className="horizontal offset-top">
+					<div className="label">stroke width:</div>
+					<TextInput value={this.props.strokeWidth} onChange={this.props.onStrokeWidthChange}
 						validator={validators.isNumber}/>
-					</div>
 				</div>
 			</div> : null}
 		</div>

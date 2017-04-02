@@ -36,19 +36,14 @@ class FloodNode extends Node{
 	}
 
 	renderEditor(){
-		return <div className="vertical-list">
-			
+		return <div className="vertical">
 			<ColorPicker color={this.props.primitive.color} onChange={this._colorChanged} />
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label" style={{marginRight: "0"}}>&alpha;:</div>
-					<div className="field-label">
-						<ReactSlider max={1000} value={this.props.primitive.alpha * 1000} 
-							onChange={e => this._alphaChanged(e / 1000)}/>
-					</div>
-					<TextInput className="field" value={this.props.primitive.alpha} 
-						onChange={this._alphaChanged} validator={validators.isNumber01} />
-				</div>
+			<div className="horizontal">
+				<div className="label">&alpha;:</div>
+				<ReactSlider max={1000} value={this.props.primitive.alpha * 1000} 
+					onChange={e => this._alphaChanged(e / 1000)}/>
+				<TextInput className="field" value={this.props.primitive.alpha} 
+					onChange={this._alphaChanged} validator={validators.isNumber01} />
 			</div>
 		</div>;
 	}

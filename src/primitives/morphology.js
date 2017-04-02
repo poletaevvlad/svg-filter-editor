@@ -37,16 +37,14 @@ class MorphologyNode extends Node{
 	}
 
 	renderEditor(){
-		return <div className="vertical-list">
+		return <div className="vertical">
 			<ComboBox value={this.props.primitive.operator} width={this.props.primitive.nodeWidth - 18}
 				values={this.props.primitive.operators.map(op => {return {value: op, label: op}})} 
 				label="operator:" onChange={this._operatorChanged}/>
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">radius:</div>
-					<TextInput className="field" value={this.props.primitive.radius} onChange={this._radiusChanged} 
-						validator={validators.isPositiveNumber} />
-				</div>
+			<div className="horizontal">
+				<div className="label">radius:</div>
+				<TextInput className="field" value={this.props.primitive.radius} onChange={this._radiusChanged} 
+					validator={validators.isPositiveNumber} />
 			</div>
 		</div>;
 	}
