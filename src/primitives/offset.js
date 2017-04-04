@@ -4,6 +4,7 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
+import converters from "../components/converters.js";
 import SVGTag from "../svg-tag.js";
 
 
@@ -29,37 +30,21 @@ class OffsetNode extends Node{
 	constructor(){
 		super();
 		this.title = "Offset";
-		this.state = {};
-
-		this._xChanged = this._xChanged.bind(this);
-		this._yChanged = this._yChanged.bind(this);
 	}
 
 	renderEditor(){
 		return <div className="horizontal">
 			<div className="label">x:</div>
-			<TextInput className="field" value={this.props.primitive.x} onChange={this._xChanged} 
-				validator={validators.isNumber} />
+			<TextInput className="field" value={this.props.primitive.x} onChange={this.valSetter("x")}  
+				validator={validators.isNumber} converter={converters.float} />
 			<div className="label inline-next">y:</div>
-			<TextInput className="field" value={this.props.primitive.y} onChange={this._yChanged}
-				validator={validators.isNumber} />
+			<TextInput className="field" value={this.props.primitive.y} onChange={this.valSetter("y")}
+				validator={validators.isNumber} converter={converters.float} />
 		</div>
 	}
 
 	_parse(val){
 		return parseFloat(val.replace(",", "."));
-	}
-
-	_xChanged(newValue){
-		this.props.primitive.x = this._parse(newValue);
-		this.setState(this.state);
-		this.props.onUpdate();
-	}
-
-	_yChanged(newValue){
-		this.props.primitive.y = this._parse(newValue);
-		this.setState(this.state);
-		this.props.onUpdate();
 	}
 }
 
