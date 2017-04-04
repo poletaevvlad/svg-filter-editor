@@ -14,6 +14,7 @@ class Node extends React.Component{
 				let props = {};
 				props[name] = value;
 				this.setPrimitiveProps(props);
+				this.props.onUpdate();
 			}
 			return setter.bind(this);
 		}
@@ -21,6 +22,7 @@ class Node extends React.Component{
 		this.valArraySetter = (name, index) => {
 			let setter = (value) => {
 				this.setPrimitiveArrayValue(name, index, value);
+				this.props.onUpdate();
 			}
 			return setter.bind(this);	
 		}
