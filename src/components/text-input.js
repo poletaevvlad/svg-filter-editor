@@ -19,7 +19,9 @@ class TextInput extends React.Component{
 	}
 
 	componentWillReceiveProps(nextProps){
-		this.setState({value: nextProps.value});
+		if (nextProps.focused){
+			this.setState({value: nextProps.value});
+		}
 	}
 
 	render(){
