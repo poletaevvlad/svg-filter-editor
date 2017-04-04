@@ -18,6 +18,10 @@ class TextInput extends React.Component{
 		}
 	}
 
+	componentWillReceiveProps(nextProps){
+		this.setState({value: nextProps.value});
+	}
+
 	render(){
 		return <input className={this.props.className + (this.state.valid ? "" : " invalid")} 
 			type="text" value={this.state.value} onChange={this._handleChange} onFocus={this._handleFocus} 
