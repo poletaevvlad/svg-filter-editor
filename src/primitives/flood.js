@@ -5,6 +5,7 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
+import converters from "../components/converters.js";
 import ComboBox from "../components/combobox.js";
 import SVGTag from "../svg-tag.js";
 import ColorPicker from "../components/color-picker.js";
@@ -31,39 +32,21 @@ class FloodNode extends Node{
 	constructor(){
 		super();
 		this.title = "Flood";
-		this._colorChanged = this._colorChanged.bind(this);
-		this._alphaChanged = this._alphaChanged.bind(this);
 	}
 
 	renderEditor(){
 		return <div className="vertical">
-			<ColorPicker color={this.props.primitive.color} onChange={this._colorChanged} />
+			<ColorPicker color={this.props.primitive.color} onChange={val => this.valSetter("color")(val.hex)} />
 			<div className="horizontal">
 				<div className="label">&alpha;:</div>
 				<ReactSlider max={1000} value={this.props.primitive.alpha * 1000} 
-					onChange={e => this._alphaChanged(e / 1000)}/>
+					onChange={e => this.valSetter("alpha")(e / 1000)}/>
 				<TextInput className="field" value={this.props.primitive.alpha} 
-					onChange={this._alphaChanged} validator={validators.isNumber01} />
+					onChange={this.valSetter("alpha")} validator={validators.isNumber01}
+					converter={converters.float} />
 			</div>
 		</div>;
 	}
-
-	_update(){
-		this.props.onUpdate();
-		this.forceUpdate();
-	}
-
-	_colorChanged(e){
-		this.props.primitive.color = e.hex;
-		this._update();
-	}
-
-	_alphaChanged(e){
-		focused(this);
-		this.props.primitive.alpha = e;
-		this._update();	
-	}
-
 }
 
 
