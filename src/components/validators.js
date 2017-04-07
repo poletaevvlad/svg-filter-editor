@@ -130,7 +130,18 @@ module.exports = (()=>{
 				}
 			}
 			return hasNonZero ? VALID : MAY_BE_VALID;
-		}
- 
+		},
+ 		
+ 		range: (validator, min, max) => (n => {
+ 			let result = validator(n);
+ 			if (result != VALID){
+ 				return result;
+ 			}
+ 			let floatValue = parseFloat(n);
+ 			if (min <= floatValue && floatValue <= max){
+ 				return VALID;
+ 			}
+ 			return MAY_BE_VALID;
+ 		})
 	}
 })();

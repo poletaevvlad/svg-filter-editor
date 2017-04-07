@@ -19,7 +19,7 @@ class TextInput extends React.Component{
 	}
 
 	componentWillReceiveProps(nextProps){
-		if (nextProps.focused){
+		if (! this.state.focused){
 			this.setState({value: nextProps.value});
 		}
 	}
@@ -27,7 +27,7 @@ class TextInput extends React.Component{
 	render(){
 		return <input className={this.props.className + (this.state.valid ? "" : " invalid")} 
 			type="text" value={this.state.value} onChange={this._handleChange} onFocus={this._handleFocus} 
-			onBlur={this._handleBlur}/>
+			onBlur={this._handleBlur} disabled={! this.props.enabled}/>
 	}
 
 	_onChange(e){
@@ -60,7 +60,8 @@ TextInput.defaultProps = {
 	className: "field",
 	validator: validators.any,
 	converter: converters.passthrough,
-	onChange: ()=>{}
+	onChange: ()=>{},
+	enabled: true
 }
 
 module.exports = TextInput;

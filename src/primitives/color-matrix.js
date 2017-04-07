@@ -105,7 +105,7 @@ class ColorMatrixNode extends Node{
 						<stop offset="100%" stopColor="#FFF" />
 					</linearGradient>
 					<filter id="filter">
-						{React.createElement(tag.name, tagz.args, null)}
+						{React.createElement(tag.name, tag.args, null)}
 					</filter>
 				</defs>
 				<g filter="url(#filter)">

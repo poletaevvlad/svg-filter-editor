@@ -66,10 +66,6 @@ class CompositeNode extends Node{
 		return parseFloat(val.replace(',', '.'));
 	}
 
-	_update(){
-		this.props.onUpdate();
-		this.forceUpdate();
-	}
 }
 
 module.exports = Composite;

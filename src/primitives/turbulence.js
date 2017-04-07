@@ -44,13 +44,6 @@ class TurbulenceNode extends Node{
 		super();
 		this.title = "Turbulence";
 		this.state = {};
-
-		this._typeChanged = this._typeChanged.bind(this);
-		this._baseFrequencyXChanged = this._baseFrequencyXChanged.bind(this);
-		this._baseFrequencyYChanged = this._baseFrequencyYChanged.bind(this);
-		this._numOctavesChanged = this._numOctavesChanged.bind(this);
-		this._seedChanged = this._seedChanged.bind(this);
-		this._stitchTilesChanged = this._stitchTilesChanged.bind(this);
 	}
 
 	renderEditor(){
@@ -80,45 +73,10 @@ class TurbulenceNode extends Node{
 
 			<label className="horizontal align-middle">
 				<input type="checkbox" checked={this.props.primitive.stitchTiles} 
-					onChange={this.valSetter("stitchTiles")}/> 
+					onChange={e => this.valSetter("stitchTiles")(e.target.checked)}/> 
 				<div className="label">stitch tiles</div>
 			</label>
 		</div>
-	}
-
-	_update(){
-		this.setState(this.state);
-		this.props.onUpdate();
-	}
-
-	_typeChanged(newValue){
-		this.props.primitive.type = newValue;
-		this._update();
-	}
-
-	_baseFrequencyXChanged(newValue){
-		this.props.primitive.baseFrequencyX = parseFloat(newValue.replace(",", "."));
-		this._update();
-	}
-
-	_baseFrequencyYChanged(newValue){
-		this.props.primitive.baseFrequencyY = parseFloat(newValue.replace(",", "."));
-		this._update();
-	}
-
-	_numOctavesChanged(newValue){
-		this.props.primitive.numOctaves = parseInt(newValue);
-		this._update();
-	}
-
-	_seedChanged(newValue){
-		this.props.primitive.seed = parseFloat(newValue.replace(",", "."));
-		this._update();
-	}
-
-	_stitchTilesChanged(e){
-		this.props.primitive.stitchTiles = e.target.checked;
-		this._update();
 	}
 }
 

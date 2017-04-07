@@ -79,8 +79,8 @@ class Primitive{
 
 	makeMatrix(matrix){
 		let matrixString = ""
-		for (let i = 0; i < 4; i++){
-			for (let j = 0; j < 5; j++){
+		for (let i = 0; i < matrix.length; i++){
+			for (let j = 0; j < matrix[i].length; j++){
 				matrixString += `${matrix[i][j]} `;
 			}
 		}
@@ -107,11 +107,14 @@ class Primitive{
 		for (let i = 0; i < index.length - 1; i++){
 			array = array[index[i]];
 		}
+		let oldValue = array[index[index.length - 1]];
 		array[index[index.length - 1]] = value;
+		this.onArrayElementChanged(name, index, oldValue, value);
 		this.changed = true;
 	}
 
 	onPropertyValueChanged(propertyName, oldValue, newValue){}
+	onArrayElementChanged(propertyName, index, oldValue, newValue){}
 }
 
 Primitive.getInputId = (primitive, ioId) => `pr${primitive}_in${ioId}`
