@@ -28,11 +28,11 @@ class ComponentTransfer extends Primitive{
 		let red = this.svgTag("feFuncR");
 		this.red.fillSVGTagProps(red, this.makeMatrix);
 		let green = this.svgTag("feFuncG");
-		this.green.fillSVGTagProps(green);
+		this.green.fillSVGTagProps(green, this.makeMatrix);
 		let blue = this.svgTag("feFuncB");
-		this.blue.fillSVGTagProps(blue);
+		this.blue.fillSVGTagProps(blue, this.makeMatrix);
 		let alpha = this.svgTag("feFuncA");
-		this.alpha.fillSVGTagProps(alpha);
+		this.alpha.fillSVGTagProps(alpha, this.makeMatrix);
 		return this.svgTag("feComponentTransfer").input("in", 0).output("result", 0)
 			.child(red).child(green).child(blue).child(alpha);
 	}
@@ -115,17 +115,44 @@ class ComponentTransferNode extends Node{
 	}
 
 	renderEditor(){
-
+		let previewId = "filter" + this.props.primitive.id;
 		return <div className="vertical">
 			{[{label: "Red", property: "red"}, {label: "Green", property: "green"}, 
 			{label: "Blue", property: "blue"}, {label: "Alpha", property: "alpha"}].map(func => 
-				<Hidable key={func.property} name={func.label} defaultShown={func.property == "red"}>
+				<Hidable key={func.property} name={func.label} defaultShown={false}>
 					<ComponentTransferFunctionComponent 
 						function={this.props.primitive[func.property]} 
 						width={this.props.primitive.nodeWidth - 18}
 						onChange={(property, value) => this.valArraySetter(func.property, [property])(value)} />
 				</Hidable>
 			)}
+
+			<hr />
+			<Hidable name="Preview">
+				<svg width="140" height="40">
+					<defs>
+						<filter id={previewId}>
+							{this.props.primitive.getSVG().makeReactComponent()}
+						</filter>
+						<linearGradient id="red">
+							<stop offset="0%" stopColor="#F00" />
+							<stop offset="100%" stopColor="#000" />
+						</linearGradient>
+						<linearGradient id="green">
+							<stop offset="0%" stopColor="#0F0" />
+							<stop offset="100%" stopColor="#000" />
+						</linearGradient>
+						<linearGradient id="blue">
+							<stop offset="0%" stopColor="#00F" />
+							<stop offset="100%" stopColor="#000" />
+						</linearGradient>
+					</defs>
+
+					<rect width="140" height="10" x="0" y="0" fill="url(#red)" filter={`url(#${previewId})`}/>
+					<rect width="140" height="10" x="0" y="15" fill="url(#green)" filter={`url(#${previewId})`}/>
+					<rect width="140" height="10" x="0" y="30" fill="url(#blue)" filter={`url(#${previewId})`}/>
+				</svg>
+			</Hidable>
 		</div>
 	}
 }
