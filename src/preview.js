@@ -21,26 +21,13 @@ class Preview extends React.Component{
 					<rect className="dark" x="9" y="9" width="9" height="9" />
 				</pattern>
 				<filter id="filter" width="5000%" height="5000%" x="-2500%" y="-2500%">
-					{primitives.map(primitive => this._getSVGComponent(primitive.getSVG(), i++))}
+					{primitives.map(primitive => primitive.getSVG().makeReactComponent(i++))}
 				</filter>
 				<rect x="0" y="0" width="100%" height="100%" {... this._getBackground()} />
 				<g filter="url(#filter)">
 					{this._getShape()}
 				</g>
 			</svg>
-		}
-	}
-
-	_getSVGComponent(svgTag, key){
-		if (svgTag == null){
-			return null;
-		}else{
-			if (typeof key != "undefined"){
-				svgTag.arg("key", key);
-			}
-			let i = 0;
-			return React.createElement(svgTag.name, svgTag.args,
-					svgTag.children.map(tag => this._getSVGComponent(tag, i++)));
 		}
 	}
 

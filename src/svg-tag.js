@@ -1,3 +1,5 @@
+import React from "react";
+
 class SVGTag{
 	constructor(name, args){
 		this.name = name;
@@ -27,6 +29,15 @@ class SVGTag{
 	output(name, id){
 		this.arg(name, this.primitive.getOutputName(id), null)
 		return this;
+	}
+
+	makeReactComponent(key){
+		if (typeof key != "undefined"){
+			this.arg("key", key);
+		}
+		let i = 0;
+		return React.createElement(this.name, this.args,
+			this.children.map(tag => tag.makeReactComponent(i++)));
 	}
 }
 
