@@ -93,12 +93,11 @@ class ColorMatrixNode extends Node{
 				<defs>
 					<linearGradient id="hue" x1="0%" y1="0%" x2="100%" y2="0">
 						<stop offset="0%" stopColor="#F00" />
-						<stop offset="17%" stopColor="#FF0" />
-						<stop offset="33%" stopColor="#0F0" />
-						<stop offset="50%" stopColor="#0FF" />
-						<stop offset="67%" stopColor="#00F" />
-						<stop offset="83%" stopColor="#F0F" />
-						<stop offset="100%" stopColor="#F00" />
+						<stop offset="20%" stopColor="#FF0" />
+						<stop offset="40%" stopColor="#0F0" />
+						<stop offset="60%" stopColor="#0FF" />
+						<stop offset="80%" stopColor="#00F" />
+						<stop offset="100%" stopColor="#800080" />
 					</linearGradient>
 					<linearGradient id="brightness" x1="0%" y1="0%" x2="0%" y2="100%">
 						<stop offset="0%" stopColor="transparent" />
