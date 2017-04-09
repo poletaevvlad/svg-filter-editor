@@ -20,8 +20,7 @@ class Offset extends Primitive{
 
 	getSVG(){
 		return this.svgTag("feOffset")
-			.arg("dx", this.x, "0")
-			.arg("dy", this.y, "0")
+			.arg("dx", this.x, "0").arg("dy", this.y, "0")
 			.input("in", 0).output("result", 0);
 	}
 }
@@ -43,9 +42,6 @@ class OffsetNode extends Node{
 		</div>
 	}
 
-	_parse(val){
-		return parseFloat(val.replace(",", "."));
-	}
 }
 
 module.exports = Offset;

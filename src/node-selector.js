@@ -14,6 +14,7 @@ import Composite from "./primitives/composite.js";
 import ConvolveMatrix from "./primitives/convolve-matrix.js";
 import ComponentTransfer from "./primitives/component-transfer.js";
 import DisplacementMap from "./primitives/displacement-map.js";
+import Image from "./primitives/image.js";
 
 class NodeSelector extends React.PureComponent{
 	constructor(props){
@@ -60,12 +61,11 @@ class NodeSelector extends React.PureComponent{
 			</div>
 			<div className="column">
 				<div className="item" onClick={() => this._selectPrimitive(new GaussianBlur())}>+ Gaussian blur</div>
-				<div className="item">Image</div>
+				<div className="item" onClick={() => this._selectPrimitive(new Image())}>+ Image</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Merge())}>+ Merge</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Morphology())}>+ Morphology</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Offset())}>+ Offset</div>
 				<div className="item" onClick={() => this._selectPrimitive(new SpecularLighting())}>+ Specular lighting</div>
-				<div className="item">Tile</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Turbulence())}>+ Turbulence</div>
 			</div>
 		</div>
