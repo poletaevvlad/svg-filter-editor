@@ -4,6 +4,7 @@ import NodesContainer from "./nodes-container.js";
 import Preview from "./preview.js";
 import Filter from "./filter.js";
 import CodeDisplay from "./code-display.js";
+import AboutWindow from "./about-window.js";
 
 import { BackgroundEditor, ShapeEditor } from "./preview-editors.js";
 
@@ -35,7 +36,8 @@ class FilterEditor extends React.Component{
 			strokeEnabled: false,
 			strokeColor: "#000000",
 			strokeWidth: 1,
-			path: "M0 0 H100 V50 H0 Z"
+			path: "M0 0 H100 V50 H0 Z",
+			aboutShown: false 
 		}
 
 	}
@@ -59,6 +61,7 @@ class FilterEditor extends React.Component{
 					<div className={"section" + (this.state.editing == "code" ? " active" : "")} onClick={() => this._toggleEditor("code")}>Show code</div>
 					<div className={"section" + (this.state.editing == "shape" ? " active" : "")} onClick={() => this._toggleEditor("shape")}>Shape</div>
 					<div className={"section" + (this.state.editing == "background" ? " active" : "")} onClick={() => this._toggleEditor("background")}>Background</div>
+					<div className="section short" onClick={() => this.setState({aboutShown: true})}>?</div>
 				</div>
 				{this._renderEditor()}
 				{this.state.editing == "code" ? 
@@ -70,6 +73,7 @@ class FilterEditor extends React.Component{
 					strokeColor={this.state.strokeColor} strokeWidth={this.state.strokeWidth} path={this.state.path} />
 				}
 			</div>
+			{this.state.aboutShown ? <AboutWindow onClose={() => this.setState({aboutShown: false})} /> : null}
 		</div>
 	}
 
