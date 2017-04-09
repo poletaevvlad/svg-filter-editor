@@ -3,6 +3,25 @@ module.exports = (()=>{
 	const VALID = 1;
 	const MAY_BE_VALID = 2;
 
+	function isPositiveNumber(n){
+		if (n.length == 0 || n == "," || n == "."){
+			return MAY_BE_VALID;
+		}
+		let separatorFound = false;
+		for (let i = 0; i < n.length; i++){
+			if (n[i] == '.' || n[i] == ","){
+				if (separatorFound){
+					return INVALID;
+				}else{
+					separatorFound = true;
+				}
+			}else if ("0123456789".indexOf(n[i]) < 0){
+				return INVALID;
+			}
+		}
+		return VALID;	
+	}
+
 	return {
 		INVALID: INVALID,
 		VALID: VALID,
@@ -39,24 +58,15 @@ module.exports = (()=>{
 			return VALID;
 		},
 
-		isPositiveNumber: n => {
-			if (n.length == 0 || n == "," || n == "."){
-				return MAY_BE_VALID;
+		isGreaterThatZero: n => {
+			let valid = isPositiveNumber(n);
+			if (valid == VALID && parseFloat(n) <= 1e-5){
+				valid = MAY_BE_VALID;
 			}
-			let separatorFound = false;
-			for (let i = 0; i < n.length; i++){
-				if (n[i] == '.' || n[i] == ","){
-					if (separatorFound){
-						return INVALID;
-					}else{
-						separatorFound = true;
-					}
-				}else if ("0123456789".indexOf(n[i]) < 0){
-					return INVALID;
-				}
-			}
-			return VALID;	
+			return valid;
 		},
+
+		isPositiveNumber: isPositiveNumber,
 
 		isNumber01: n => {
 			if (n.length == 0 || n == "," || n == "."){

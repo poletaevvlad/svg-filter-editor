@@ -5,88 +5,113 @@ import Primitive from "../primitive.js";
 import Node from "../node-ui.js";
 import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
+import converters from "../components/converters.js";
 import ComboBox from "../components/combobox.js";
 import SVGTag from "../svg-tag.js";
 import ColorPicker from "../components/color-picker.js";
 
 
 class Lighting extends Primitive{
-	constructor(){
+	constructor(props){
 		super();
 		this.createInput("Input", 0);
 		this.createOutput("Output", 0);
 		this.nodeComponentClass = LightingNode;
 
+		this.isDiffuse = true;
 		this.surfaceScale = 1;
 		this.constant = 1;
+		this.exponent = 1;
 		this.kernelUnitLengthX = 1;
 		this.kernelUnitLengthY = 1;
 
 		this.lightType = "point";
 		this.lightTypes = [{value: "point", label: "Point light"}, 
 			{value: "spot", label: "Spot light"}, 
-			{value: "distant", label: "Distant light"}];
+			/*{value: "distant", label: "Distant light"}*/];
 
 		this.x = 0;
 		this.y = 0;
 		this.z = 0;
+
+		this.pointsAtX = 0;
+		this.pointsAtY = 0;
+		this.pointsAtZ = 0;
+
+		this.azimuth = 0;
+		this.elevation = 0;
  	}
 
  	getSVG(){
- 		let tag = this.svgTag("feDifuseLighting").input("in", 0).output("result", 0)
+ 		let tag = this.svgTag(this.isDiffuse ? "feDiffuseLighting" : "feSpecularLighting").input("in", 0).output("result", 0)
  			.arg("surfaceScale", this.surfaceScale, "1")
- 			.arg("diffuseConstant", this.diffuseConstant, "1")
- 			.arg("kernelUnitLength", `${primitive.kernelUnitLengthX} ${primitive.kernelUnitLengthY}`, "1 1")
+ 			.arg(this.isDiffuse ? "diffuseConstant" : "specularConstant", this.constant, "1")
+ 			.arg("kernelUnitLength", `${this.kernelUnitLengthX} ${this.kernelUnitLengthY}`, "1 1")
  			.arg("lightingColor", "white", null);
- 		if (this.lightType == "point"){
-			tag.child(this.svgTag("fePointLight").arg("x", this.x, null).arg("y", primitive.y, null)
-				.arg("z", primitive.z, null));
+ 		if (! this.isDiffuse){
+ 			tag.arg("specularExponent", this.exponent, null);
  		}
+ 		if (this.lightType == "point"){
+			tag.child(this.svgTag("fePointLight").arg("x", this.x, null).arg("y", this.y, null).arg("z", this.z, null));
+ 		}else if (this.lightType == "distant"){
+ 			tag.child(this.svgTag("feDistantLight").arg("azimuth", azimuth, null).arg("elevation", this.elevation, null));
+ 		}else if (this.lightType == "spot"){
+ 			tag.child(this.svgTag("feSpotLight").arg("x", this.x, null).arg("y", this.y, null).arg("z", this.z, null)
+ 				.arg("pointsAtX", this.pointsAtX, null).arg("pointsAtY", this.pointsAtY, null).arg("pointsAtZ", this.pointsAtZ, null));
+ 		}
+ 		return tag;
  	}
 }
 
-class LightingNode extends Node{
+class DiffuseLighting extends Lighting{	
+}
+
+class SpecularLighting extends Lighting{
 	constructor(){
 		super();
-		this.title = "Lighting";
-		this._surfaceScaleChanged = this._surfaceScaleChanged.bind(this);
-		this._constantChanged = this._constantChanged.bind(this);
-		this._kernelUnitLengthXChanged = this._kernelUnitLengthXChanged.bind(this);
-		this._kernelUnitLengthYChanged = this._kernelUnitLengthYChanged.bind(this);
-		this._listTypeChanged = this._listTypeChanged.bind(this);
+		this.isDiffuse = false;
+	}
+}
+
+class LightingNode extends Node{
+	constructor(props){
+		super(props);
+		this.title = props.primitive.isDiffuse ? "Diffuse lighting" : "Specular lighting";
 	}
 
 	renderEditor(){
-		return <div className="vertical-list">
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">surface scale:</div>
-					<TextInput className="field" value={this.props.primitive.surfaceScale} 
-						onChange={this._surfaceScaleChanged} validator={validators.isPositiveNumber} />
-				</div>
+		return <div className="vertical">
+			<div className="horizontal">
+				<div className="label">surface scale:</div>
+				<TextInput value={this.props.primitive.surfaceScale} converter={converters.float}
+					onChange={this.valSetter("surfaceScale")} validator={validators.isGreaterThatZero} />
 			</div>
 
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">difuse const.:</div>
-					<TextInput className="field" value={this.props.primitive.constant} 
-						onChange={this._constantChanged} validator={validators.isPositiveNumber} />
-				</div>
+			<div className="horizontal">
+				<div className="label">{this.props.primitive.isDiffuse ? "difuse" : "specular"} const.:</div>
+				<TextInput value={this.props.primitive.constant} converter={converters.float}
+					onChange={this.valSetter("constant")} validator={validators.isPositiveNumber} />
 			</div>
 
-			<div className="horizontalFields">
-				<div className="field-section">
-					<div className="field-label">kernel unit:</div>
-					<TextInput className="field" value={this.props.primitive.kernelUnitLengthX} 
-						onChange={this._kernelUnitLengthXChanged} validator={validators.isPositiveNumber} />
-					<div className="field-label"></div>
-					<TextInput className="field" value={this.props.primitive.kernelUnitLengthY} 
-						onChange={this._kernelUnitLengthYChanged} validator={validators.isPositiveNumber} />
-				</div>
+			{this.props.primitive.isDiffuse ? null : <div className="section">specular exp.:</div>}
+			{this.props.primitive.isDiffuse ? null : 
+				<div className="horizontal">
+					<ReactSlider min={1} max={128} value={this.props.primitive.exponent} onChange={this.valSetter("exponent")}/>
+					<TextInput value={this.props.primitive.exponent} converter={converters.float}
+						onChange={this.valSetter("exponent")} validator={validators.range(validators.isPositiveNumber, 1, 128)} />
+				</div>}
+
+			<div className="horizontal">
+				<div className="label">kernel unit:</div>
+				<TextInput value={this.props.primitive.kernelUnitLengthX} converter={converters.float}
+					onChange={this.valSetter("kernelUnitLengthX")} validator={validators.isPositiveNumber} />
+				<TextInput value={this.props.primitive.kernelUnitLengthY} converter={converters.float}
+					onChange={this.valSetter("kernelUnitLengthY")} validator={validators.isPositiveNumber} />
 			</div>
 
 			<ComboBox value={this.props.primitive.lightType} width={this.props.primitive.nodeWidth - 18}
-				values={this.props.primitive.lightTypes} label="light:" onChange={this._listTypeChanged}/>
+				values={this.props.primitive.lightTypes} label="light:" onChange={this.valSetter("lightType")}/>
+			
 			{ this.props.primitive.lightType == "point" ? this._renderPointLight() :
 			  this.props.primitive.lightType == "spot" ? this._renderSpotLight() :
 			  this.props.primitive.lightType == "distant" ? this._renderDistantLight() : null }
@@ -94,58 +119,62 @@ class LightingNode extends Node{
 	}
 
 	_renderPointLight(){
-		return <div className="horizontalFields">
-			<div className="field-section">
-				<div className="field-label">xyz:</div>
-				<TextInput className="field" value={this.props.primitive.x} validator={validators.isNumber}
-					onChange={(val) => {this.props.primitive.x = parseFloat(val.replace(",", ".")); this._update()}}/>
-				<div className="field-label"></div>
-				<TextInput className="field" value={this.props.primitive.y} validator={validators.isNumber}
-					onChange={(val) => {this.props.primitive.y = parseFloat(val.replace(",", ".")); this._update()}}/>
-				<div className="field-label"></div>
-				<TextInput className="field" value={this.props.primitive.z} validator={validators.isNumber}
-					onChange={(val) => {this.props.primitive.z = parseFloat(val.replace(",", ".")); this._update()}}/>
+		return <div className="horizontal">
+			<div className="field-label">xyz:</div>
+			<TextInput value={this.props.primitive.x} converter={converters.float}
+				onChange={this.valSetter("x")} validator={validators.isNumber} />
+			<TextInput value={this.props.primitive.y} converter={converters.float}
+				onChange={this.valSetter("y")} validator={validators.isNumber} />
+			<TextInput value={this.props.primitive.z} converter={converters.float}
+				onChange={this.valSetter("z")} validator={validators.isNumber} />
+		</div>
+	}
+
+	_renderDistantLight(){
+		return null;
+		return <div className="vertical">
+			<div className="section">azimuth:</div>
+			<div className="horizontal">
+				<ReactSlider max={360} value={this.props.primitive.azimuth} onChange={this.valSetter("azimuth")}/>
+				<TextInput className="field" value={this.props.primitive.azimuth} onChange={this.valSetter("azimuth")} 
+					validator={validators.isNumber} converter={converters.float} />
+			</div>
+			<div className="section">elevation:</div>
+			<div className="horizontal">
+				<ReactSlider max={360} value={this.props.primitive.elevation} onChange={this.valSetter("elevation")}/>
+				<TextInput className="field" value={this.props.primitive.elevation} onChange={this.valSetter("elevation")} 
+					validator={validators.isNumber} converter={converters.float} />
 			</div>
 		</div>
 	}
 
 	_renderSpotLight(){
-		return null;
+		return <div className="vertical">
+			<div className="horizontal">
+				<div className="field-label">xyz:</div>
+				<TextInput value={this.props.primitive.x} converter={converters.float}
+					onChange={this.valSetter("x")} validator={validators.isNumber} />
+				<TextInput value={this.props.primitive.y} converter={converters.float}
+					onChange={this.valSetter("y")} validator={validators.isNumber} />
+				<TextInput value={this.props.primitive.z} converter={converters.float}
+					onChange={this.valSetter("z")} validator={validators.isNumber} />
+			</div>
+
+			<div className="horizontal">
+				<div className="field-label">points at:</div>
+				<TextInput value={this.props.primitive.pointsAtX} converter={converters.float}
+					onChange={this.valSetter("pointsAtX")} validator={validators.isNumber} />
+				<TextInput value={this.props.primitive.pointsAtY} converter={converters.float}
+					onChange={this.valSetter("pointsAtY")} validator={validators.isNumber} />
+				<TextInput value={this.props.primitive.pointsAtZ} converter={converters.float}
+					onChange={this.valSetter("pointsAtZ")} validator={validators.isNumber} />
+			</div>
+		</div>
 	}
 
-	_renderDistantLight(){
-		return null;
-	}
-
-	_update(){
-		this.props.onUpdate();
-		this.forceUpdate();
-	}
-
-	_surfaceScaleChanged(e){
-		this.props.primitive.surfaceScale = parseFloat(e.replace(",", "."));
-		this._update();
-	}
-
-	_constantChanged(e){
-		this.props.primitive.constant = parseFloat(e.replace(",", "."));
-		this._update();
-	}
-
-	_kernelUnitLengthXChanged(e){
-		this.props.primitive.kernelUnitLengthX = parseFloat(e.replace(",", "."));
-		this._update();
-	}
-
-	_kernelUnitLengthYChanged(e){
-		this.props.primitive.kernelUnitLengthY = parseFloat(e.replace(",", "."));
-		this._update();
-	}
-
-	_listTypeChanged(e){
-		this.props.primitive.lightType = e;
-		this._update();
-	}
 }
 
-module.exports = Lighting;
+module.exports = {
+	DiffuseLighting: DiffuseLighting,
+	SpecularLighting: SpecularLighting
+};

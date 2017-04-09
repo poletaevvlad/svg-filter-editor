@@ -20,7 +20,7 @@ class Preview extends React.Component{
 					<rect className="dark" x="0" y="0" width="9" height="9" />
 					<rect className="dark" x="9" y="9" width="9" height="9" />
 				</pattern>
-				<filter id="filter" width="5000%" height="5000%" x="-2500%" y="-2500%">
+				<filter id="filter" width="5000%" height="5000%" x="-2500%" y="-2500%" primitiveUnits="objectBoundingBox">
 					{primitives.map(primitive => primitive.getSVG().makeReactComponent(i++))}
 				</filter>
 				<rect x="0" y="0" width="100%" height="100%" {... this._getBackground()} />
