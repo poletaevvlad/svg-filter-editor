@@ -1,19 +1,19 @@
 #node-selector{
 	position: absolute;
-    background: #454545;
-    z-index: 3;
-    border: 1px solid #222;
-    border-radius: 5px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 3px rgba(0, 0, 0, 0.1);
-    padding: 7px;
-    left: 250px;
-    top: 100px;
+	background: #454545;
+	z-index: 3;
+	border: 1px solid #222;
+	border-radius: 5px;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 3px rgba(0, 0, 0, 0.1);
+	padding: 7px;
+	left: 250px;
+	top: 100px;
 	display: flex;
-    width: 200px;
+	width: 320px;
 
 	.column{
 		margin-right: 10px;
-        flex-shrink: 0;
+			flex-shrink: 0;
 
 		&:last-child{
 			margin-right: 0;
@@ -22,19 +22,19 @@
 
 	.item{
 		padding: 1px 5px;
-    	border-radius: 3px;
-    	color: #bbb;
-    	transform: color 0.2s, background-color 0.2s;
-        word-wrap: nowrap;
+		border-radius: 3px;
+		color: #bbb;
+		transform: color 0.2s, background-color 0.2s;
+		  word-wrap: nowrap;
 
-    	&:hover{
-    		background-color: orange;
-    		color: black;
-    	}
+		&:hover{
+			background-color: orange;
+			color: black;
+		}
 
-    	&:active{
-    		background-color: lighten(orange, 10%);
-    	}
+		&:active{
+			background-color: lighten(orange, 10%);
+		}
 	}
 
 	.section{
@@ -42,6 +42,7 @@
 		font-weight: bold;
 		color: #eee;
 		padding-left: 5px;
+		margin-top: 7px;
 		margin-bottom: 4px;
-    }
+	 }
 }

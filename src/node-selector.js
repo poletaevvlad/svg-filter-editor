@@ -19,7 +19,7 @@ import Image from "./primitives/image.js";
 class NodeSelector extends React.PureComponent{
 	constructor(props){
 		super();
-		this._selectPrimitive = this._onPrimitiveSelected.bind(this);
+		this.addPrimitive = this.addPrimitive.bind(this);
 		this.state = {
 			x: props.x + 5,
 			y: props.y + 5
@@ -48,32 +48,43 @@ class NodeSelector extends React.PureComponent{
 	render(){
 		return <div ref="root" id="node-selector" style={{left: this.state.x, top: this.state.y}}>
 			<div className="column">
-				<div className="item" onClick={() => this._selectPrimitive(new Input())}>+ Input</div>
-				<div className="section">Primitives</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Blend())}>+ Blend</div>
-				<div className="item" onClick={() => this._selectPrimitive(new ColorMatrix())}>+ Color matrix</div>
-				<div className="item" onClick={() => this._selectPrimitive(new ComponentTransfer())}>+ Component transfer</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Composite())}>+ Composite</div>
-				<div className="item" onClick={() => this._selectPrimitive(new ConvolveMatrix())}>+ Convolve matrix</div>
-				<div className="item" onClick={() => this._selectPrimitive(new DiffuseLighting())}>+ Difuse lighting</div>
-				<div className="item" onClick={() => this._selectPrimitive(new DisplacementMap())}>+ Displacement map</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Flood())}>+ Flood</div>
+				<div className="section">Inputs</div>
+				<div className="item" onClick={this.addPrimitive(new Input())}>Input</div>
+				<div className="item" onClick={this.addPrimitive(new Flood())}>Flood</div>
+				<div className="item" onClick={this.addPrimitive(new Image())}>Image</div>
+				<div className="item" onClick={this.addPrimitive(new Turbulence())}>Turbulence</div>
+				
+				<div className="section">Lighting</div>
+				<div className="item" onClick={this.addPrimitive(new DiffuseLighting())}>Difuse lighting</div>
+				<div className="item" onClick={this.addPrimitive(new SpecularLighting())}>Specular lighting</div>
+
 			</div>
 			<div className="column">
-				<div className="item" onClick={() => this._selectPrimitive(new GaussianBlur())}>+ Gaussian blur</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Image())}>+ Image</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Merge())}>+ Merge</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Morphology())}>+ Morphology</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Offset())}>+ Offset</div>
-				<div className="item" onClick={() => this._selectPrimitive(new SpecularLighting())}>+ Specular lighting</div>
-				<div className="item" onClick={() => this._selectPrimitive(new Turbulence())}>+ Turbulence</div>
+				<div className="section">Geometry manipulation</div>
+				<div className="item" onClick={this.addPrimitive(new Offset())}>Offset</div>
+				<div className="item" onClick={this.addPrimitive(new ConvolveMatrix())}>Convolve matrix</div>
+				<div className="item" onClick={this.addPrimitive(new DisplacementMap())}>Displacement map</div>
+				<div className="item" onClick={this.addPrimitive(new GaussianBlur())}>Gaussian blur</div>
+				<div className="item" onClick={this.addPrimitive(new Morphology())}>Morphology</div>
+			</div>
+			<div className="column">
+				<div className="section">Combining</div>
+				<div className="item" onClick={this.addPrimitive(new Blend())}>Blend</div>
+				<div className="item" onClick={this.addPrimitive(new Composite())}>Composite</div>
+				<div className="item" onClick={this.addPrimitive(new Merge())}>Merge</div>
+
+				<div className="section">Color manipulation</div>
+				<div className="item" onClick={this.addPrimitive(new ColorMatrix())}>Color matrix</div>
+				<div className="item" onClick={this.addPrimitive(new ComponentTransfer())}>Component transfer</div>
 			</div>
 		</div>
 	}
 
-	_onPrimitiveSelected(component){
-		if (typeof this.props.onSelected != "undefined"){
-			this.props.onSelected(component);
+	addPrimitive(component){
+		return (e) =>{
+			if (typeof this.props.onSelected != "undefined"){
+				this.props.onSelected(component);
+			}
 		}
 	}
 }
