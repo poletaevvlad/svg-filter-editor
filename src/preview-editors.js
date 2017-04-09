@@ -18,9 +18,9 @@ class BackgroundEditor extends React.Component{
 		]
 
 		this.checkerboardTypes = [
-			{value: "dark", "class": "checkerboard-dark"},
-			{value: "light", "class": "checkerboard-light"},
-			{value: "contrast", "class": "checkerboard-contrast"}
+			{value: "dark", "class": "checkerboard-dark", label: ""},
+			{value: "light", "class": "checkerboard-light", label: ""},
+			{value: "contrast", "class": "checkerboard-contrast", label:""}
 		]
 	}
 

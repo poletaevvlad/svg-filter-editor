@@ -2,7 +2,6 @@ import Primitive from "./primitive.js"
 import Output from "./primitives/output.js"
 
 import Connection from "./connection.js";
-import ComponentTransfer from "./primitives/component-transfer.js";
 
 let RESERVED_INPUT = ["SourceGraphic", "SourceAlpha"];
 
@@ -15,7 +14,6 @@ class Filter{
 		this.output = new Output();
 
 		this.addPrimitive(this.output);
-		this.addPrimitive(new ComponentTransfer());
 	}
 
 	_notifyConnectionChange(connection){

@@ -12,8 +12,8 @@ import Lighting from "./primitives/lighting.js";
 import Input from "./primitives/input.js";
 import Composite from "./primitives/composite.js";
 import ConvolveMatrix from "./primitives/convolve-matrix.js";
-import ComponentTransfer from "./primitives/component-transfer.js"
-
+import ComponentTransfer from "./primitives/component-transfer.js";
+import DisplacementMap from "./primitives/displacement-map.js";
 
 class NodeSelector extends React.PureComponent{
 	constructor(props){
@@ -55,7 +55,7 @@ class NodeSelector extends React.PureComponent{
 				<div className="item" onClick={() => this._selectPrimitive(new Composite())}> +Composite</div>
 				<div className="item" onClick={() => this._selectPrimitive(new ConvolveMatrix())}>+ Convolve matrix</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Lighting())}>+ Difuse lighting</div>
-				<div className="item">Displacement map</div>
+				<div className="item" onClick={() => this._selectPrimitive(new DisplacementMap())}>+ Displacement map</div>
 				<div className="item" onClick={() => this._selectPrimitive(new Flood())}>+ Flood</div>
 			</div>
 			<div className="column">
