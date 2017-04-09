@@ -7,7 +7,9 @@ class Selector extends React.PureComponent{
 			{this.props.values.map(val => {
 					let value = val.value;
 					return <div key={val.value} onClick={e => {focused(); this.props.onChange(value)}}
-						className={"item " + val.class + (this.props.value == val.value ? " selected" : "")} />
+						className={"item " + val.class + (this.props.value == val.value ? " selected" : "")} >
+						{val.label}
+					</div>
 				}
 			)}
 		</div>
