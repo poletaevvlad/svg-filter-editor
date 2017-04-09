@@ -102,7 +102,7 @@ class FilterEditor extends React.Component{
 					strokeWidth={this.state.strokeWidth}
 					onStrokeWidthChange={val => this.setState({strokeWidth: parseFloat(val.replace(",", "."))})}
 					path={this.state.path}
-					onPathChange={val => this.setState({path: val.trget.value})}
+					onPathChange={event => this.setState({path: event.target.value})}
 					/>
 			</div>	
 		}
