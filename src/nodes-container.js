@@ -73,6 +73,7 @@ class NodesContainer extends React.Component{
 		this._selectionBoxY = 0;
 
 		this._nodeSelectorOpen = false;
+		this._instructionsVisible = true;
 		this._nodeSelectorX = 0;
 		this._nodeSelectorY = 0;
 	}
@@ -121,6 +122,10 @@ class NodesContainer extends React.Component{
 						selected={true}/>
 				 : null}
 			</svg>
+
+			<div id="instruction" {... this._instructionsVisible ? {className: "visible"} : null}>
+				<i>Double-click</i> to add nodes. Use <i>middle mouse button</i> to pan.
+			</div>
 		</div>
 	}
 
@@ -358,6 +363,7 @@ class NodesContainer extends React.Component{
 	_onDoubleClick(e){
 		if (! this._nodeSelectorOpen && (e.target.id == "nodes-origin" || e.target.id == "nodes-connections")){
 			this._nodeSelectorOpen = true;
+			this._instructionsVisible = false;
 			this._nodeSelectorX = e.nativeEvent.clientX;
 			this._nodeSelectorY = e.nativeEvent.clientY;
 			this.setState(this.state);

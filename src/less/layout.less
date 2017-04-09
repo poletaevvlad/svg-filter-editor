@@ -117,3 +117,20 @@
 	font-size: 13px;
 	padding: 0 10px
 }
+
+#instruction{
+	position: absolute;
+	left: 50px;
+	right: 50px;
+	text-align: center;
+	color: #777;
+	font-size: 11px;
+	bottom: -50px;
+	opacity: 0.0;
+	transition: bottom 0.7s, opacity 0.7s;
+
+	&.visible{
+		bottom: 20px;
+		opacity: 1.0;
+	}
+}
