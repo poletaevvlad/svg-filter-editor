@@ -10,6 +10,7 @@ import ComboBox from "../components/combobox.js";
 import SVGTag from "../svg-tag.js";
 import { arrayRange } from "../utils.js";
 import Hidable from "../components/hidable.js";
+import CheckBox from "../components/checkbox.js";
 
 
 class ConvolveMatrix extends Primitive{
@@ -148,7 +149,7 @@ class ConvolveMatrixNode extends Node{
 			<Hidable name="Details">
 				<div className="vertical">
 					<div className="horizontal align-middle">
-						<input type="checkbox" checked={this.props.primitive.divisorActive} onChange={e => this.valSetter("divisorActive")(e.target.checked)}/>
+						<CheckBox checked={this.props.primitive.divisorActive} onChange={e => this.valSetter("divisorActive")(e.target.checked)}/>
 						<div className="label">divisor:</div>
 						<TextInput value={this.props.primitive.divisor} onChange={this.valSetter("divisor")} 
 							enabled={this.props.primitive.divisorActive} validator={validators.isNumber} converter={converters.float} />
@@ -165,7 +166,7 @@ class ConvolveMatrixNode extends Node{
 						label="edge mode:" onChange={this.valSetter("edgeMode")} />
 
 					<label className="horizontal align-middle">
-						<input type="checkbox" checked={this.props.primitive.preserveAlpha} onChange={e => this.valSetter("preserveAlpha")(e.target.checked)}/>
+						<CheckBox checked={this.props.primitive.preserveAlpha} onChange={e => this.valSetter("preserveAlpha")(e.target.checked)}/>
 						<div className="label">preserve alpha</div>
 					</label>
 				</div>

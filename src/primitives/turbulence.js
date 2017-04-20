@@ -6,8 +6,8 @@ import TextInput from "../components/text-input.js";
 import validators from "../components/validators.js";
 import converters from "../components/converters.js";
 import ComboBox from "../components/combobox.js";
+import CheckBox from "../components/checkbox.js";
 import SVGTag from "../svg-tag.js";
-
 
 class Turbulence extends Primitive{
 	constructor(){
@@ -72,8 +72,7 @@ class TurbulenceNode extends Node{
 			</div>
 
 			<label className="horizontal align-middle">
-				<input type="checkbox" checked={this.props.primitive.stitchTiles} 
-					onChange={e => this.valSetter("stitchTiles")(e.target.checked)}/> 
+				<CheckBox checked={this.props.primitive.stitchTiles} onChange={e => this.valSetter("stitchTiles")(e.target.checked)}/> 
 				<div className="label">stitch tiles</div>
 			</label>
 		</div>

@@ -6,7 +6,7 @@ import Selector from "./components/selector.js";
 import TextInput from "./components/text-input.js";
 import validators from "./components/validators.js";
 import focused from "./components/focused.js";
-
+import CheckBox from "./components/checkbox.js"
 
 class BackgroundEditor extends React.Component{
 	constructor(){
@@ -73,7 +73,7 @@ class ShapeEditor extends React.Component{
 			: null}
 			
 			<label className="horizontal align-middle section-name field-section">
-				<input type="checkbox" checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
+				<CheckBox checked={this.props.fillEnabled} onChange={this.props.onFillEnabledChange} />
 				<div className="label">Fill</div>
 			</label>
 			{this.props.fillEnabled ? 
@@ -81,7 +81,7 @@ class ShapeEditor extends React.Component{
 			: null}
 
 			<label className="horizontal align-middle section-name field-section">
-				<input type="checkbox" checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
+				<CheckBox checked={this.props.strokeEnabled} onChange={this.props.onStrokeEnabledChange}/>
 				<div className="field-label">Stroke</div>
 			</label>
 			{this.props.strokeEnabled ? <div>
