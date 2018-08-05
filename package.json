@@ -2,6 +2,7 @@
   "name": "svg-filter-editor",
   "version": "1.0.0",
   "description": "A GUI node-based editor for creating SVG Filters",
+  "repository": "https://github.com/poletaevvlad/svg-filter-editor",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "grunt test"
@@ -9,6 +10,8 @@
   "author": "Vlad Poletaev",
   "license": "MIT",
   "dependencies": {
+    "grunt": "^1.0.3",
+    "npm": "^6.3.0",
     "react": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.2",
     "react-color": "^2.11.4",
