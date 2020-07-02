@@ -11,59 +11,77 @@ import SVGTag from "../svg-tag.js";
 import focused from "../components/focused.js";
 import Selector from "../components/selector.js";
 
-class DisplacementMap extends Primitive{
-	constructor(){
-		super();
-		this.createInput("Input", 0);
-		this.createInput("Displacement", 1);
-		this.createOutput("Output", 0);
-		this.nodeComponentClass = DisplacementMapNode;
+class DisplacementMap extends Primitive {
+  constructor() {
+    super();
+    this.createInput("Input", 0);
+    this.createInput("Displacement", 1);
+    this.createOutput("Output", 0);
+    this.nodeComponentClass = DisplacementMapNode;
 
-		this.scale = 0;
-		this.xChannelSelector = "A";
-		this.yChannelSelector = "A";
-		this.channelSelectors = ["R", "G", "B", "A"];
+    this.scale = 0;
+    this.xChannelSelector = "A";
+    this.yChannelSelector = "A";
+    this.channelSelectors = ["R", "G", "B", "A"];
 
-		this.alpha = 1;
-	}
+    this.alpha = 1;
+  }
 
-	getSVG(){
-		return this.svgTag("feDisplacementMap").output("result", 0).input("in", 0).input("in2", 1)
-			.arg("scale", this.scale, "0")
-			.arg("xChannelSelector", this.xChannelSelector, "A")
-			.arg("yChannelSelector", this.yChannelSelector, "A");
-	}
+  getSVG() {
+    return this.svgTag("feDisplacementMap")
+      .output("result", 0)
+      .input("in", 0)
+      .input("in2", 1)
+      .arg("scale", this.scale, "0")
+      .arg("xChannelSelector", this.xChannelSelector, "A")
+      .arg("yChannelSelector", this.yChannelSelector, "A");
+  }
 }
 
-class DisplacementMapNode extends Node{
-	constructor(){
-		super();
-		this.title = "DisplacementMap";
-	}
+class DisplacementMapNode extends Node {
+  constructor() {
+    super();
+    this.title = "DisplacementMap";
+  }
 
-	renderEditor(){
-		return <div className="vertical">
-			<div className="horizontal">
-				<div className="label">scale:</div>
-				<TextInput className="field" value={this.props.primitive.scale} 
-					onChange={this.valSetter("scale")} validator={validators.isNumber}
-					converter={converters.float} />
-			</div>
+  renderEditor() {
+    return (
+      <div className="vertical">
+        <div className="horizontal">
+          <div className="label">scale:</div>
+          <TextInput
+            className="field"
+            value={this.props.primitive.scale}
+            onChange={this.valSetter("scale")}
+            validator={validators.isNumber}
+            converter={converters.float}
+          />
+        </div>
 
-			<div className="horizontal">
-				<div className="label">x channel:</div>
-				<Selector values={this.props.primitive.channelSelectors.map((val) => {return {value: val, class:"", label: val}})} 
-					value={this.props.primitive.xChannelSelector} onChange={this.valSetter("xChannelSelector")} />
-			</div>
+        <div className="horizontal">
+          <div className="label">x channel:</div>
+          <Selector
+            values={this.props.primitive.channelSelectors.map((val) => {
+              return { value: val, class: "", label: val };
+            })}
+            value={this.props.primitive.xChannelSelector}
+            onChange={this.valSetter("xChannelSelector")}
+          />
+        </div>
 
-			<div className="horizontal">
-				<div className="label">y channel:</div>
-				<Selector values={this.props.primitive.channelSelectors.map((val) => {return {value: val, class:"", label: val}})} 
-					value={this.props.primitive.yChannelSelector} onChange={this.valSetter("yChannelSelector")} />
-			</div>
-		</div>;
-	}
+        <div className="horizontal">
+          <div className="label">y channel:</div>
+          <Selector
+            values={this.props.primitive.channelSelectors.map((val) => {
+              return { value: val, class: "", label: val };
+            })}
+            value={this.props.primitive.yChannelSelector}
+            onChange={this.valSetter("yChannelSelector")}
+          />
+        </div>
+      </div>
+    );
+  }
 }
-
 
 module.exports = DisplacementMap;
