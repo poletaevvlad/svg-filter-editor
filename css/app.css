@@ -7,7 +7,7 @@ body {
 * {
   cursor: default;
 }
-input[type=text] {
+input[type="text"] {
   font-size: 12px;
   background: #393939;
   border: 1px solid #333;
@@ -16,13 +16,13 @@ input[type=text] {
   outline: none;
   transition: box-shadow 0.1s;
 }
-input[type=text]:focus {
+input[type="text"]:focus {
   box-shadow: 0 0 1px 1px orange;
 }
-input[type=text].invalid:focus {
+input[type="text"].invalid:focus {
   box-shadow: 0 0 1px 1px red;
 }
-input[type=text]:disabled {
+input[type="text"]:disabled {
   color: #888;
   background: #3e3e3e;
   border-color: #383838;
@@ -60,7 +60,7 @@ input[type=text]:disabled {
   width: 8px;
   height: 6px;
   margin-top: -3px;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%228%22%20height%3D%226%22%3E%0D%0A%20%20%20%20%20%3Cpath%20d%3D%22M0%200%20L%204%205%20L%208%200%20%22%20stroke%3D%22%23aaa%22%20fill%3D%22transparent%22%20stroke-width%3D%221.2%22%20%2F%3E%0D%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%228%22%20height%3D%226%22%3E%0A%20%20%20%20%20%3Cpath%20d%3D%22M0%200%20L%204%205%20L%208%200%20%22%20stroke%3D%22%23aaa%22%20fill%3D%22transparent%22%20stroke-width%3D%221.2%22%20%2F%3E%0A%3C%2Fsvg%3E");
   background-repeat: no-repeat;
 }
 .slider {
@@ -133,7 +133,7 @@ input[type=text]:disabled {
   box-shadow: 0 0 1px 1px orange;
 }
 .checkbox input[type="checkbox"]:checked + .checkbox-graphics {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2210%22%20height%3D%2210%22%3E%0D%0A%09%3Cpath%20d%3D%22M%202%205%20L%204%208%20L%208%202%22%20stroke%3D%22%23aaa%22%20stroke-width%3D%221.2%22%20fill%3D%22transparent%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2210%22%20height%3D%2210%22%3E%0A%09%3Cpath%20d%3D%22M%202%205%20L%204%208%20L%208%202%22%20stroke%3D%22%23aaa%22%20stroke-width%3D%221.2%22%20fill%3D%22transparent%22%2F%3E%3C%2Fsvg%3E");
 }
 .checkbox .checkbox-graphics {
   position: absolute;
@@ -219,7 +219,7 @@ textarea:focus {
   margin-left: 3px;
   margin-right: 5px;
   display: inline-block;
-  background: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20%0D%0A%20%20%20%20%20baseProfile%3D%22full%22%0D%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0D%0A%20%20%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0D%0A%20%20%20%20%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%0D%0A%20%20%20%20%20width%3D%2210%22%0D%0A%20%20%20%20%20height%3D%2210%22%3E%0D%0A%3Cpath%20d%3D%22M1%203%20L%205%207%20L%209%203%22%20stroke%3D%22%23888%22%20fill%3D%22transparent%22%20stroke-width%3D%221.2%22%2F%3E%0D%0A%20%3C%2Fsvg%3E%0D%0A");
+  background: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20%0A%20%20%20%20%20baseProfile%3D%22full%22%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0A%20%20%20%20%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%0A%20%20%20%20%20width%3D%2210%22%0A%20%20%20%20%20height%3D%2210%22%3E%0A%3Cpath%20d%3D%22M1%203%20L%205%207%20L%209%203%22%20stroke%3D%22%23888%22%20fill%3D%22transparent%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%3C%2Fsvg%3E%0A");
   transform: rotate(-90deg);
 }
 .hidable .icon.open {
@@ -340,7 +340,7 @@ textarea:focus {
   border-style: none solid;
   z-index: 2;
   cursor: ew-resize;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%223%22%20height%3D%2230%22%3E%0D%0A%09%3Cpath%20transform%3D%22translate(0%2015)%22%20d%3D%22M0.5%200%20V15%20M2.5%200%20V15%22%20fill%3D%22transparent%22%20stroke%3D%22%23666%22%20%2F%3E%0D%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%223%22%20height%3D%2230%22%3E%0A%09%3Cpath%20transform%3D%22translate(0%2015)%22%20d%3D%22M0.5%200%20V15%20M2.5%200%20V15%22%20fill%3D%22transparent%22%20stroke%3D%22%23666%22%20%2F%3E%0A%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position-x: 1px;
   background-position-y: calc(50% - 7px);
@@ -423,12 +423,12 @@ textarea:focus {
   color: #777;
   font-size: 11px;
   bottom: -50px;
-  opacity: 0.0;
+  opacity: 0;
   transition: bottom 0.7s, opacity 0.7s;
 }
 #instruction.visible {
   bottom: 20px;
-  opacity: 1.0;
+  opacity: 1;
 }
 .node-position {
   position: absolute;
@@ -474,7 +474,7 @@ textarea:focus {
 }
 .node .io .io-connector {
   width: 15px;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20%0D%0A%20%20%20%20%20baseProfile%3D%22full%22%0D%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0D%0A%20%20%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0D%0A%20%20%20%20%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%0D%0A%20%20%20%20%20width%3D%2210%22%0D%0A%20%20%20%20%20height%3D%2210%22%3E%0D%0A%3Cpath%20d%3D%22M1%205%20l4%204%20l4%20-4%20l-4%20-4%20z%22%20stroke%3D%22%23222%22%20fill%3D%22%23bbb%22%2F%3E%0D%0A%20%3C%2Fsvg%3E%0D%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20%0A%20%20%20%20%20baseProfile%3D%22full%22%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0A%20%20%20%20%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%0A%20%20%20%20%20width%3D%2210%22%0A%20%20%20%20%20height%3D%2210%22%3E%0A%3Cpath%20d%3D%22M1%205%20l4%204%20l4%20-4%20l-4%20-4%20z%22%20stroke%3D%22%23222%22%20fill%3D%22%23bbb%22%2F%3E%0A%20%3C%2Fsvg%3E%0A");
   position: absolute;
   top: 0;
   bottom: 2px;
@@ -483,7 +483,7 @@ textarea:focus {
   margin: -1px 0;
 }
 .node .io .io-connector.selected {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20%0D%0A%20%20%20%20%20baseProfile%3D%22full%22%0D%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0D%0A%20%20%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0D%0A%20%20%20%20%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%0D%0A%20%20%20%20%20width%3D%2210%22%0D%0A%20%20%20%20%20height%3D%2210%22%3E%0D%0A%3Cpath%20d%3D%22M1%205%20l4%204%20l4%20-4%20l-4%20-4%20z%22%20stroke%3D%22%23fff%22%20fill%3D%22orange%22%2F%3E%0D%0A%20%3C%2Fsvg%3E%0D%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20%0A%20%20%20%20%20baseProfile%3D%22full%22%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0A%20%20%20%20%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%0A%20%20%20%20%20width%3D%2210%22%0A%20%20%20%20%20height%3D%2210%22%3E%0A%3Cpath%20d%3D%22M1%205%20l4%204%20l4%20-4%20l-4%20-4%20z%22%20stroke%3D%22%23fff%22%20fill%3D%22orange%22%2F%3E%0A%20%3C%2Fsvg%3E%0A");
 }
 .node .io .inputs .io-component {
   padding-left: 10px;
@@ -637,7 +637,7 @@ textarea:focus {
   margin-right: 0;
 }
 .section-name {
-  color: #CCC;
+  color: #ccc;
   margin-bottom: 3px;
   margin-top: 6px;
 }
@@ -656,13 +656,13 @@ textarea:focus {
   width: 180px;
 }
 #preview-editor .checkerboard-dark {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2218%22%20height%3D%2218%22%3E%0D%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23303030%22%2F%3E%0D%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23262626%22%2F%3E%0D%0A%3Crect%20x%3D%2250%25%22%20y%3D%2250%25%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23262626%22%2F%3E%0D%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2218%22%20height%3D%2218%22%3E%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23303030%22%2F%3E%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23262626%22%2F%3E%0A%3Crect%20x%3D%2250%25%22%20y%3D%2250%25%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23262626%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 #preview-editor .checkerboard-light {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2218%22%20height%3D%2218%22%3E%0D%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23eee%22%2F%3E%0D%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23ccc%22%2F%3E%0D%0A%3Crect%20x%3D%2250%25%22%20y%3D%2250%25%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23ccc%22%2F%3E%0D%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2218%22%20height%3D%2218%22%3E%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23eee%22%2F%3E%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23ccc%22%2F%3E%0A%3Crect%20x%3D%2250%25%22%20y%3D%2250%25%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22%23ccc%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 #preview-editor .checkerboard-contrast {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0D%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2218%22%20height%3D%2218%22%3E%0D%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22white%22%2F%3E%0D%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22black%22%2F%3E%0D%0A%3Crect%20x%3D%2250%25%22%20y%3D%2250%25%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22black%22%2F%3E%0D%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22full%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aev%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2Fxml-events%22%20width%3D%2218%22%20height%3D%2218%22%3E%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22white%22%2F%3E%0A%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22black%22%2F%3E%0A%3Crect%20x%3D%2250%25%22%20y%3D%2250%25%22%20width%3D%2250%25%22%20height%3D%2250%25%22%20fill%3D%22black%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 #code {
   position: absolute;
