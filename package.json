@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "grunt": "^1.0.3",
-    "npm": "^6.3.0",
+    "npm": "^6.13.4",
     "react": "^16.4.2",
     "react-addons-shallow-compare": "^15.6.2",
     "react-color": "^2.14.1",
