@@ -14,14 +14,17 @@ class Preview extends React.Component{
 		}else{
 			let i = 0;
 			return <svg id="preview-root">
-				<pattern id="checkerboard" patternUnits="userSpaceOnUse" width="18" height="18" 
+				<pattern id="checkerboard" patternUnits="userSpaceOnUse" width="18" height="18"
 					className={"checkerboard " + this.props.bgCheckerboard}>
 					<rect className="light" x="0" y="0" width="18" height="18" />
 					<rect className="dark" x="0" y="0" width="9" height="9" />
 					<rect className="dark" x="9" y="9" width="9" height="9" />
 				</pattern>
 				<filter id="filter" width="5000%" height="5000%" x="-2500%" y="-2500%" primitiveUnits="objectBoundingBox">
-					{primitives.map(primitive => primitive.getSVG().makeReactComponent(i++))}
+					{primitives
+						.map(primitive => primitive.getSVG())
+						.filter(svg => svg != null)
+						.map(svg => svg.makeReactComponent(i++))}
 				</filter>
 				<rect x="0" y="0" width="100%" height="100%" {... this._getBackground()} />
 				<g filter="url(#filter)">
@@ -50,7 +53,7 @@ class Preview extends React.Component{
 			case "ellipse":
 				return <ellipse rx={this.props.shapeWidth / 2} ry={this.props.shapeHeight / 2} cx="50%" cy="50%" {... args} />
 			case "rect":
-				return <rect x="50%" y="50%" height={this.props.shapeHeight} width={this.props.shapeWidth} 
+				return <rect x="50%" y="50%" height={this.props.shapeHeight} width={this.props.shapeWidth}
 					transform={`translate(${-this.props.shapeWidth / 2 |0}.5 ${-this.props.shapeHeight / 2 |0}.5)`} {... args}/>
 			case "path":
 				return <path ref="path" d={this.props.path} {... args} />
@@ -66,7 +69,7 @@ class Preview extends React.Component{
 
 			let parent = document.getElementById("preview-root");
 			let parentBbox = parent.getBoundingClientRect();
-		
+
 			let x = ((parentBbox.right - parentBbox.left) - (bbox.right - bbox.left)) / 2;
 			let y = ((parentBbox.bottom - parentBbox.top) - (bbox.bottom - bbox.top)) / 2;
 			path.setAttribute("transform", `translate(${x} ${y})`);
@@ -75,7 +78,7 @@ class Preview extends React.Component{
 
 	_getBackground(){
 		switch(this.props.bgType){
-			case "transparent": 
+			case "transparent":
 				return {fill: "transparent"}
 			case "color":
 				return {fill: this.props.bgColor}
