@@ -1,13 +1,15 @@
 @import (reference) "./focus.less";
 
-textarea{
-	background: #393939;
-	border: 1px solid #333;
-	color: #bbb;
-	font-size: 11px;
-	width: 184px;
-	resize: none;
+textarea {
+  background: #393939;
+  border: 1px solid #333;
+  color: #bbb;
+  font-size: 11px;
+  width: 184px;
+  resize: none;
 
-	.focusable();
-	&:focus{ .focused(); }
+  .focusable();
+  &:focus {
+    .focused();
+  }
 }

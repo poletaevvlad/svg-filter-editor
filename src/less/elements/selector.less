@@ -1,52 +1,52 @@
-.selector{
-	display: flex;
-	flex-grow: 1;
+.selector {
+  display: flex;
+  flex-grow: 1;
 
-	.item{
-		border: 1px solid #333;
-		flex-grow: 1;
-		border-right: none;
-		padding: 1px 2px;
-		background: #4e4e4e;
-		box-shadow: 0 1px 0 0 #555 inset;
-		text-align: center;
+  .item {
+    border: 1px solid #333;
+    flex-grow: 1;
+    border-right: none;
+    padding: 1px 2px;
+    background: #4e4e4e;
+    box-shadow: 0 1px 0 0 #555 inset;
+    text-align: center;
 
-		@border-radius: 2px;
-		&:first-child{
-			border-top-left-radius: @border-radius;
-			border-bottom-left-radius: @border-radius;
-		}
+    @border-radius: 2px;
+    &:first-child {
+      border-top-left-radius: @border-radius;
+      border-bottom-left-radius: @border-radius;
+    }
 
-		&:last-child{
-			border-right: 1px solid #333;
-			border-top-right-radius: @border-radius;
-			border-bottom-right-radius: @border-radius;
-		}	
+    &:last-child {
+      border-right: 1px solid #333;
+      border-top-right-radius: @border-radius;
+      border-bottom-right-radius: @border-radius;
+    }
 
-		&.selected{
-			background: #444444;
-			box-shadow: none;
-		}
-	}
+    &.selected {
+      background: #444444;
+      box-shadow: none;
+    }
+  }
 }
 
-#preview-editor{
-	.selector{
-		justify-content: space-around;
+#preview-editor {
+  .selector {
+    justify-content: space-around;
 
-		.item{
-			flex-grow: 0;
-			width: 54px;
-			height: 36px;
-			border: 1px solid #333;
-			padding: 0;
-			border-radius: 0 !important;
-			box-shadow: none;
+    .item {
+      flex-grow: 0;
+      width: 54px;
+      height: 36px;
+      border: 1px solid #333;
+      padding: 0;
+      border-radius: 0 !important;
+      box-shadow: none;
 
-			&.selected{
-				border: 1px solid orange;
-				box-shadow: 0 0 0 1px orange inset;
-			}
-		}
-	}
+      &.selected {
+        border: 1px solid orange;
+        box-shadow: 0 0 0 1px orange inset;
+      }
+    }
+  }
 }

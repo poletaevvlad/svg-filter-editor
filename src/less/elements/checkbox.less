@@ -1,41 +1,44 @@
 @import (reference) "./focus.less";
 
-.checkbox{
-	width: 12px;
-	height: 12px;
-	overflow: hidden;
-	position: relative;
+.checkbox {
+  width: 12px;
+  height: 12px;
+  overflow: hidden;
+  position: relative;
 
-	input[type="checkbox"]{
-		margin: 0;
-	  	padding: 0;
-	  	opacity: 0;
-		width: 12px;
-		height: 12px;
-		position: absolute;
-		z-index: 3;
+  input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    z-index: 3;
 
-		&:focus+.checkbox-graphics{
-			.focused();
-		}
+    &:focus + .checkbox-graphics {
+      .focused();
+    }
 
-		&:checked+.checkbox-graphics{
-			background-image: data-uri('image/svg+xml;charset=UTF-8', 'elements/checkbox-icon.svg');
-		}
-	}
+    &:checked + .checkbox-graphics {
+      background-image: data-uri(
+        "image/svg+xml;charset=UTF-8",
+        "elements/checkbox-icon.svg"
+      );
+    }
+  }
 
-	.checkbox-graphics{
-		position: absolute;
-		left: 0;
-		top: 0;
-		content: "";
-		width: 10px;
-		height: 10px;
-		background-color: #555;
-		display: block;
-		border: 1px solid #333;
-		box-shadow: 0 1px 0 0 #616161 inset;
-		z-index: 1;
-		.focusable();
-	}
+  .checkbox-graphics {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #555;
+    display: block;
+    border: 1px solid #333;
+    box-shadow: 0 1px 0 0 #616161 inset;
+    z-index: 1;
+    .focusable();
+  }
 }

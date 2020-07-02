@@ -1,24 +1,24 @@
 @import (reference) "./focus.less";
 
-input[type=text]{
-    font-size: 12px;
-    background: #393939;
-    border: 1px solid #333;
-    color: #ccc;
-    padding: 0 3px;
-    .focusable();
+input[type="text"] {
+  font-size: 12px;
+  background: #393939;
+  border: 1px solid #333;
+  color: #ccc;
+  padding: 0 3px;
+  .focusable();
 
-    &:focus{
-        .focused();
-    }
+  &:focus {
+    .focused();
+  }
 
-    &.invalid:focus{
-        .focused-invalid();
-    }
+  &.invalid:focus {
+    .focused-invalid();
+  }
 
-    &:disabled{
-        color: #888;
-        background: #3e3e3e;
-        border-color: #383838;
-    }
+  &:disabled {
+    color: #888;
+    background: #3e3e3e;
+    border-color: #383838;
+  }
 }
