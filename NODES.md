@@ -26,7 +26,7 @@
 * Gaussian blur (`<feGaussianBlur>`);
 * Morphology (`<feMorphology>`).
 
-![](sampes/geometry-nodes.svg)
+![](samples/geometry-nodes.svg)
 
 
 ## Combining
