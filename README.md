@@ -1,6 +1,6 @@
 # svg-filter-editor
 
-A node-based editor for SVG filters. It supports most filter primitives defined in SVG 1.1 Specification.
+A node-based editor for SVG filters. It supports [most filter primitives](NODES.md) defined in SVG 1.1 Specification.
 
 SVG filter contains multiple stages, defined by their types, parameters, and sets of inputs and outputs. Each of these stages is represented by a node in the editor. Connections between a node's input and some other node's output define the order in which the filter's primitives are going to be applied.
 
